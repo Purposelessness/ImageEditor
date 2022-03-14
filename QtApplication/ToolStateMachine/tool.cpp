@@ -12,7 +12,7 @@ QString Tool::toString() const {
 }
 
 void Tool::updateView(ToolDock *dock) {
-    dock->setWidget(view->getWidget());
+    dock->setToolWidget(view->getWidget());
 }
 
 void Tool::toolClickEvent() const {
