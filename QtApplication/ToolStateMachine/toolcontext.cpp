@@ -32,8 +32,7 @@ void ToolContext::setTool(const QString &toolType) {
     qInfo(service()) << "Tool type changed to" << toolType;
     currentTool = tools.value(toolType);
     currentToolString = toolType;
-    if (dock)
-        currentTool->updateToolDock(dock);
+    updateToolDock();
 }
 
 void ToolContext::setToolBar(ToolBar *toolBar) {
@@ -45,9 +44,18 @@ void ToolContext::addToolsToBar() {
     for (auto tool : tools.values()) {
         tool->addToolToBar(bar);
     }
+    qDebug(ui()) << "ToolBar linked to ToolContext. Tools added to ToolBar";
 }
 
 void ToolContext::setToolDock(ToolDock *toolDock) {
     dock = toolDock;
+    qDebug(ui()) << "ToolDock linked to ToolContext";
+    updateToolDock();
+}
+
+void ToolContext::updateToolDock() {
+    if (!dock)
+        return;
     currentTool->updateToolDock(dock);
+    qDebug(ui()) << "ToolDock content updated";
 }

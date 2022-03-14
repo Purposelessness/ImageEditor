@@ -27,6 +27,7 @@ private:
 
     void createTools();
     void addToolsToBar();
+    void updateToolDock();
 
     QHash<QString, Tool *> tools;
     Tool *currentTool;
