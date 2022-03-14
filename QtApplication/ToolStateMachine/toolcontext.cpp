@@ -12,7 +12,7 @@ ToolContext &ToolContext::getInstance() {
 
 void ToolContext::setState(const QString &stateName) {
     if (!tools.contains(stateName)) {
-        qCritical(critical()) << "Key" << stateName << "doesn't contain in Tools hash";
+        qCritical(service()) << "Key" << stateName << "doesn't contain in Tools hash";
         return;
     }
     auto tool = tools.find(stateName).value();
