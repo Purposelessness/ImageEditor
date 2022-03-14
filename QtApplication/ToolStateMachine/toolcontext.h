@@ -14,17 +14,23 @@ class ToolContext : QObject {
 Q_OBJECT
 
 public:
-    static ToolContext &getInstance();
-    void setState(const QString &name);
-    void addToolBar(ToolBar *toolBar);
-    void addToolDock(ToolDock *toolDock);
+    static ToolContext& getInstance();
+    void addTool(Tool *tool);
+    void setTool(const QString& toolType);
+    void setToolBar(ToolBar *toolBar);
+    void setToolDock(ToolDock *toolDock);
 
 private:
     ToolContext();
-    ToolContext(const ToolContext &root) = delete;
-    ToolContext &operator=(const ToolContext &) = delete;
+    ToolContext(const ToolContext& root) = delete;
+    ToolContext &operator=(const ToolContext&) = delete;
+
+    void createTools();
+    void addToolsToBar();
 
     QHash<QString, Tool *> tools;
+    Tool *currentTool;
+    QString currentToolString;
     ToolBar *bar;
     ToolDock *dock;
 };

@@ -2,11 +2,12 @@
 #define IMAGEEDITOR_BRUSH_H
 
 #include "../../tool.h"
+#include "../defaulttoolview.h"
+#include "brushcore.h"
 
 class Brush : public Tool {
 public:
-
-private:
+    explicit Brush(const QString& name = tr("Brush"));
 };
 
 

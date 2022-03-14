@@ -5,11 +5,11 @@
 
 ToolDock::ToolDock(QWidget *parent) : QDockWidget(parent) {
     setMinimumWidth(320);
-    setMinimumHeight(200);
+    setMinimumHeight(600);
     setBackgroundColor(Qt::white);
     setAllowedAreas(Qt::RightDockWidgetArea | Qt::LeftDockWidgetArea);
 
-    ToolContext::getInstance().addToolDock(this);
+    ToolContext::getInstance().setToolDock(this);
 }
 
 void ToolDock::setToolWidget(QWidget *widget) {

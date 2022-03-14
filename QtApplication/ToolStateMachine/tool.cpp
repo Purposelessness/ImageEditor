@@ -4,17 +4,21 @@
 #include "toolcontext.h"
 
 Tool::Tool(QString name, ToolView *view, ToolCore *core) : name(std::move(name)), view(view), core(core) {
-    connect(view->getButton(), SIGNAL(clicked(bool)), this, SLOT(toolClickEvent()));
+    connect(view->getAction(), SIGNAL(triggered(bool)), this, SLOT(toolClickEvent()));
 }
 
 QString Tool::toString() const {
     return name;
 }
 
-void Tool::updateView(ToolDock *dock) {
+void Tool::addToolToBar(ToolBar *bar) {
+    bar->addAction(view->getAction());
+}
+
+void Tool::updateToolDock(ToolDock *dock) {
     dock->setToolWidget(view->getWidget());
 }
 
 void Tool::toolClickEvent() const {
-    ToolContext::getInstance().setState(toString());
+    ToolContext::getInstance().setTool(toString());
 }

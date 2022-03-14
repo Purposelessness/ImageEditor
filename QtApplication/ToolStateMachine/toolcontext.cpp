@@ -1,8 +1,16 @@
 #include "toolcontext.h"
-#include "../Logger/logger.h"
+#include "Tools/Brushes/brush.h"
+#include "Tools/Frames/frame.h"
 
 ToolContext::ToolContext() {
-    setState("Brush");
+    qDebug(service()) << "Tool state machine initialized";
+    createTools();
+    setTool("Brush");
+}
+
+void ToolContext::createTools() {
+    addTool(new Brush());
+    addTool(new Frame());
 }
 
 ToolContext &ToolContext::getInstance() {
@@ -10,19 +18,36 @@ ToolContext &ToolContext::getInstance() {
     return instance;
 }
 
-void ToolContext::setState(const QString &stateName) {
-    if (!tools.contains(stateName)) {
-        qCritical(service()) << "Key" << stateName << "doesn't contain in Tools hash";
+void ToolContext::addTool(Tool *tool) {
+    tools.insert(tool->toString(), tool);
+}
+
+void ToolContext::setTool(const QString &toolType) {
+    if (toolType == currentToolString)
+        return;
+    if (!tools.contains(toolType)) {
+        qCritical(service()) << "Key" << toolType << "doesn't contain in Tools hash";
         return;
     }
-    auto tool = tools.find(stateName).value();
-    tool->updateView(dock);
+    qInfo(service()) << "Tool type changed to" << toolType;
+    currentTool = tools.value(toolType);
+    currentToolString = toolType;
+    if (dock)
+        currentTool->updateToolDock(dock);
 }
 
-void ToolContext::addToolBar(ToolBar *toolBar) {
+void ToolContext::setToolBar(ToolBar *toolBar) {
     bar = toolBar;
+    addToolsToBar();
 }
 
-void ToolContext::addToolDock(ToolDock *toolDock) {
+void ToolContext::addToolsToBar() {
+    for (auto tool : tools.values()) {
+        tool->addToolToBar(bar);
+    }
+}
+
+void ToolContext::setToolDock(ToolDock *toolDock) {
     dock = toolDock;
+    currentTool->updateToolDock(dock);
 }

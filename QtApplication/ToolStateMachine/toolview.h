@@ -1,22 +1,31 @@
 #ifndef IMAGEEDITOR_TOOLVIEW_H
 #define IMAGEEDITOR_TOOLVIEW_H
 
-#include <QPushButton>
+#include <QAction>
+#include <QGroupBox>
+#include <QVBoxLayout>
 #include <QWidget>
 #include <QLabel>
+#include <QPixmap>
 
 class ToolView {
 public:
-    explicit ToolView(const QString &name);
+    explicit ToolView(const QString& name);
+    explicit ToolView(const QPixmap& pixmap, const QString& name);
 
-    virtual QPushButton *getButton();
-    virtual QWidget *getWidget();
+    QAction *getAction();
+    QWidget *getWidget();
+
+protected:
+    void addSection(QWidget *section);
+    void addSection(const QString& sectionLabel, QWidget *section);
 
 private:
-    QPushButton *button;
+    void setActionIcon(const QPixmap& pixmap);
 
-    QWidget *widget;
-    QLabel *label;
+    QAction *action;
+    QVBoxLayout *layout;
+    QGroupBox *settingsBox;
 };
 
 

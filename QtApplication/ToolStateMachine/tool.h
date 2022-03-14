@@ -1,6 +1,7 @@
 #ifndef IMAGEEDITOR_TOOL_H
 #define IMAGEEDITOR_TOOL_H
 
+#include "../MainWidgets/toolbar.h"
 #include "../MainWidgets/tooldock.h"
 #include "toolview.h"
 #include "toolcore.h"
@@ -15,7 +16,8 @@ public:
     explicit Tool(QString name, ToolView *view, ToolCore *core);
     [[nodiscard]] QString toString() const;
 
-    void updateView(ToolDock *dock);
+    void addToolToBar(ToolBar *bar);
+    void updateToolDock(ToolDock *dock);
 
 private slots:
     void toolClickEvent() const;

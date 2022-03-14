@@ -1,15 +1,38 @@
 #include "toolview.h"
 
-ToolView::ToolView(const QString &name) : button(new QPushButton(name)), widget(new QWidget()),
-                                          label(new QLabel(name, widget)) {
-    button->hide();
-    widget->hide();
+#include <QIcon>
+
+ToolView::ToolView(const QString& name) : action(new QAction(name)), settingsBox(new QGroupBox(name)),
+                                          layout(new QVBoxLayout()) {
+    settingsBox->setLayout(layout);
+    settingsBox->hide();
 }
 
-QPushButton *ToolView::getButton() {
-    return button;
+ToolView::ToolView(const QPixmap& pixmap, const QString& name) : ToolView(name) {
+    setActionIcon(pixmap);
+}
+
+void ToolView::setActionIcon(const QPixmap& pixmap) {
+    action->setIcon(QIcon(pixmap));
+}
+
+QAction *ToolView::getAction() {
+    return action;
 }
 
 QWidget *ToolView::getWidget() {
-    return widget;
+    return settingsBox;
+}
+
+void ToolView::addSection(QWidget *section) {
+    layout->addWidget(section);
+}
+
+void ToolView::addSection(const QString &sectionLabel, QWidget *section) {
+    auto *newSection = new QWidget();
+    auto *newLayout = new QVBoxLayout();
+    newLayout->addWidget(new QLabel(sectionLabel));
+    newLayout->addWidget(section);
+    newSection->setLayout(newLayout);
+    addSection(newSection);
 }

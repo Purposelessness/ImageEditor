@@ -9,6 +9,7 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     qInstallMessageHandler(messageHandler);
     EditorWindow w;
+
     w.show();
     return QApplication::exec();
 }

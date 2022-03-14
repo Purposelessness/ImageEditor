@@ -2,6 +2,7 @@
 #define IMAGEEDITOR_TOOLDOCK_H
 
 #include <QDockWidget>
+#include <QCloseEvent>
 
 class ToolDock : public QDockWidget {
 public:

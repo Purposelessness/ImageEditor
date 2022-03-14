@@ -1,5 +1,6 @@
 #include "logger.h"
 
+#include <iostream>
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
@@ -29,6 +30,9 @@ void messageHandler(QtMsgType type, const QMessageLogContext &context, const QSt
         case QtDebugMsg:
             messageType = "|DBG|";
             break;
+        case QtInfoMsg:
+            messageType = "|INF|";
+            break;
         case QtWarningMsg:
             messageType = "|WRN|";
             break;
@@ -43,6 +47,7 @@ void messageHandler(QtMsgType type, const QMessageLogContext &context, const QSt
     }
 
     logText << QString("%1 %2 %3: %4 at %5").arg(logDateTime, messageType, context.category, msg, contextInfo) << Qt::endl;
+    std::cout << QString("%1 %2: %3 at %4").arg(messageType, context.category, msg, contextInfo).toStdString() << std::endl;
 
     logText.flush();
     logFile.flush();
