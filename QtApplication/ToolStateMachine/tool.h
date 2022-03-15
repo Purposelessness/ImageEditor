@@ -20,7 +20,7 @@ public:
     void updateToolDock(ToolDock *dock);
 
 private slots:
-    void toolClickEvent() const;
+    void toolTriggeredEvent() const;
 
 private:
     const QString name;

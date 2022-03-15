@@ -11,13 +11,20 @@ Q_LOGGING_CATEGORY(ui, "UI")
 Q_LOGGING_CATEGORY(service, "Service")
 Q_LOGGING_CATEGORY(core, "Core")
 
+QString fileName;
+
+void initLogger() {
+    QString currentDateTime = QDateTime::currentDateTime().toString("yyyy_MM_dd_hh_mm");
+    fileName = QString("%1/logs/log_%2.txt").arg(QCoreApplication::applicationDirPath(), currentDateTime);
+    qInstallMessageHandler(messageHandler);
+}
+
 void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
     QString dirName = "logs";
     if (!QDir(dirName).exists())
         QDir().mkdir(dirName);
 
-    QString fileDateTime = QDateTime::currentDateTime().toString("yyyy_MM_dd_hh_mm_ss");
-    QFile logFile(QString("%1/logs/log_%2.txt").arg(QCoreApplication::applicationDirPath(), fileDateTime));
+    QFile logFile(fileName);
     if (!logFile.open(QFile::Append | QFile::Text)) {
         return;
     }

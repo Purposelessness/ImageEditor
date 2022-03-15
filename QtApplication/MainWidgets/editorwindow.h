@@ -6,6 +6,7 @@
 #include "tooldock.h"
 
 #include <QMainWindow>
+#include <QMenuBar>
 
 class EditorWindow : public QMainWindow {
 public:
@@ -14,7 +15,7 @@ public:
 private:
     ImageViewer *imageViewer;
     ToolBar *toolBar;
-    ToolDock *sideBar;
+    ToolDock *toolDock;
 };
 
 #endif //IMAGEEDITOR_EDITORWINDOW_H
