@@ -22,12 +22,11 @@ public:
     virtual QAction *getAction() = 0;
     virtual QWidget *getWidget() = 0;
     virtual IToolModel *getToolModel() = 0;
-    void setActive(bool value);
+
     [[nodiscard]] QString toString() const;
 
 private:
     QString name;
-    bool enabled;
 };
 
 inline bool operator==(const ToolUnit &s1, const ToolUnit &s2)

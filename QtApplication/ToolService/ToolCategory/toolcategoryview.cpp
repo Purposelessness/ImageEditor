@@ -6,20 +6,20 @@
 #include <QToolButton>
 
 ToolCategoryView::ToolCategoryView(const QString& name) : ToolUnitView(name) {
-    makeWidget(name);
+    createWidget(name);
 }
 
 ToolCategoryView::ToolCategoryView(const QString& name, const QIcon& icon) : ToolUnitView(name, icon) {
-    makeWidget(name);
+    createWidget(name);
 }
 
-void ToolCategoryView::addAction(QAction *action) {
+void ToolCategoryView::addToolAction(QAction *action) {
     auto button = new QToolButton();
     button->setDefaultAction(action);
     toolLayout->addWidget(button);
 }
 
-void ToolCategoryView::makeWidget(const QString& name) {
+void ToolCategoryView::createWidget(const QString& name) {
     toolLayout = new QHBoxLayout();
     toolLayout->setAlignment(Qt::AlignLeft);
     toolBox = new QGroupBox(name);

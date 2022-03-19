@@ -29,7 +29,7 @@ IToolModel *ToolCategory::getToolModel() {
 }
 
 void ToolCategory::onToolAdded(QAction *action) {
-    view->addAction(action);
+    view->addToolAction(action);
 }
 
 void ToolCategory::onActionTriggered() {

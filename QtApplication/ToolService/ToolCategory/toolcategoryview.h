@@ -11,10 +11,10 @@ public:
     explicit ToolCategoryView(const QString& name, const QIcon& icon);
 
 public:
-    void addAction(QAction *action);
+    void addToolAction(QAction *action);
 
 private:
-    void makeWidget(const QString& name);
+    void createWidget(const QString& name);
 
     QHBoxLayout *toolLayout;
     QGroupBox *toolBox;
