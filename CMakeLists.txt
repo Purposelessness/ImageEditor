@@ -28,8 +28,21 @@ set(PROJECT_SOURCES
         QtApplication/main.cpp
         QtApplication/MainWidgets/editorwindow.cpp
         QtApplication/MainWidgets/editorwindow.h
-        QtApplication/MainWidgets/tooldock.cpp
-        QtApplication/MainWidgets/tooldock.h QtApplication/MainWidgets/imageviewer.cpp QtApplication/MainWidgets/imageviewer.h QtApplication/MainWidgets/toolbar.cpp QtApplication/MainWidgets/toolbar.h QtApplication/ToolStateMachine/toolcontext.cpp QtApplication/ToolStateMachine/toolcontext.h QtApplication/ToolStateMachine/tool.cpp QtApplication/ToolStateMachine/tool.h QtApplication/ToolStateMachine/Tools/Brushes/brush.cpp QtApplication/ToolStateMachine/Tools/Brushes/brush.h QtApplication/ToolStateMachine/toolview.cpp QtApplication/ToolStateMachine/toolview.h QtApplication/ToolStateMachine/toolcore.h QtApplication/Logger/logger.cpp QtApplication/Logger/logger.h QtApplication/ToolStateMachine/Tools/defaulttoolview.cpp QtApplication/ToolStateMachine/Tools/defaulttoolview.h QtApplication/ToolStateMachine/Tools/Brushes/brushcore.cpp QtApplication/ToolStateMachine/Tools/Brushes/brushcore.h QtApplication/ToolStateMachine/Tools/Frames/framecore.cpp QtApplication/ToolStateMachine/Tools/Frames/framecore.h QtApplication/ToolStateMachine/Tools/Frames/frame.cpp QtApplication/ToolStateMachine/Tools/Frames/frame.h)
+        QtApplication/MainWidgets/ToolDock/tooldock.cpp
+        QtApplication/MainWidgets/ToolDock/tooldock.h
+        QtApplication/MainWidgets/imageviewer.cpp
+        QtApplication/MainWidgets/imageviewer.h
+        QtApplication/MainWidgets/ToolBar/toolbar.cpp
+        QtApplication/MainWidgets/ToolBar/toolbar.h
+        QtApplication/ToolService/toolservice.cpp
+        QtApplication/ToolService/toolservice.h
+        QtApplication/Logger/logger.cpp
+        QtApplication/Logger/logger.h
+        QtApplication/MainWidgets/ToolDock/itooldock.h
+        QtApplication/MainWidgets/ToolBar/itoolbar.h
+        QtApplication/ToolService/toolcontext.cpp
+        QtApplication/ToolService/toolcontext.h
+        QtApplication/ToolService/toolunit.h QtApplication/ToolService/Tool/itoolmodel.h QtApplication/ToolService/toolunitview.cpp QtApplication/ToolService/toolunitview.h QtApplication/ToolService/toolunit.cpp QtApplication/ToolService/ToolCategory/toolcategory.cpp QtApplication/ToolService/ToolCategory/toolcategory.h QtApplication/ToolService/ToolCategory/toolcategorymodel.cpp QtApplication/ToolService/ToolCategory/toolcategorymodel.h QtApplication/ToolService/ToolCategory/BrushCategory/brushcategory.cpp QtApplication/ToolService/ToolCategory/BrushCategory/brushcategory.h QtApplication/ToolService/ToolCategory/BrushCategory/brushcategorymodel.cpp QtApplication/ToolService/ToolCategory/BrushCategory/brushcategorymodel.h QtApplication/ToolService/ToolCategory/BrushCategory/brushcategoryview.cpp QtApplication/ToolService/ToolCategory/BrushCategory/brushcategoryview.h QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategory.cpp QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategory.h QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategoryview.cpp QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategoryview.h QtApplication/ToolService/Tool/Brush-like/Brush/brush.cpp QtApplication/ToolService/Tool/Brush-like/Brush/brush.h QtApplication/ToolService/Tool/Brush-like/Brush/brushview.cpp QtApplication/ToolService/Tool/Brush-like/Brush/brushview.h QtApplication/ToolService/Tool/Brush-like/Brush/brushmodel.cpp QtApplication/ToolService/Tool/Brush-like/Brush/brushmodel.h QtApplication/ToolService/Tool/tool.cpp QtApplication/ToolService/Tool/tool.h QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategorymodel.cpp QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategorymodel.h QtApplication/ToolService/Tool/Brush-like/Pen/pen.cpp QtApplication/ToolService/Tool/Brush-like/Pen/pen.h QtApplication/ToolService/Tool/Brush-like/Pen/penview.cpp QtApplication/ToolService/Tool/Brush-like/Pen/penview.h QtApplication/ToolService/Tool/Brush-like/Pen/penmodel.cpp QtApplication/ToolService/Tool/Brush-like/Pen/penmodel.h QtApplication/ToolService/ToolCategory/toolcategoryview.cpp QtApplication/ToolService/ToolCategory/toolcategoryview.h)
 
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(ImageEditor
@@ -76,12 +89,12 @@ if (WIN32)
                 "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/imageformats/")
 
         file(GLOB QT_IMAGE_FORMATS "${QT_INSTALL_PATH}/plugins/imageformats/*.dll")
-        foreach(CurrentHeaderFile IN LISTS QT_IMAGE_FORMATS)
+        foreach (CurrentHeaderFile IN LISTS QT_IMAGE_FORMATS)
             add_custom_command(
                     TARGET ${PROJECT_NAME} POST_BUILD
                     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CurrentHeaderFile}
                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/plugins/imageformats")
-        endforeach()
+        endforeach ()
     endif ()
     foreach (QT_LIB Core Gui Widgets)
         add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD

@@ -2,8 +2,8 @@
 #define IMAGEEDITOR_EDITORWINDOW_H
 
 #include "imageviewer.h"
-#include "toolbar.h"
-#include "tooldock.h"
+#include "ToolBar/toolbar.h"
+#include "ToolDock/tooldock.h"
 
 #include <QMainWindow>
 #include <QMenuBar>

@@ -9,6 +9,7 @@
 
 Q_LOGGING_CATEGORY(ui, "UI")
 Q_LOGGING_CATEGORY(service, "Service")
+Q_LOGGING_CATEGORY(toolService, "ToolService", QtInfoMsg)
 Q_LOGGING_CATEGORY(core, "Core")
 
 QString fileName;
@@ -19,7 +20,7 @@ void initLogger() {
     qInstallMessageHandler(messageHandler);
 }
 
-void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
+void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString& msg) {
     QString dirName = "logs";
     if (!QDir(dirName).exists())
         QDir().mkdir(dirName);
