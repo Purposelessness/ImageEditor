@@ -9,7 +9,6 @@ EditorWindow::EditorWindow(QWidget *parent) : QMainWindow(parent), imageViewer(n
     setCentralWidget(imageViewer);
     addToolBar(Qt::TopToolBarArea, toolBar);
     addDockWidget(Qt::RightDockWidgetArea, toolDock);
-
     createActions();
 }
 

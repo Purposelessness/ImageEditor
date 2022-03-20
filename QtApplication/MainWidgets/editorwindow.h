@@ -1,7 +1,7 @@
 #ifndef IMAGEEDITOR_EDITORWINDOW_H
 #define IMAGEEDITOR_EDITORWINDOW_H
 
-#include "imageviewer.h"
+#include "ImageViewer/imageviewer.h"
 #include "ToolBar/toolbar.h"
 #include "ToolDock/tooldock.h"
 

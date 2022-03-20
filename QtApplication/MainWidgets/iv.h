@@ -6,23 +6,19 @@
 #include <QLabel>
 #include <QImage>
 #include <QScrollArea>
-#include "ui_imageviewer.h"
+#include <QGuiApplication>
 
-class ImageViewer : public QMainWindow {
+class IV : public QMainWindow {
 Q_OBJECT
 
 public:
-    explicit ImageViewer(QWidget *parent = Q_NULLPTR);
-
-    ~ImageViewer() override;
+    explicit IV(QWidget *parent = Q_NULLPTR);
 
 private slots:
     void open();
     static void saveAs();
 
 private:
-    Ui::ImageViewer *ui;
-
     bool loadFile(const QString &fileName);
     void setImage(const QImage &newImage);
     void createActions();

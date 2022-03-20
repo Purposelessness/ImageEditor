@@ -1,14 +1,20 @@
 #ifndef IMAGEEDITOR_IMAGEVIEWER_H
 #define IMAGEEDITOR_IMAGEVIEWER_H
 
+#include "canvas.h"
+
 #include <QWidget>
+#include <QGridLayout>
+#include <QScrollArea>
 
 class ImageViewer : public QWidget {
 public:
     explicit ImageViewer(QWidget *parent = Q_NULLPTR);
 
 private:
-    void setBackgroundColor(QColor color);
+    Canvas *canvas;
+    QGridLayout *layout;
+    QScrollArea *scrollArea;
 };
 
 

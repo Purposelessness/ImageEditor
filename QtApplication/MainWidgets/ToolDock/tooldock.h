@@ -2,7 +2,6 @@
 #define IMAGEEDITOR_TOOLDOCK_H
 
 #include <QDockWidget>
-#include <QCloseEvent>
 
 #include "itooldock.h"
 
@@ -12,9 +11,6 @@ public:
 
     void setWidget(QWidget *widget) override;
     void setWindowTitle(const QString &title) override;
-
-private:
-    void setBackgroundColor(const QColor &color);
 };
 
 

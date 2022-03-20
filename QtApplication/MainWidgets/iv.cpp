@@ -10,10 +10,8 @@
 #include <QColorDialog>
 #include "iv.h"
 
-ImageViewer::ImageViewer(QWidget *parent) :
-        QMainWindow(parent), ui(new Ui::ImageViewer), imageLabel(new QLabel), scrollArea(new QScrollArea) {
-    ui->setupUi(this);
-
+IV::IV(QWidget *parent) :
+        QMainWindow(parent), imageLabel(new QLabel), scrollArea(new QScrollArea) {
     auto toolButton = new QToolButton(this);
     toolButton->setGeometry(50, 50, 100, 50);
     toolButton->setText(tr("QToolButton"));
@@ -42,15 +40,11 @@ ImageViewer::ImageViewer(QWidget *parent) :
     createActions();
 }
 
-ImageViewer::~ImageViewer() {
-    delete ui;
-}
-
-void ImageViewer::createMenus() {
+void IV::createMenus() {
     fileMenu = menuBar()->addMenu(tr("&File"));
 }
 
-void ImageViewer::createActions() {
+void IV::createActions() {
     openAct = fileMenu->addAction(tr("&Open"), this, SLOT(open()), QKeySequence::Open);
 
     saveAsAct = fileMenu->addAction(tr("&Save As"), this, SLOT(saveAs()),
@@ -58,7 +52,7 @@ void ImageViewer::createActions() {
     saveAsAct->setEnabled(false);
 }
 
-void ImageViewer::open() {
+void IV::open() {
     const QStringList picturesLocation = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open"),
                                                     picturesLocation.isEmpty() ? QDir::currentPath() : picturesLocation.last(),
@@ -67,11 +61,11 @@ void ImageViewer::open() {
         loadFile(fileName);
 }
 
-void ImageViewer::saveAs() {
+void IV::saveAs() {
     qDebug("Save As");
 }
 
-bool ImageViewer::loadFile(const QString &fileName) {
+bool IV::loadFile(const QString &fileName) {
     QImageReader reader(fileName);
     reader.setAutoTransform(true);
     const QImage newImage = reader.read();
@@ -88,7 +82,7 @@ bool ImageViewer::loadFile(const QString &fileName) {
     return true;
 }
 
-void ImageViewer::setImage(const QImage &newImage) {
+void IV::setImage(const QImage &newImage) {
     image = newImage;
     auto pixmap = new QPixmap(QPixmap::fromImage(newImage));
     image = pixmap->toImage();
