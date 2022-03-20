@@ -13,6 +13,8 @@ public:
     explicit EditorWindow(QWidget *parent = Q_NULLPTR);
 
 private:
+    void createActions();
+
     ImageViewer *imageViewer;
     ToolBar *toolBar;
     ToolDock *toolDock;

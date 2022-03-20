@@ -11,6 +11,7 @@ public:
     explicit ToolDock(QWidget *parent = Q_NULLPTR);
 
     void setWidget(QWidget *widget) override;
+    void setWindowTitle(const QString &title) override;
 
 private:
     void setBackgroundColor(const QColor &color);

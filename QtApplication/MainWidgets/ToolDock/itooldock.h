@@ -6,6 +6,7 @@
 class IToolDock {
 public:
     virtual void setWidget(QWidget *widget) = 0;
+    virtual void setWindowTitle(const QString& title) = 0;
 };
 
 
