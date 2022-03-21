@@ -8,6 +8,7 @@
 #include <QTextStream>
 
 Q_LOGGING_CATEGORY(ui, "UI")
+Q_LOGGING_CATEGORY(fileSystem, "FileSystem")
 Q_LOGGING_CATEGORY(service, "Service")
 Q_LOGGING_CATEGORY(toolService, "ToolService", QtInfoMsg)
 Q_LOGGING_CATEGORY(core, "Core")

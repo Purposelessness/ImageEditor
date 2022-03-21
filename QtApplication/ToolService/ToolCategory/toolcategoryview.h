@@ -10,7 +10,6 @@ public:
     explicit ToolCategoryView(const QString& name);
     explicit ToolCategoryView(const QString& name, const QIcon& icon);
 
-public:
     void addToolAction(QAction *action);
 
 private:

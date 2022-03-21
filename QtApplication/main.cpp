@@ -1,5 +1,6 @@
 #include "Logger/logger.h"
-#include "MainWidgets/editorwindow.h"
+#include "MainWidgets/EditorWindow/editorwindow.h"
+#include "MainWidgets/iv.h"
 #include "ToolService/toolservice.h"
 
 #include <QApplication>
@@ -9,6 +10,7 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     initLogger();
     EditorWindow w;
-    w.show();
+//    IV iv;
+//    iv.show();
     return QApplication::exec();
 }

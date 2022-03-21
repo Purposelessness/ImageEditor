@@ -2,7 +2,6 @@
 #include "../../Logger/logger.h"
 
 #include <QLabel>
-#include <QGuiApplication>
 #include <QToolButton>
 
 ToolCategoryView::ToolCategoryView(const QString& name) : ToolUnitView(name) {

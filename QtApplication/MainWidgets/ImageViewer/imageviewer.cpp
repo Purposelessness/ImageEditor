@@ -4,7 +4,11 @@ ImageViewer::ImageViewer(QWidget *parent) : QWidget(parent), canvas(new Canvas()
                                             scrollArea(new QScrollArea()) {
     layout->setContentsMargins(5, 5, 5, 5);
     scrollArea->setBackgroundRole(QPalette::Mid);
-    scrollArea->setWidget(canvas);
     scrollArea->setAlignment(Qt::AlignCenter);
+    scrollArea->setWidget(canvas);
     layout->addWidget(scrollArea);
+}
+
+void ImageViewer::setImage(const QImage& newImage) {
+    canvas->setImage(newImage);
 }

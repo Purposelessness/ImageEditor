@@ -8,10 +8,9 @@ class Canvas : public QWidget {
 public:
     explicit Canvas(QWidget *parent = Q_NULLPTR);
 
-private:
-    bool loadFile(const QString &fileName);
-    void setImage(const QImage &newImage);
+    void setImage(const QImage& newImage);
 
+private:
     QImage image;
     QLabel *imageLabel;
 };

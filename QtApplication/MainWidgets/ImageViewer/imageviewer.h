@@ -11,6 +11,8 @@ class ImageViewer : public QWidget {
 public:
     explicit ImageViewer(QWidget *parent = Q_NULLPTR);
 
+    void setImage(const QImage& newImage);
+
 private:
     Canvas *canvas;
     QGridLayout *layout;

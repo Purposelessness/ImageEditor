@@ -13,8 +13,6 @@ public:
 
 private:
     void bindToToolService();
-// TODO: unbind tool bar from service
-    void unbindFromToolService();
 };
 
 
