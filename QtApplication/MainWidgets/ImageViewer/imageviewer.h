@@ -1,7 +1,7 @@
 #ifndef IMAGEEDITOR_IMAGEVIEWER_H
 #define IMAGEEDITOR_IMAGEVIEWER_H
 
-#include "canvas.h"
+#include "imagecontainer.h"
 
 #include <QWidget>
 #include <QGridLayout>
@@ -14,7 +14,7 @@ public:
     void setImage(const QImage& newImage);
 
 private:
-    Canvas *canvas;
+    ImageContainer *imageContainer;
     QGridLayout *layout;
     QScrollArea *scrollArea;
 };
