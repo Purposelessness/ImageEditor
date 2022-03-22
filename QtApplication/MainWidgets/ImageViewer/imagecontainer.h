@@ -5,16 +5,21 @@
 
 #include <QWidget>
 #include <QLabel>
+#include <QResizeEvent>
 
 class ImageContainer : public QLabel, public ICanvas {
+Q_OBJECT
+
 public:
     explicit ImageContainer(QWidget *parent = Q_NULLPTR);
 
     void setImage(const QImage& newImage);
     void scale(float scaleFactor) override;
+    void adjustSize(const QSize& parentSize) override;
 
 private:
-    QImage image;
+    QPixmap originalPixmap;
+    QPixmap pixmap;
 };
 
 

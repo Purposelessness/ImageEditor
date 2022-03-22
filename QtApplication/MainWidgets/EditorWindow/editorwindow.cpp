@@ -30,11 +30,9 @@ void EditorWindow::openImage() {
 }
 
 void EditorWindow::loadImage(const QString& fileName) {
-    qInfo(core()) << "I'm on" << QThread::currentThread();
 // TODO: make read image by tiles with multithreading in ImageReader
     readFuture = QtConcurrent::run(ImageReader::loadImage, fileName);
     imageViewer->setImage(readFuture.result());
-    qInfo(core()) << "I'm still on" << QThread::currentThread();
 }
 
 void EditorWindow::saveImage() {

@@ -10,17 +10,21 @@ ImageContainer::ImageContainer(QWidget *parent) : QLabel(parent) {
 
 void ImageContainer::setImage(const QImage& newImage) {
     qDebug(ui()) << "Setting image with size" << newImage.size();
-    image = newImage;
+    originalPixmap = QPixmap::fromImage(newImage);
+    pixmap = originalPixmap;
 /*  Color space validity
     auto pixmap = new QPixmap(QPixmap::fromImage(newImage));
     image = pixmap->toImage();
     if (image.colorSpace().isValid())
     image.convertToColorSpace(QColorSpace::SRgb); */
-    setPixmap(QPixmap::fromImage(image));
-    adjustSize();
+    setPixmap(pixmap);
     resize(newImage.size());
 }
 
 void ImageContainer::scale(float scaleFactor) {
-    resize(scaleFactor * pixmap(Qt::ReturnByValue).size());
+    resize(scaleFactor * pixmap.size());
+}
+
+void ImageContainer::adjustSize(const QSize &parentSize) {
+
 }

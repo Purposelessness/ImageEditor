@@ -10,21 +10,13 @@ EditorWindowView::EditorWindowView(QWidget *parent) : QMainWindow(parent) {
 }
 
 void EditorWindowView::createActions() {
-    auto fileMenu = new QMenu(tr("&File"));
-    menuBar()->addMenu(fileMenu);
+    auto fileMenu = menuBar()->addMenu(tr("&File"));
 
-    auto open = new QAction(tr("&Open"));
-    connect(open, SIGNAL(triggered(bool)), this, SLOT(onOpenActionTriggered()));
-    fileMenu->addAction(open);
-
-    auto save = new QAction(tr("Save As"));
-    connect(save, SIGNAL(triggered(bool)), this, SLOT(onSaveActionTriggered()));
+    fileMenu->addAction(tr("&Open"), this, SLOT(onOpenActionTriggered()));
+    auto save = fileMenu->addAction(tr("Save As"), this, SLOT(onSaveActionTriggered()));
     save->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_S);
-    fileMenu->addAction(save);
 
-    auto showDock = new QAction(tr("&ToolDock"));
-    connect(showDock, SIGNAL(triggered(bool)), this, SLOT(onShowDockActionTriggered()));
-    menuBar()->addAction(showDock);
+    menuBar()->addAction(tr("&ToolDock"), this, SLOT(onShowDockActionTriggered()));
 }
 
 void EditorWindowView::onOpenActionTriggered() {
