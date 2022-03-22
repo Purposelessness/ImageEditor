@@ -3,10 +3,13 @@
 #include <QStandardPaths>
 #include <QDir>
 
-EditorWindowView::EditorWindowView(QWidget *parent) : QMainWindow(parent) {
+EditorWindowView::EditorWindowView(QWidget *parent) : QMainWindow(parent), imageViewer(new ImageViewer()),
+                                                      toolBar(new ToolBar()), toolDock(new ToolDock()) {
     resize(1200, 720);
     createActions();
-    show();
+    setCentralWidget(imageViewer->getView());
+    addToolBar(Qt::TopToolBarArea, toolBar);
+    addDockWidget(Qt::RightDockWidgetArea, toolDock);
 }
 
 void EditorWindowView::createActions() {

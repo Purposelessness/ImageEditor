@@ -1,10 +1,10 @@
 #ifndef IMAGEEDITOR_EDITORWINDOW_H
 #define IMAGEEDITOR_EDITORWINDOW_H
 
+#include "editorwindowview.h"
 #include "../ImageViewer/imageviewer.h"
 #include "../ToolBar/toolbar.h"
 #include "../ToolDock/tooldock.h"
-#include "editorwindowview.h"
 
 #include <QObject>
 #include <QFuture>
@@ -14,7 +14,7 @@ Q_OBJECT
 
 public:
     explicit EditorWindow(QWidget *parent = Q_NULLPTR);
-    ~EditorWindow();
+    ~EditorWindow() override;
 
 private slots:
     void openImage();

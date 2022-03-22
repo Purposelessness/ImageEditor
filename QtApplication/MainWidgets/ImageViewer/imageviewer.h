@@ -1,40 +1,19 @@
 #ifndef IMAGEEDITOR_IMAGEVIEWER_H
 #define IMAGEEDITOR_IMAGEVIEWER_H
 
-#include "imagecontainer.h"
+#include "imageviewerview.h"
 
-#include <QWidget>
-#include <QGridLayout>
-#include <QScrollArea>
-#include <QToolBar>
-#include <QPushButton>
-
-class ImageViewer : public QWidget {
-Q_OBJECT
-
+class ImageViewer {
 public:
     explicit ImageViewer(QWidget *parent = Q_NULLPTR);
 
     void setImage(const QImage& newImage);
     void scale(float factor);
-
-private slots:
-    void onZoomInActionTriggered();
-    void onZoomOutActionTriggered();
-    void onAdjustSizeActionTriggered();
+    ImageViewerView *getView();
 
 private:
-    void adjustScrollBar(QScrollBar *bar, float factor);
-    void createActions();
-    void setActionsEnabled(bool value);
-
-    QToolBar *toolBar;
-    QAction *zoomInAction;
-    QAction *zoomOutAction;
-    QAction *adjustSizeAction;
+    ImageViewerView *view;
     ImageContainer *imageContainer;
-    QGridLayout *layout;
-    QScrollArea *scrollArea;
     float scaleFactor = 1;
 };
 
