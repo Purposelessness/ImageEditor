@@ -2,7 +2,6 @@
 
 #include <QStandardPaths>
 #include <QDir>
-#include <QFileDialog>
 
 EditorWindowView::EditorWindowView(QWidget *parent) : QMainWindow(parent) {
     resize(1200, 720);
@@ -17,10 +16,12 @@ void EditorWindowView::createActions() {
     auto open = new QAction(tr("&Open"));
     connect(open, SIGNAL(triggered(bool)), this, SLOT(onOpenActionTriggered()));
     fileMenu->addAction(open);
+
     auto save = new QAction(tr("Save As"));
     connect(save, SIGNAL(triggered(bool)), this, SLOT(onSaveActionTriggered()));
     save->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_S);
     fileMenu->addAction(save);
+
     auto showDock = new QAction(tr("&ToolDock"));
     connect(showDock, SIGNAL(triggered(bool)), this, SLOT(onShowDockActionTriggered()));
     menuBar()->addAction(showDock);

@@ -5,6 +5,7 @@
 
 class ICanvas {
 public:
+    virtual void scale(float scaleFactor) = 0;
 };
 
 #endif //IMAGEEDITOR_ICANVAS_H

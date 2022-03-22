@@ -1,5 +1,5 @@
 #include "imagecontainer.h"
-#include "../../Logger/logger.h"
+#include "../../logger.h"
 
 #include <QColorSpace>
 
@@ -19,4 +19,8 @@ void ImageContainer::setImage(const QImage& newImage) {
     setPixmap(QPixmap::fromImage(image));
     adjustSize();
     resize(newImage.size());
+}
+
+void ImageContainer::scale(float scaleFactor) {
+    resize(scaleFactor * pixmap(Qt::ReturnByValue).size());
 }

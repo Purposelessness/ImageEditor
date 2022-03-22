@@ -1,25 +1,35 @@
 #ifndef IMAGEEDITOR_EDITORWINDOW_H
 #define IMAGEEDITOR_EDITORWINDOW_H
 
+#include "../ImageViewer/imageviewer.h"
+#include "../ToolBar/toolbar.h"
+#include "../ToolDock/tooldock.h"
 #include "editorwindowview.h"
-#include "editorwindowmodel.h"
 
 #include <QObject>
+#include <QFuture>
 
 class EditorWindow : QObject {
 Q_OBJECT
 
 public:
-    explicit EditorWindow(QWidget* parent = Q_NULLPTR);
+    explicit EditorWindow(QWidget *parent = Q_NULLPTR);
+    ~EditorWindow();
 
 private slots:
-    void onOpenFile();
-    void onSaveFile();
-    void onShowDock();
+    void openImage();
+    void loadImage(const QString& fileName);
+    void saveImage();
+    void showDock();
 
 private:
     EditorWindowView *view;
-    EditorWindowModel *model;
+
+    ImageViewer *imageViewer;
+    ToolBar *toolBar;
+    ToolDock *toolDock;
+
+    QFuture<QImage> readFuture;
 };
 
 

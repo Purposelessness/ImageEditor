@@ -14,6 +14,7 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS
         Core
         Gui
         Widgets
+        Concurrent
         REQUIRED
         )
 
@@ -21,6 +22,7 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
         Core
         Gui
         Widgets
+        Concurrent
         REQUIRED
         )
 
@@ -38,14 +40,17 @@ set(PROJECT_SOURCES
         QtApplication/MainWidgets/ToolBar/toolbar.h
         QtApplication/ToolService/toolservice.cpp
         QtApplication/ToolService/toolservice.h
-        QtApplication/Logger/logger.cpp
-        QtApplication/Logger/logger.h
+        QtApplication/Utility/Logger/logger.cpp
+        QtApplication/logger.h
         QtApplication/MainWidgets/ToolDock/itooldock.h
         QtApplication/MainWidgets/ToolBar/itoolbar.h
         QtApplication/ToolService/toolcontext.cpp
         QtApplication/ToolService/toolcontext.h
         QtApplication/ToolService/toolunit.h
-        QtApplication/ToolService/Tool/itoolmodel.h QtApplication/ToolService/toolunitview.cpp QtApplication/ToolService/toolunitview.h QtApplication/ToolService/toolunit.cpp QtApplication/ToolService/ToolCategory/toolcategory.cpp QtApplication/ToolService/ToolCategory/toolcategory.h QtApplication/ToolService/ToolCategory/toolcategorymodel.cpp QtApplication/ToolService/ToolCategory/toolcategorymodel.h QtApplication/ToolService/ToolCategory/BrushCategory/brushcategory.cpp QtApplication/ToolService/ToolCategory/BrushCategory/brushcategory.h QtApplication/ToolService/ToolCategory/BrushCategory/brushcategorymodel.cpp QtApplication/ToolService/ToolCategory/BrushCategory/brushcategorymodel.h QtApplication/ToolService/ToolCategory/BrushCategory/brushcategoryview.cpp QtApplication/ToolService/ToolCategory/BrushCategory/brushcategoryview.h QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategory.cpp QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategory.h QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategoryview.cpp QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategoryview.h QtApplication/ToolService/Tool/Brush-like/Brush/brush.cpp QtApplication/ToolService/Tool/Brush-like/Brush/brush.h QtApplication/ToolService/Tool/Brush-like/Brush/brushview.cpp QtApplication/ToolService/Tool/Brush-like/Brush/brushview.h QtApplication/ToolService/Tool/Brush-like/Brush/brushmodel.cpp QtApplication/ToolService/Tool/Brush-like/Brush/brushmodel.h QtApplication/ToolService/Tool/tool.cpp QtApplication/ToolService/Tool/tool.h QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategorymodel.cpp QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategorymodel.h QtApplication/ToolService/Tool/Brush-like/Pen/pen.cpp QtApplication/ToolService/Tool/Brush-like/Pen/pen.h QtApplication/ToolService/Tool/Brush-like/Pen/penview.cpp QtApplication/ToolService/Tool/Brush-like/Pen/penview.h QtApplication/ToolService/Tool/Brush-like/Pen/penmodel.cpp QtApplication/ToolService/Tool/Brush-like/Pen/penmodel.h QtApplication/ToolService/ToolCategory/toolcategoryview.cpp QtApplication/ToolService/ToolCategory/toolcategoryview.h QtApplication/MainWidgets/ImageViewer/imagecontainer.cpp QtApplication/MainWidgets/ImageViewer/imagecontainer.h QtApplication/MainWidgets/EditorWindow/editorwindow.cpp QtApplication/MainWidgets/EditorWindow/editorwindow.h QtApplication/MainWidgets/EditorWindow/editorwindowmodel.cpp QtApplication/MainWidgets/EditorWindow/editorwindowmodel.h QtApplication/MainWidgets/ImageViewer/icanvas.h)
+        QtApplication/ToolService/Tool/itoolmodel.h
+        QtApplication/ToolService/toolunitview.cpp
+        QtApplication/ToolService/toolunitview.h
+        QtApplication/ToolService/toolunit.cpp QtApplication/ToolService/ToolCategory/toolcategory.cpp QtApplication/ToolService/ToolCategory/toolcategory.h QtApplication/ToolService/ToolCategory/toolcategorymodel.cpp QtApplication/ToolService/ToolCategory/toolcategorymodel.h QtApplication/ToolService/ToolCategory/BrushCategory/brushcategory.cpp QtApplication/ToolService/ToolCategory/BrushCategory/brushcategory.h QtApplication/ToolService/ToolCategory/BrushCategory/brushcategorymodel.cpp QtApplication/ToolService/ToolCategory/BrushCategory/brushcategorymodel.h QtApplication/ToolService/ToolCategory/BrushCategory/brushcategoryview.cpp QtApplication/ToolService/ToolCategory/BrushCategory/brushcategoryview.h QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategory.cpp QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategory.h QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategoryview.cpp QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategoryview.h QtApplication/ToolService/Tool/Brush-like/Brush/brush.cpp QtApplication/ToolService/Tool/Brush-like/Brush/brush.h QtApplication/ToolService/Tool/Brush-like/Brush/brushview.cpp QtApplication/ToolService/Tool/Brush-like/Brush/brushview.h QtApplication/ToolService/Tool/Brush-like/Brush/brushmodel.cpp QtApplication/ToolService/Tool/Brush-like/Brush/brushmodel.h QtApplication/ToolService/Tool/tool.cpp QtApplication/ToolService/Tool/tool.h QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategorymodel.cpp QtApplication/ToolService/ToolCategory/ShapeCategory/shapecategorymodel.h QtApplication/ToolService/Tool/Brush-like/Pen/pen.cpp QtApplication/ToolService/Tool/Brush-like/Pen/pen.h QtApplication/ToolService/Tool/Brush-like/Pen/penview.cpp QtApplication/ToolService/Tool/Brush-like/Pen/penview.h QtApplication/ToolService/Tool/Brush-like/Pen/penmodel.cpp QtApplication/ToolService/Tool/Brush-like/Pen/penmodel.h QtApplication/ToolService/ToolCategory/toolcategoryview.cpp QtApplication/ToolService/ToolCategory/toolcategoryview.h QtApplication/MainWidgets/ImageViewer/imagecontainer.cpp QtApplication/MainWidgets/ImageViewer/imagecontainer.h QtApplication/MainWidgets/ImageViewer/icanvas.h QtApplication/MainWidgets/EditorWindow/editorwindow.cpp QtApplication/Utility/ImageReader/imagereader.cpp QtApplication/Utility/ImageReader/imagereader.h QtApplication/Utility/imageio.h QtApplication/Utility/ImageWriter/imagewriter.cpp QtApplication/Utility/ImageWriter/imagewriter.h QtApplication/MainWidgets/EditorWindow/editorwindow.h)
 
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(ImageEditor
@@ -62,6 +67,7 @@ target_link_libraries(ImageEditor PRIVATE
         Qt::Core
         Qt::Gui
         Qt::Widgets
+        Qt::Concurrent
         )
 
 if (QT_VERSION_MAJOR EQUAL 6)

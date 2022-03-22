@@ -1,5 +1,5 @@
 #include "toolcontext.h"
-#include "../Logger/logger.h"
+#include "../logger.h"
 
 void ToolContext::setTool(const QString &name) {
     if (!tools.contains(name)) {

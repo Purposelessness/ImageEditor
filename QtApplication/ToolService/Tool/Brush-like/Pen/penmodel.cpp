@@ -1,7 +1,7 @@
 #include "penmodel.h"
 
 #include <QDebug>
-#include "../../../../Logger/logger.h"
+#include "../../../../logger.h"
 
 void PenModel::use() {
     qDebug(core()) << "Using the pen";

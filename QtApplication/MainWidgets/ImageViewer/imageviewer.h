@@ -12,11 +12,15 @@ public:
     explicit ImageViewer(QWidget *parent = Q_NULLPTR);
 
     void setImage(const QImage& newImage);
+    void scale(float factor);
 
 private:
+    void adjustScrollBar(QScrollBar *bar, float factor);
+
     ImageContainer *imageContainer;
     QGridLayout *layout;
     QScrollArea *scrollArea;
+    float scaleFactor = 1;
 };
 
 
