@@ -14,7 +14,7 @@ public:
     explicit ImageContainer(QWidget *parent = Q_NULLPTR);
 
     void setImage(const QImage& newImage);
-    void scale(float scaleFactor) override;
+    void scale(float scaleValue) override;
     void adjustSize(const QSize& parentSize) override;
 
 private:

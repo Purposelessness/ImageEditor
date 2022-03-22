@@ -21,8 +21,8 @@ void ImageContainer::setImage(const QImage& newImage) {
     resize(newImage.size());
 }
 
-void ImageContainer::scale(float scaleFactor) {
-    resize(scaleFactor * pixmap.size());
+void ImageContainer::scale(float scaleValue) {
+    resize(scaleValue * pixmap.size());
 }
 
 void ImageContainer::adjustSize(const QSize &parentSize) {

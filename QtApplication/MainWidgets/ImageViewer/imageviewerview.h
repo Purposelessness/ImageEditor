@@ -7,7 +7,7 @@
 #include <QGridLayout>
 #include <QScrollArea>
 #include <QToolBar>
-#include <QPushButton>
+#include <QSlider>
 
 class ImageViewer;
 
@@ -23,21 +23,24 @@ signals:
     void zoomInActionTriggered();
     void zoomOutActionTriggered();
     void adjustSizeActionTriggered();
+    void sliderValueChanged(int value);
 
 private slots:
     void onZoomInActionTriggered();
     void onZoomOutActionTriggered();
     void onAdjustSizeActionTriggered();
+    void onSliderValueChanged(int value);
 
 private:
     void createActions();
     void setActionsEnabled(bool value);
 
     QToolBar *toolBar;
+    ImageContainer *imageContainer;
     QAction *zoomInAction;
     QAction *zoomOutAction;
     QAction *adjustSizeAction;
-    ImageContainer *imageContainer;
+    QSlider *slider;
     QGridLayout *layout;
     QScrollArea *scrollArea;
 };

@@ -1,6 +1,6 @@
 #include "imageviewerview.h"
 
-ImageViewerView::ImageViewerView(QWidget *parent) : QWidget(parent), toolBar(new QToolBar()),
+ImageViewerView::ImageViewerView(QWidget *parent) : QWidget(parent), toolBar(new QToolBar()), slider(new QSlider(Qt::Horizontal)),
                                                     imageContainer(new ImageContainer()), layout(new QGridLayout(this)),
                                                     scrollArea(new QScrollArea()) {
     createActions();
@@ -16,6 +16,11 @@ void ImageViewerView::createActions() {
     zoomInAction = toolBar->addAction(tr("ZoomIn"), this, SLOT(onZoomInActionTriggered()));
     zoomInAction->setShortcut(QKeySequence::ZoomIn);
 
+    slider->setRange(0, 100);
+    slider->setValue(50);
+    connect(slider, SIGNAL(valueChanged(int)), this, SLOT(onSliderValueChanged(int)));
+    toolBar->addWidget(slider);
+
     zoomOutAction = toolBar->addAction(tr("ZoomOut"), this, SLOT(onZoomOutActionTriggered()));
     zoomOutAction->setShortcut(QKeySequence::ZoomOut);
 
@@ -28,6 +33,7 @@ void ImageViewerView::createActions() {
 void ImageViewerView::setActionsEnabled(bool value) {
     for (auto action : toolBar->actions())
         action->setEnabled(value);
+    slider->setEnabled(value);
 }
 
 void ImageViewerView::onZoomInActionTriggered() {
@@ -40,4 +46,8 @@ void ImageViewerView::onZoomOutActionTriggered() {
 
 void ImageViewerView::onAdjustSizeActionTriggered() {
     emit adjustSizeActionTriggered();
+}
+
+void ImageViewerView::onSliderValueChanged(int value) {
+    emit sliderValueChanged(value);
 }
