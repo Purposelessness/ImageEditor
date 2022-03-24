@@ -34,6 +34,7 @@ private:
     void createActions();
     void setActionsEnabled(bool value);
     void setSliderValue(int value);
+    void resetScaleValue();
 
     QToolBar *toolBar;
     ImageContainer *imageContainer;

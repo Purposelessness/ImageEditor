@@ -16,11 +16,14 @@ public:
 
 private slots:
     void adjustSize();
-    void setScaleValue(int value);
+    void setScaleValue(int sliderValue);
 
 private:
+    void scaleView(float scaleFactor);
     void scaleImage(int newScaleValue);
     static void adjustScrollBar(QScrollBar *scrollBar, float scaleFactor);
+    void resetScaleValue();
+    void syncSlider();
 
     ImageViewerView *view;
     ImageContainer *imageContainer;

@@ -43,6 +43,10 @@ void ImageViewerView::setSliderValue(int value) {
     slider->setValue(value);
 }
 
+void ImageViewerView::resetScaleValue() {
+    setSliderValue(sliderMaxValue / 2);
+}
+
 void ImageViewerView::onZoomOutActionTriggered() {
     setSliderValue(slider->value() - zoomStep);
 }
