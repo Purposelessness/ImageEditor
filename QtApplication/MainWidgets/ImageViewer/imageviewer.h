@@ -3,6 +3,8 @@
 
 #include "imageviewerview.h"
 
+#include <QScrollBar>
+
 class ImageViewer : QObject {
 Q_OBJECT
 
@@ -13,18 +15,19 @@ public:
     ImageViewerView *getView();
 
 private slots:
-    void zoomIn();
-    void zoomOut();
     void adjustSize();
     void setScaleValue(int value);
 
 private:
-    void scaleImage();
+    void scaleImage(int newScaleValue);
+    static void adjustScrollBar(QScrollBar *scrollBar, float scaleFactor);
 
     ImageViewerView *view;
     ImageContainer *imageContainer;
-    float scaleValues[10];
-    float scaleValue = 1;
+
+    const int defaultScale, minScale, maxScale;
+    const int sliderMaxValue, sliderDefaultValue;
+    int scaleValue;
 };
 
 

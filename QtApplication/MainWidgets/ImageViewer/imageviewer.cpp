@@ -1,8 +1,10 @@
 #include "imageviewer.h"
+#include "../../logger.h"
 
-ImageViewer::ImageViewer(QWidget *parent) : view(new ImageViewerView(parent)), imageContainer(view->imageContainer) {
-    connect(view, SIGNAL(zoomInActionTriggered()), this, SLOT(zoomIn()));
-    connect(view, SIGNAL(zoomOutActionTriggered()), this, SLOT(zoomOut()));
+ImageViewer::ImageViewer(QWidget *parent) : view(new ImageViewerView(parent)), imageContainer(view->imageContainer),
+                                            minScale(view->minScale), maxScale(view->maxScale),
+                                            defaultScale(view->defaultScale), scaleValue(defaultScale),
+                                            sliderDefaultValue(sliderMaxValue / 2), sliderMaxValue(view->sliderMaxValue) {
     connect(view, SIGNAL(adjustSizeActionTriggered()), this, SLOT(adjustSize()));
     connect(view, SIGNAL(sliderValueChanged(int)), this, SLOT(setScaleValue(int)));
 }
@@ -16,47 +18,28 @@ ImageViewerView *ImageViewer::getView() {
     return view;
 }
 
-void ImageViewer::scaleImage() {
-    imageContainer->scale(scaleValue);
-    qDebug() << scaleValue;
+void ImageViewer::scaleImage(int newScaleValue) {
+    imageContainer->scale((float) newScaleValue / 100);
 }
 
-void ImageViewer::zoomIn() {
-    if (scaleValue < .25)
-        scaleValue = .25;
-    else if (scaleValue < .5)
-        scaleValue = .5;
-    else if (scaleValue < 1)
-        scaleValue = 1;
-    else
-        scaleValue += .5;
-    scaleImage();
-}
-
-void ImageViewer::zoomOut() {
-    if (scaleValue <= .25)
-        scaleValue = .1;
-    else if (scaleValue <= .5)
-        scaleValue = .25;
-    else if (scaleValue <= 1)
-        scaleValue = .5;
-    else
-        scaleValue -= .25;
-    scaleImage();
+void ImageViewer::adjustScrollBar(QScrollBar *scrollBar, float scaleFactor) {
+    scrollBar->setValue(int(scaleFactor * (float) scrollBar->value()
+                            + ((scaleFactor - 1) * (float) scrollBar->pageStep() / 2)));
 }
 
 void ImageViewer::setScaleValue(int value) {
-    if (value == 0)
-        scaleValue = 0.1;
-    else if (value <= 25)
-        scaleValue = 0.5;
-    else if (value >= 75)
-        scaleValue = 5;
-    else if (value == 100)
-        scaleValue = 10;
-    else
-        scaleValue = 1;
-    scaleImage();
+    int oldScaleValue = scaleValue;
+    if (value > sliderDefaultValue) {
+        scaleValue = defaultScale + (value - sliderDefaultValue) * (maxScale - defaultScale) / 100;
+    } else {
+        scaleValue = minScale + value * (defaultScale - minScale) / 100;
+    }
+    view->slider->setToolTip(QString("%1").arg(scaleValue));
+    scaleImage(scaleValue);
+    float scaleFactor = (float) scaleValue / (float) oldScaleValue;
+    adjustScrollBar(view->scrollArea->horizontalScrollBar(), scaleFactor);
+    adjustScrollBar(view->scrollArea->verticalScrollBar(), scaleFactor);
+    qDebug(ui()) << "Scaling image:" << scaleValue << "%";
 }
 
 void ImageViewer::adjustSize() {

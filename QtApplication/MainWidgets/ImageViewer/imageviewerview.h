@@ -8,6 +8,7 @@
 #include <QScrollArea>
 #include <QToolBar>
 #include <QSlider>
+#include <QLineEdit>
 
 class ImageViewer;
 
@@ -20,8 +21,6 @@ public:
     explicit ImageViewerView(QWidget *parent = Q_NULLPTR);
 
 signals:
-    void zoomInActionTriggered();
-    void zoomOutActionTriggered();
     void adjustSizeActionTriggered();
     void sliderValueChanged(int value);
 
@@ -34,6 +33,7 @@ private slots:
 private:
     void createActions();
     void setActionsEnabled(bool value);
+    void setSliderValue(int value);
 
     QToolBar *toolBar;
     ImageContainer *imageContainer;
@@ -43,6 +43,10 @@ private:
     QSlider *slider;
     QGridLayout *layout;
     QScrollArea *scrollArea;
+
+    const int defaultScale = 100, minScale = 10, maxScale = 500;
+    const int sliderMinValue = 0, sliderMaxValue = 200;
+    const int zoomStep = sliderMaxValue / 10;
 };
 
 
