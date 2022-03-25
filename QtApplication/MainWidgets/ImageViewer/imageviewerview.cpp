@@ -1,5 +1,6 @@
-#include <QIntValidator>
 #include "imageviewerview.h"
+
+#include <QIntValidator>
 
 ImageViewerView::ImageViewerView(QWidget *parent) : QWidget(parent), toolBar(new QToolBar()),
                                                     slider(new QSlider(Qt::Horizontal)),

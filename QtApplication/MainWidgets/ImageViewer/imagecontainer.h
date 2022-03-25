@@ -15,7 +15,6 @@ public:
 
     void setImage(const QImage& newImage);
     void scale(float scaleValue) override;
-    void adjustSize(const QSize& parentSize) override;
 
 private:
     QPixmap originalPixmap;

@@ -1,7 +1,7 @@
 #include "imageviewer.h"
+#include "../../logger.h"
 
 #include <cmath>
-#include "../../logger.h"
 
 ImageViewer::ImageViewer(QWidget *parent) : view(new ImageViewerView(parent)), imageContainer(view->imageContainer),
                                             minScale(view->minScale), maxScale(view->maxScale),
