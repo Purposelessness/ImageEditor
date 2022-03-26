@@ -16,6 +16,7 @@ void ImageViewer::setImage(const QImage& newImage) {
     imageContainer->setImage(newImage);
     view->setActionsEnabled(true);
     resetScaleValue();
+    adjustSize();
 }
 
 ImageViewerView *ImageViewer::getView() {

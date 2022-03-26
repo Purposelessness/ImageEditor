@@ -6,8 +6,7 @@
 #include <QStandardPaths>
 #include <QFileDialog>
 
-EditorWindow::EditorWindow(QWidget *parent) : view(new EditorWindowView(parent)), toolBar(view->toolBar),
-                                              toolDock(view->toolDock), imageViewer(view->imageViewer) {
+EditorWindow::EditorWindow(QWidget *parent) : view(new EditorWindowView(parent)) {
     connect(view, SIGNAL(openActionTriggered()), this, SLOT(openImage()));
     connect(view, SIGNAL(saveActionTriggered()), this, SLOT(saveImage()));
     connect(view, SIGNAL(showDockActionTriggered()), this, SLOT(showDock()));
@@ -28,7 +27,7 @@ void EditorWindow::openImage() {
 void EditorWindow::loadImage(const QString &fileName) {
 // TODO: make read image by tiles with multithreading in ImageReader
     readFuture = QtConcurrent::run(ImageReader::loadImage, fileName);
-    imageViewer->setImage(readFuture.result());
+    view->imageViewer->setImage(readFuture.result());
 }
 
 void EditorWindow::saveImage() {
@@ -36,7 +35,7 @@ void EditorWindow::saveImage() {
 }
 
 void EditorWindow::showDock() {
-    toolDock->show();
+    view->toolDock->show();
 }
 
 EditorWindow::~EditorWindow() {

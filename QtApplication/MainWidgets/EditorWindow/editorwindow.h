@@ -25,10 +25,6 @@ private slots:
 private:
     EditorWindowView *view;
 
-    ImageViewer *imageViewer;
-    ToolBar *toolBar;
-    ToolDock *toolDock;
-
     QFuture<QImage> readFuture;
 };
 
