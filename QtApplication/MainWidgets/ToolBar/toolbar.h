@@ -7,7 +7,7 @@
 
 class ToolBar : public QToolBar, IToolBar {
 public:
-    explicit ToolBar(QWidget *parent = Q_NULLPTR);
+    explicit ToolBar(QWidget *parent = nullptr);
 
     void addAction(QAction *action) override;
 

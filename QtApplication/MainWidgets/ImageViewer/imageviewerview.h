@@ -18,7 +18,7 @@ Q_OBJECT
     friend ImageViewer;
 
 public:
-    explicit ImageViewerView(QWidget *parent = Q_NULLPTR);
+    explicit ImageViewerView(QWidget *parent = nullptr);
 
 signals:
     void adjustSizeActionTriggered();

@@ -16,7 +16,7 @@ Q_OBJECT
     friend EditorWindow;
 
 public:
-    explicit EditorWindowView(QWidget *parent = Q_NULLPTR);
+    explicit EditorWindowView(QWidget *parent = nullptr);
 
 signals:
     void openActionTriggered();

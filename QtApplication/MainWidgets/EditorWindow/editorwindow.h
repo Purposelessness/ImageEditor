@@ -13,7 +13,7 @@ class EditorWindow : QObject {
 Q_OBJECT
 
 public:
-    explicit EditorWindow(QWidget *parent = Q_NULLPTR);
+    explicit EditorWindow(QWidget *parent = nullptr);
     ~EditorWindow() override;
 
 private slots:

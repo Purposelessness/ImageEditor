@@ -28,8 +28,6 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
 
 set(PROJECT_SOURCES
         QtApplication/main.cpp
-        QtApplication/MainWidgets/iv.h
-        QtApplication/MainWidgets/iv.cpp
         QtApplication/MainWidgets/EditorWindow/editorwindowview.cpp
         QtApplication/MainWidgets/EditorWindow/editorwindowview.h
         QtApplication/MainWidgets/ToolDock/tooldock.cpp

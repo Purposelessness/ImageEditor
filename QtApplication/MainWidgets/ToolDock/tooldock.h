@@ -7,7 +7,7 @@
 
 class ToolDock : public QDockWidget, IToolDock {
 public:
-    explicit ToolDock(QWidget *parent = Q_NULLPTR);
+    explicit ToolDock(QWidget *parent = nullptr);
 
     void setWidget(QWidget *widget) override;
     void setWindowTitle(const QString &title) override;

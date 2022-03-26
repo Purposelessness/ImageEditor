@@ -9,7 +9,7 @@ class ImageViewer : QObject {
 Q_OBJECT
 
 public:
-    explicit ImageViewer(QWidget *parent = Q_NULLPTR);
+    explicit ImageViewer(QWidget *parent = nullptr);
 
     void setImage(const QImage& newImage);
     ImageViewerView *getView();
