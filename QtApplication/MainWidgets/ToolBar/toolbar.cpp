@@ -1,5 +1,5 @@
 #include "toolbar.h"
-#include "../../ToolService/toolservice.h"
+#include "../../Service/ToolService/toolservice.h"
 
 #include <QSizePolicy>
 

@@ -1,7 +1,6 @@
 #include "logger.h"
 #include "MainWidgets/EditorWindow/editorwindow.h"
-#include "MainWidgets/iv.h"
-#include "ToolService/toolservice.h"
+//#include "MainWidgets/iv.h"
 
 #include <QApplication>
 

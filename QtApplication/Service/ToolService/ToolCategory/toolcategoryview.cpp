@@ -1,5 +1,5 @@
 #include "toolcategoryview.h"
-#include "../../logger.h"
+#include "../../../logger.h"
 
 #include <QLabel>
 #include <QToolButton>

@@ -2,6 +2,7 @@
 #include "../../logger.h"
 
 #include <QColorSpace>
+#include <QPainter>
 
 ImageContainer::ImageContainer(QWidget *parent) : QLabel(parent) {
     setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);

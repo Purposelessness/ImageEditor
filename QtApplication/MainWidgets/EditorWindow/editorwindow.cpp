@@ -1,6 +1,6 @@
 #include "editorwindow.h"
 #include "../../logger.h"
-#include "../../Utility/imageio.h"
+#include "../../Service/imageio.h"
 
 #include <QtConcurrent>
 #include <QStandardPaths>

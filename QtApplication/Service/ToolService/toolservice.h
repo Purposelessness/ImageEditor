@@ -4,8 +4,8 @@
 #define IMAGEEDITOR_TOOLSERVICE_H
 
 #include "toolcontext.h"
-#include "../MainWidgets/ToolBar/itoolbar.h"
-#include "../MainWidgets/ToolDock/itooldock.h"
+#include "../../MainWidgets/ToolBar/itoolbar.h"
+#include "../../MainWidgets/ToolDock/itooldock.h"
 
 #include <QString>
 #include "QHash"

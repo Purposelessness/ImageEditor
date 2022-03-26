@@ -1,5 +1,5 @@
 #include "toolcategorymodel.h"
-#include "../../logger.h"
+#include "../../../logger.h"
 
 QWidget *ToolCategoryModel::getCurrentToolWidget() {
     return currentToolWidget;

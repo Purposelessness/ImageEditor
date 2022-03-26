@@ -1,5 +1,5 @@
 #include "toolservice.h"
-#include "../logger.h"
+#include "../../logger.h"
 #include "ToolCategory/BrushCategory/brushcategory.h"
 #include "ToolCategory/ShapeCategory/shapecategory.h"
 

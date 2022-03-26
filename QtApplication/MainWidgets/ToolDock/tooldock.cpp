@@ -1,5 +1,5 @@
 #include "tooldock.h"
-#include "../../ToolService/toolservice.h"
+#include "../../Service/ToolService/toolservice.h"
 
 ToolDock::ToolDock(QWidget *parent) : QDockWidget(parent) {
     setMinimumWidth(320);
