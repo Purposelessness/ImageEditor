@@ -2,21 +2,27 @@
 #include "../../logger.h"
 
 #include <QColorSpace>
+#include <QMouseEvent>
 
 ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(new QGraphicsScene),
-                                                  pixmapItem(nullptr) {
+                                                  pixmapItem(nullptr), painter(Painter(scene)) {
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setViewportMargins(-2, -2, -2, -2);
     setBackgroundRole(QPalette::Mid);
+
+    connect(this, SIGNAL(mousePressed(const QPoint&)), &painter, SLOT(onMousePressed(const QPoint&)));
+    connect(this, SIGNAL(mouseMoved(const QPoint&)), &painter, SLOT(onMouseMoved(const QPoint&)));
+    connect(this, SIGNAL(mouseReleased(const QPoint&)), &painter, SLOT(onMouseReleased(const QPoint&)));
+    connect(&painter, SIGNAL(drawingFinished(QGraphicsItem*)), this, SLOT(onDrawingFinished(QGraphicsItem*)));
+
     setScene(scene);
 }
 
-void ImageContainer::setImage(const QImage &newImage) {
+void ImageContainer::setImage(const QImage& newImage) {
     scaleValue = 1;
     qDebug(ui()) << "Setting image with size" << newImage.size();
-    originalPixmap = QPixmap::fromImage(newImage);
-    pixmap = originalPixmap;
+    pixmap = QPixmap::fromImage(newImage);
 /*  Color space validity
     auto pixmap = new QPixmap(QPixmap::fromImage(newImage));
     image = pixmap->toImage();
@@ -39,4 +45,32 @@ void ImageContainer::resizeEvent(QResizeEvent *event) {
         pixmapItem->setScale(scaleValue);
     setSceneRect(contentsRect());
     QGraphicsView::resizeEvent(event);
+}
+
+void ImageContainer::mousePressEvent(QMouseEvent *event) {
+    emit mousePressed(event->pos());
+    QGraphicsView::mousePressEvent(event);
+}
+
+void ImageContainer::mouseMoveEvent(QMouseEvent *event) {
+    emit mouseMoved(event->pos());
+    QGraphicsView::mouseMoveEvent(event);
+}
+
+void ImageContainer::mouseReleaseEvent(QMouseEvent *event) {
+    emit mouseReleased(event->pos());
+    QGraphicsView::mouseReleaseEvent(event);
+}
+
+void ImageContainer::onDrawingFinished(QGraphicsItem *item) {
+    bool ok = true;
+    auto transform = item->itemTransform(pixmapItem, &ok);
+    if (!ok) {
+        // TODO: error handling
+        delete item;
+        qCritical(ui()) << "Cannot transform graphics item to pixmap item";
+        return;
+    }
+    item->setParentItem(pixmapItem);
+    item->setTransform(transform);
 }
