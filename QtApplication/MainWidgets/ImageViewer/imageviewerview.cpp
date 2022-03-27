@@ -1,4 +1,5 @@
 #include "imageviewerview.h"
+#include "../../Service/UndoService/undoservice.h"
 
 #include <QIntValidator>
 
@@ -33,6 +34,9 @@ void ImageViewerView::createActions() {
 
     adjustSizeAction = toolBar->addAction(tr("AdjustSize"), this, SLOT(onAdjustSizeActionTriggered()));
     adjustSizeAction->setShortcut(Qt::CTRL | Qt::Key_Equal);
+
+    toolBar->addAction(UndoService::getInstance().getUndoAction());
+    toolBar->addAction(UndoService::getInstance().getRedoAction());
 }
 
 void ImageViewerView::setActionsEnabled(bool value) {

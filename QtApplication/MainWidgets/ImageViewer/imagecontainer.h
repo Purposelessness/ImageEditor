@@ -1,12 +1,13 @@
 #ifndef IMAGEEDITOR_IMAGECONTAINER_H
 #define IMAGEEDITOR_IMAGECONTAINER_H
 
+#include "igraphicsview.h"
 #include "../../Service/Painter/painter.h"
 
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 
-class ImageContainer : public QGraphicsView {
+class ImageContainer : public QGraphicsView, public IGraphicsView {
 Q_OBJECT
 
 public:
@@ -14,6 +15,9 @@ public:
 
     void setImage(const QImage& newImage);
     void scale(float newScaleValue);
+
+    void addItem(QGraphicsItem *item) override;
+    QGraphicsScene *getScene() override;
 
 signals:
     void mousePressed(const QPoint& mousePos);

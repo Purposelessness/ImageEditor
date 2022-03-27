@@ -1,11 +1,12 @@
 #include "imagecontainer.h"
 #include "../../logger.h"
+#include "../../Service/UndoService/undoservice.h"
 
 #include <QColorSpace>
 #include <QMouseEvent>
 
 ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(new QGraphicsScene),
-                                                  pixmapItem(nullptr), painter(Painter(scene)) {
+                                                  pixmapItem(nullptr), painter(Painter(this)) {
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setViewportMargins(-2, -2, -2, -2);
@@ -73,4 +74,13 @@ void ImageContainer::onDrawingFinished(QGraphicsItem *item) {
     }
     item->setParentItem(pixmapItem);
     item->setTransform(transform);
+}
+
+void ImageContainer::addItem(QGraphicsItem *item) {
+    scene->addItem(item);
+    onDrawingFinished(item);
+}
+
+QGraphicsScene *ImageContainer::getScene() {
+    return scene;
 }

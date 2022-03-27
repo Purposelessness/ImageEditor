@@ -1,8 +1,9 @@
 #include "painter.h"
+#include "../UndoService/Command/additemcommand.h"
 
-#include <QGraphicsEllipseItem>
-
-Painter::Painter(QGraphicsScene *scene) : scene(scene), defaultPen(Qt::black), defaultBrush(Qt::blue), ellipseItem(nullptr) {}
+Painter::Painter(IGraphicsView *graphicsView) : scene(graphicsView->getScene()), graphicsView(graphicsView),
+                                                defaultPen(Qt::black), defaultBrush(Qt::blue),
+                                                ellipseItem(nullptr) {}
 
 void Painter::onMousePressed(const QPoint& mousePos) {
     if (isDrawing)
@@ -12,7 +13,6 @@ void Painter::onMousePressed(const QPoint& mousePos) {
     auto rect = QRectF(x, y, 0, 0);
     ellipseItem = scene->addEllipse(rect, defaultPen, defaultBrush);
     isDrawing = true;
-    qDebug() << "Pressed";
 }
 
 void Painter::onMouseMoved(const QPoint& mousePos) {
@@ -23,10 +23,10 @@ void Painter::onMouseMoved(const QPoint& mousePos) {
 }
 
 void Painter::onMouseReleased(const QPoint& mousePos) {
-    qDebug() << "Released";
     isDrawing = false;
     auto rect = QRectF(x, y, mousePos.x() - x, mousePos.y() - y);
     ellipseItem->setRect(rect);
+    new AddItemCommand(ellipseItem);
     emit drawingFinished(ellipseItem);
     ellipseItem = nullptr;
 }

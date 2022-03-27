@@ -1,6 +1,8 @@
 #ifndef IMAGEEDITOR_PAINTER_H
 #define IMAGEEDITOR_PAINTER_H
 
+#include "../../MainWidgets/ImageViewer/igraphicsview.h"
+
 #include <QGraphicsScene>
 #include <QPen>
 #include <QBrush>
@@ -9,7 +11,7 @@ class Painter : public QObject {
 Q_OBJECT
 
 public:
-    explicit Painter(QGraphicsScene *scene);
+    explicit Painter(IGraphicsView *graphicsView);
 
 signals:
     void drawingFinished(QGraphicsItem *item);
@@ -21,6 +23,7 @@ public slots:
 
 private:
     QGraphicsScene *scene;
+    IGraphicsView *graphicsView;
     QGraphicsEllipseItem *ellipseItem;
     QPen defaultPen;
     QBrush defaultBrush;
