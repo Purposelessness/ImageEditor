@@ -4,10 +4,12 @@
 #define IMAGEEDITOR_UNDOSERVICE_H
 
 #include <QUndoStack>
+#include <QAction>
 
 class UndoService : public QUndoStack {
 public:
     static UndoService& getInstance();
+    ~UndoService() override;
 
     QAction *getUndoAction();
     QAction *getRedoAction();

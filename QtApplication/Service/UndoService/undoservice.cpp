@@ -1,4 +1,5 @@
 #include "undoservice.h"
+#include "QDebug"
 
 UndoService::UndoService() : undoAction(createUndoAction(this)), redoAction(createRedoAction(this)) {}
 
@@ -13,4 +14,9 @@ QAction *UndoService::getUndoAction() {
 
 QAction *UndoService::getRedoAction() {
     return redoAction;
+}
+
+UndoService::~UndoService() {
+    delete undoAction;
+    delete redoAction;
 }
