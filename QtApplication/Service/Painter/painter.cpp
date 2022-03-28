@@ -1,5 +1,6 @@
 #include "painter.h"
 #include "../UndoService/Command/additemcommand.h"
+#include "../../logger.h"
 
 Painter::Painter(IGraphicsView *graphicsView) : scene(graphicsView->getScene()), graphicsView(graphicsView),
                                                 defaultPen(Qt::black), defaultBrush(Qt::blue),
@@ -25,6 +26,12 @@ void Painter::onMouseMoved(const QPoint& mousePos) {
 void Painter::onMouseReleased(const QPoint& mousePos) {
     isDrawing = false;
     auto rect = QRectF(x, y, mousePos.x() - x, mousePos.y() - y);
+    if (rect.isNull()) {
+        qDebug(service()) << "Rect is NULL";
+        delete ellipseItem;
+        ellipseItem = nullptr;
+        return;
+    }
     ellipseItem->setRect(rect);
     new AddItemCommand(ellipseItem);
     emit drawingFinished(ellipseItem);
