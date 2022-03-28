@@ -35,8 +35,12 @@ void ImageViewerView::createActions() {
     adjustSizeAction = toolBar->addAction(tr("AdjustSize"), this, SLOT(onAdjustSizeActionTriggered()));
     adjustSizeAction->setShortcut(Qt::CTRL | Qt::Key_Equal);
 
-    toolBar->addAction(UndoService::getInstance().getUndoAction());
-    toolBar->addAction(UndoService::getInstance().getRedoAction());
+    QAction *undo = UndoService::getInstance().getUndoAction();
+    toolBar->addAction(undo);
+    undo->setShortcut(QKeySequence::Undo);
+    QAction *redo = UndoService::getInstance().getRedoAction();
+    toolBar->addAction(redo);
+    redo->setShortcut(QKeySequence::Redo);
 }
 
 void ImageViewerView::setActionsEnabled(bool value) {
