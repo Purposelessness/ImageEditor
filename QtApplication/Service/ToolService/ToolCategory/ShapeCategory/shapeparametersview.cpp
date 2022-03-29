@@ -1,0 +1,123 @@
+#include "shapeparametersview.h"
+
+#include <QLabel>
+#include <QAction>
+#include <QMenu>
+#include <QColorDialog>
+
+ShapeParametersView::ShapeParametersView(const QString& name, QWidget *widget) : QObject(), ToolUnitView(name, widget),
+                                                                                 fillColorPicker(new QPushButton()),
+                                                                                 fillMaterialPicker(new QToolButton()),
+                                                                                 lineColorPicker(new QPushButton()),
+                                                                                 lineMaterialPicker(new QToolButton()),
+                                                                                 thicknessSlider(new QSlider()) {
+    auto fillMaterialPickerMenu = new QMenu(fillMaterialPicker);
+    fillMaterialPickerMenu->addAction(tr("None"), this, SLOT(onNoneFillAction()));
+    fillMaterialPickerMenu->addAction(tr("Solid"), this, SLOT(onSolidFillAction()));
+    fillMaterialPicker->setMenu(fillMaterialPickerMenu);
+    createColorPicker(tr("Fill"), fillColorPicker, fillMaterialPicker);
+
+    auto lineMaterialPickerMenu = new QMenu(lineMaterialPicker);
+    lineMaterialPickerMenu->addAction(tr("None"), this, SLOT(onNoneLineAction()));
+    lineMaterialPickerMenu->addAction(tr("Solid"), this, SLOT(onSolidLineAction()));
+    lineMaterialPicker->setMenu(lineMaterialPickerMenu);
+    createColorPicker(tr("Line type"), lineColorPicker, lineMaterialPicker);
+
+    connect(fillColorPicker, SIGNAL(pressed()), this, SLOT(pickFillColor()));
+    connect(lineColorPicker, SIGNAL(pressed()), this, SLOT(pickLineColor()));
+
+    addWidget(new QLabel(tr("Thickness")));
+    thicknessSlider->setRange(1, 100);
+
+    thicknessSlider->setValue(10);
+    thicknessSlider->setOrientation(Qt::Horizontal);
+    onNoneFillAction();
+    onSolidLineAction();
+    addWidget(thicknessSlider);
+}
+
+void ShapeParametersView::pickFillColor() {
+    setFillColor(QColorDialog::getColor(fillColor, nullptr, tr("Fill color")));
+}
+
+void ShapeParametersView::pickLineColor() {
+    setLineColor(QColorDialog::getColor(lineColor, nullptr, tr("Line color")));
+}
+
+void ShapeParametersView::setFillColor(const QColor& color) {
+    if (fillColor != QColor())
+        prevFillColor = fillColor;
+    fillColor = color;
+    if (color.isValid()) {
+        fillColorPicker->setStyleSheet(QString("background-color: %1").arg(color.name()));
+    } else {
+        fillColorPicker->setStyleSheet(QString("background-color: %1").arg(QColor(Qt::lightGray).name()));
+    }
+    emit fillColorChanged(fillColor);
+}
+
+void ShapeParametersView::setLineColor(const QColor& color) {
+    if (lineColor != QColor())
+        prevLineColor = lineColor;
+    lineColor = color;
+    if (color.isValid()) {
+        lineColorPicker->setStyleSheet(QString("background-color: %1").arg(color.name()));
+    } else {
+        lineColorPicker->setStyleSheet(QString("background-color: %1").arg(QColor(Qt::lightGray).name()));
+    }
+    emit lineColorChanged(lineColor);
+}
+
+void ShapeParametersView::onNoneFillAction() {
+    fillMaterialPicker->setText(tr("None"));
+    setFillColor(QColor());
+}
+
+void ShapeParametersView::onSolidFillAction() {
+    fillMaterialPicker->setText(tr("Solid"));
+    if (prevFillColor.isValid()) {
+        setFillColor(prevFillColor);
+    } else {
+        setFillColor(defaultFillColor);
+    }
+}
+
+void ShapeParametersView::onNoneLineAction() {
+    lineMaterialPicker->setText(tr("None"));
+    setLineColor(QColor());
+}
+
+void ShapeParametersView::onSolidLineAction() {
+    lineMaterialPicker->setText(tr("Solid"));
+    if (prevLineColor.isValid()) {
+        setLineColor(prevLineColor);
+    } else {
+        setLineColor(defaultLineColor);
+    }
+}
+
+void ShapeParametersView::createColorPicker(const QString& name, QPushButton *colorPickerButton, QToolButton *materialPickerButton) {
+    addWidget(new QLabel(name));
+
+    materialPickerButton->setToolButtonStyle(Qt::ToolButtonTextOnly);
+    materialPickerButton->setPopupMode(QToolButton::InstantPopup);
+
+    auto colorPicker = new QWidget();
+    auto layout = new QHBoxLayout(colorPicker);
+    colorPicker->setLayout(layout);
+    layout->addWidget(colorPickerButton);
+    layout->addWidget(materialPickerButton);
+    addWidget(colorPicker);
+}
+
+QColor ShapeParametersView::getFillColor() const {
+    return fillColor;
+}
+
+QColor ShapeParametersView::getLineColor() const {
+    return lineColor;
+}
+
+int ShapeParametersView::getThicknessValue() const {
+    return thicknessValue;
+}
