@@ -3,7 +3,7 @@
 #include "ToolCategory/BrushCategory/brushcategory.h"
 #include "ToolCategory/ShapeCategory/shapecategory.h"
 
-ToolService::ToolService() : bar(Q_NULLPTR), dock(Q_NULLPTR) {
+ToolService::ToolService() : bar(nullptr), dock(nullptr) {
     createTools();
 }
 
@@ -13,18 +13,18 @@ void ToolService::createTools() {
     setTool("BrushCategory");
 }
 
-ToolService &ToolService::getInstance() {
+ToolService& ToolService::getInstance() {
     static ToolService instance;
     return instance;
 }
 
 void ToolService::addTool(ToolUnit *tool) {
     ToolContext::addTool(tool);
-    if (bar)
-        addToolToBar(tool);
+    connect(tool, SIGNAL(updateView()), this, SLOT(updateToolDock()));
+    addToolToBar(tool);
 }
 
-void ToolService::setTool(const QString &name) {
+void ToolService::setTool(const QString& name) {
     ToolContext::setTool(name);
     updateToolDock();
 }
@@ -37,7 +37,8 @@ void ToolService::setToolBar(IToolBar *toolBar) {
 }
 
 void ToolService::addToolToBar(ToolUnit *tool) {
-    bar->addAction(tool->getAction());
+    if (bar)
+        bar->addAction(tool->getAction());
 }
 
 void ToolService::setToolDock(IToolDock *toolDock) {
@@ -47,15 +48,6 @@ void ToolService::setToolDock(IToolDock *toolDock) {
 }
 
 void ToolService::updateToolDock() {
-    if (!dock)
-        return;
-    dock->setWidget(getCurrentTool()->getWidget());
-}
-
-void ToolService::onToolChanged() {
-    updateToolDock();
-}
-
-void ToolService::onToolWidgetEnabled(bool value) {
-    updateToolDock();
+    if (dock)
+        dock->setWidget(getCurrentTool()->getWidget());
 }

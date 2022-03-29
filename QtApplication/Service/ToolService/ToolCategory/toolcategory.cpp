@@ -5,15 +5,10 @@
 
 ToolCategory::ToolCategory(QString name, ToolCategoryView *view, ToolCategoryModel *model) : ToolUnit(std::move(name)),
                                                                                              view(view), model(model) {
-    connectSignals();
-    model->createTools();
-}
-
-void ToolCategory::connectSignals() {
     connect(model, SIGNAL(toolAdded(QAction*)), this, SLOT(onToolAdded(QAction*)));
     connect(view->getAction(), SIGNAL(triggered(bool)), this, SLOT(onActionTriggered()));
-    connect(model, SIGNAL(toolChanged()), this, SLOT(onToolChanged()));
     connect(model, SIGNAL(toolWidgetEnabled(bool)), this, SLOT(onToolWidgetEnabled(bool)));
+    model->createTools();
 }
 
 QAction *ToolCategory::getAction() {
@@ -21,10 +16,10 @@ QAction *ToolCategory::getAction() {
 }
 
 QWidget *ToolCategory::getWidget() {
-    return toolWidgetState ? model->getCurrentToolWidget() : view->getWidget();
+    return view->getWidget();
 }
 
-IToolModel *ToolCategory::getToolModel() {
+IToolModel *ToolCategory::getModel() {
     return model->getCurrentToolModel();
 }
 
@@ -33,15 +28,9 @@ void ToolCategory::onToolAdded(QAction *action) {
 }
 
 void ToolCategory::onActionTriggered() {
-    emit toolTriggered(toString());
+    emit triggered(toString());
 }
 
-void ToolCategory::onToolChanged() {
-    emit toolChanged();
+QWidget *ToolCategory::getAlternativeWidget() {
+    return ToolUnit::getAlternativeWidget();
 }
-
-void ToolCategory::onToolWidgetEnabled(bool value) {
-    toolWidgetState = value;
-    emit toolWidgetEnabled(value);
-}
-

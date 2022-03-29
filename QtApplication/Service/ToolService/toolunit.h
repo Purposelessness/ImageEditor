@@ -14,14 +14,14 @@ public:
     explicit ToolUnit(QString name);
 
 signals:
-    void toolTriggered(const QString &name);
-    void toolChanged();
-    void toolWidgetEnabled(bool value);
+    void triggered(const QString &name);
+    void updateView();
 
 public:
     virtual QAction *getAction() = 0;
+    virtual IToolModel *getModel() = 0;
     virtual QWidget *getWidget() = 0;
-    virtual IToolModel *getToolModel() = 0;
+    virtual QWidget *getAlternativeWidget();
 
     [[nodiscard]] QString toString() const;
 

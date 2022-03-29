@@ -12,7 +12,7 @@ public:
 
     QAction *getAction() final;
     QWidget *getWidget() final;
-    IToolModel *getToolModel() final;
+    IToolModel *getModel() final;
 
 private slots:
     void onActionTriggered();

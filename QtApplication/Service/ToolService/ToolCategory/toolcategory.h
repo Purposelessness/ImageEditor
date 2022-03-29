@@ -13,20 +13,17 @@ public:
     explicit ToolCategory(QString name, ToolCategoryView *view, ToolCategoryModel *model);
 
     QAction *getAction() final;
-    QWidget *getWidget() final;
-    IToolModel *getToolModel() final;
+    QWidget *getWidget() override;
+    IToolModel *getModel() final;
+    QWidget *getAlternativeWidget() override;
 
 private slots:
     void onToolAdded(QAction *action);
     void onActionTriggered();
-    void onToolChanged();
-    void onToolWidgetEnabled(bool value);
 
 private:
-    void connectSignals();
     ToolCategoryView *view;
     ToolCategoryModel *model;
-    bool toolWidgetState = false;
 };
 
 

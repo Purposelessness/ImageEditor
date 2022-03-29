@@ -4,10 +4,16 @@
 #include "../toolcategory.h"
 #include "shapecategoryview.h"
 #include "shapecategorymodel.h"
+#include "shapeparametersinterface.h"
 
 class ShapeCategory : public ToolCategory {
 public:
-    explicit ShapeCategory(const QString& name = "ShapeCategory");
+    explicit ShapeCategory(const QString& name = tr("ShapeCategory"));
+
+    QWidget *getAlternativeWidget() override;
+
+private:
+    ShapeParametersInterface *parametersInterface;
 };
 
 

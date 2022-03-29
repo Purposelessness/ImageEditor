@@ -1,3 +1,3 @@
 #include "shapecategoryview.h"
 
-ShapeCategoryView::ShapeCategoryView(const QString &name) : ToolCategoryView(name) {}
+ShapeCategoryView::ShapeCategoryView(const QString& name) : ToolCategoryView(name) {}

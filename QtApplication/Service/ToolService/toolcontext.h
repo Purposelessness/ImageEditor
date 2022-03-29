@@ -20,14 +20,9 @@ protected:
 
 protected slots:
     virtual void onToolTriggered(const QString& name);
-    virtual void onToolChanged() = 0;
-    virtual void onToolWidgetEnabled(bool value) = 0;
 
 private:
-    void updateToolModel();
-
     ToolUnit *currentTool;
-    IToolModel *currentToolModel;
 };
 
 

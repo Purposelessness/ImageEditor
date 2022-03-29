@@ -1,5 +1,5 @@
-#ifndef IMAGEEDITOR_SHAPEPARAMETERSVIEW_H
-#define IMAGEEDITOR_SHAPEPARAMETERSVIEW_H
+#ifndef IMAGEEDITOR_SHAPEPARAMETERSINTERFACE_H
+#define IMAGEEDITOR_SHAPEPARAMETERSINTERFACE_H
 
 #include "../../toolunitview.h"
 
@@ -7,11 +7,11 @@
 #include <QPushButton>
 #include <QToolButton>
 
-class ShapeParametersView : public QObject, public ToolUnitView {
+class ShapeParametersInterface : public QObject, public ToolUnitView {
 Q_OBJECT
 
 public:
-    explicit ShapeParametersView(const QString& name, QWidget *widget = new QWidget());
+    explicit ShapeParametersInterface(const QString& name, QObject *parent = nullptr, QWidget *widget = new QWidget());
 
     [[nodiscard]] QColor getFillColor() const;
     [[nodiscard]] QColor getLineColor() const;
@@ -45,4 +45,4 @@ private:
 };
 
 
-#endif //IMAGEEDITOR_SHAPEPARAMETERSVIEW_H
+#endif //IMAGEEDITOR_SHAPEPARAMETERSINTERFACE_H

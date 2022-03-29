@@ -15,10 +15,10 @@ QWidget *Tool::getWidget() {
     return view->getWidget();
 }
 
-IToolModel *Tool::getToolModel() {
+IToolModel *Tool::getModel() {
     return model;
 }
 
 void Tool::onActionTriggered() {
-    emit toolTriggered(toString());
+    emit triggered(toString());
 }

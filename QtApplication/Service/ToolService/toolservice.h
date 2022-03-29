@@ -20,9 +20,8 @@ public:
     void setToolBar(IToolBar *toolBar);
     void setToolDock(IToolDock *toolDock);
 
-protected slots:
-    void onToolChanged() final;
-    void onToolWidgetEnabled(bool value) final;
+private slots:
+    void updateToolDock();
 
 private:
     ToolService();
@@ -31,7 +30,6 @@ private:
 
     void createTools();
     void addToolToBar(ToolUnit *tool);
-    void updateToolDock();
 
     IToolBar *bar;
     IToolDock *dock;

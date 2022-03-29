@@ -1,16 +1,17 @@
-#include "shapeparametersview.h"
+#include "shapeparametersinterface.h"
 
 #include <QLabel>
 #include <QAction>
 #include <QMenu>
 #include <QColorDialog>
 
-ShapeParametersView::ShapeParametersView(const QString& name, QWidget *widget) : QObject(), ToolUnitView(name, widget),
-                                                                                 fillColorPicker(new QPushButton()),
-                                                                                 fillMaterialPicker(new QToolButton()),
-                                                                                 lineColorPicker(new QPushButton()),
-                                                                                 lineMaterialPicker(new QToolButton()),
-                                                                                 thicknessSlider(new QSlider()) {
+ShapeParametersInterface::ShapeParametersInterface(const QString &name, QObject *parent, QWidget *widget)
+        : QObject(parent), ToolUnitView(name, widget),
+          fillColorPicker(new QPushButton()),
+          fillMaterialPicker(new QToolButton()),
+          lineColorPicker(new QPushButton()),
+          lineMaterialPicker(new QToolButton()),
+          thicknessSlider(new QSlider()) {
     auto fillMaterialPickerMenu = new QMenu(fillMaterialPicker);
     fillMaterialPickerMenu->addAction(tr("None"), this, SLOT(onNoneFillAction()));
     fillMaterialPickerMenu->addAction(tr("Solid"), this, SLOT(onSolidFillAction()));
@@ -36,15 +37,15 @@ ShapeParametersView::ShapeParametersView(const QString& name, QWidget *widget) :
     addWidget(thicknessSlider);
 }
 
-void ShapeParametersView::pickFillColor() {
+void ShapeParametersInterface::pickFillColor() {
     setFillColor(QColorDialog::getColor(fillColor, nullptr, tr("Fill color")));
 }
 
-void ShapeParametersView::pickLineColor() {
+void ShapeParametersInterface::pickLineColor() {
     setLineColor(QColorDialog::getColor(lineColor, nullptr, tr("Line color")));
 }
 
-void ShapeParametersView::setFillColor(const QColor& color) {
+void ShapeParametersInterface::setFillColor(const QColor& color) {
     if (fillColor != QColor())
         prevFillColor = fillColor;
     fillColor = color;
@@ -56,7 +57,7 @@ void ShapeParametersView::setFillColor(const QColor& color) {
     emit fillColorChanged(fillColor);
 }
 
-void ShapeParametersView::setLineColor(const QColor& color) {
+void ShapeParametersInterface::setLineColor(const QColor& color) {
     if (lineColor != QColor())
         prevLineColor = lineColor;
     lineColor = color;
@@ -68,12 +69,12 @@ void ShapeParametersView::setLineColor(const QColor& color) {
     emit lineColorChanged(lineColor);
 }
 
-void ShapeParametersView::onNoneFillAction() {
+void ShapeParametersInterface::onNoneFillAction() {
     fillMaterialPicker->setText(tr("None"));
     setFillColor(QColor());
 }
 
-void ShapeParametersView::onSolidFillAction() {
+void ShapeParametersInterface::onSolidFillAction() {
     fillMaterialPicker->setText(tr("Solid"));
     if (prevFillColor.isValid()) {
         setFillColor(prevFillColor);
@@ -82,12 +83,12 @@ void ShapeParametersView::onSolidFillAction() {
     }
 }
 
-void ShapeParametersView::onNoneLineAction() {
+void ShapeParametersInterface::onNoneLineAction() {
     lineMaterialPicker->setText(tr("None"));
     setLineColor(QColor());
 }
 
-void ShapeParametersView::onSolidLineAction() {
+void ShapeParametersInterface::onSolidLineAction() {
     lineMaterialPicker->setText(tr("Solid"));
     if (prevLineColor.isValid()) {
         setLineColor(prevLineColor);
@@ -96,7 +97,7 @@ void ShapeParametersView::onSolidLineAction() {
     }
 }
 
-void ShapeParametersView::createColorPicker(const QString& name, QPushButton *colorPickerButton, QToolButton *materialPickerButton) {
+void ShapeParametersInterface::createColorPicker(const QString& name, QPushButton *colorPickerButton, QToolButton *materialPickerButton) {
     addWidget(new QLabel(name));
 
     materialPickerButton->setToolButtonStyle(Qt::ToolButtonTextOnly);
@@ -110,14 +111,14 @@ void ShapeParametersView::createColorPicker(const QString& name, QPushButton *co
     addWidget(colorPicker);
 }
 
-QColor ShapeParametersView::getFillColor() const {
+QColor ShapeParametersInterface::getFillColor() const {
     return fillColor;
 }
 
-QColor ShapeParametersView::getLineColor() const {
+QColor ShapeParametersInterface::getLineColor() const {
     return lineColor;
 }
 
-int ShapeParametersView::getThicknessValue() const {
+int ShapeParametersInterface::getThicknessValue() const {
     return thicknessValue;
 }
