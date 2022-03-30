@@ -29,12 +29,15 @@ ShapeParametersInterface::ShapeParametersInterface(const QString &name, QObject 
 
     addWidget(new QLabel(tr("Thickness")));
     thicknessSlider->setRange(1, 100);
-
-    thicknessSlider->setValue(10);
     thicknessSlider->setOrientation(Qt::Horizontal);
+    connect(thicknessSlider, SIGNAL(valueChanged(int)), this, SLOT(onThicknessChanged(int)));
+    addWidget(thicknessSlider);
+}
+
+void ShapeParametersInterface::resetParameters() {
     onNoneFillAction();
     onSolidLineAction();
-    addWidget(thicknessSlider);
+    thicknessSlider->setValue(10);
 }
 
 void ShapeParametersInterface::pickFillColor() {
@@ -95,6 +98,10 @@ void ShapeParametersInterface::onSolidLineAction() {
     } else {
         setLineColor(defaultLineColor);
     }
+}
+
+void ShapeParametersInterface::onThicknessChanged(int value) {
+    emit thicknessChanged(value);
 }
 
 void ShapeParametersInterface::createColorPicker(const QString& name, QPushButton *colorPickerButton, QToolButton *materialPickerButton) {

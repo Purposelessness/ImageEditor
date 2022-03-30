@@ -15,7 +15,6 @@ ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(n
     connect(this, SIGNAL(mousePressed(const QPoint&)), &painter, SLOT(onMousePressed(const QPoint&)));
     connect(this, SIGNAL(mouseMoved(const QPoint&)), &painter, SLOT(onMouseMoved(const QPoint&)));
     connect(this, SIGNAL(mouseReleased(const QPoint&)), &painter, SLOT(onMouseReleased(const QPoint&)));
-    connect(&painter, SIGNAL(drawingFinished(QGraphicsItem*)), this, SLOT(onDrawingFinished(QGraphicsItem*)));
 
     setScene(scene);
 }

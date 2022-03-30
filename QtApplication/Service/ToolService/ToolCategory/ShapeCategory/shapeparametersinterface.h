@@ -16,6 +16,7 @@ public:
     [[nodiscard]] QColor getFillColor() const;
     [[nodiscard]] QColor getLineColor() const;
     [[nodiscard]] int getThicknessValue() const;
+    void resetParameters();
 
 signals:
     void fillColorChanged(const QColor &color);
@@ -27,6 +28,7 @@ private slots:
     void onSolidFillAction();
     void onNoneLineAction();
     void onSolidLineAction();
+    void onThicknessChanged(int value);
     void pickFillColor();
     void pickLineColor();
 

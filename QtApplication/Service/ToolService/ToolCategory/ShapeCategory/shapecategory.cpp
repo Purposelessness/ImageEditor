@@ -6,6 +6,7 @@ ShapeCategory::ShapeCategory(const QString &name) : ToolCategory(name, new Shape
     connect(parametersInterface, SIGNAL(fillColorChanged(const QColor&)), this, SLOT(onFillColorChanged(const QColor&)));
     connect(parametersInterface, SIGNAL(lineColorChanged(const QColor&)), this, SLOT(onLineColorChanged(const QColor&)));
     connect(parametersInterface, SIGNAL(thicknessChanged(const int&)), this, SLOT(onThicknessChanged(const int&)));
+    parametersInterface->resetParameters();
 }
 
 QWidget *ShapeCategory::getAlternativeWidget() {

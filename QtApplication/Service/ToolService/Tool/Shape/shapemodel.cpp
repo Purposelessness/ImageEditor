@@ -7,6 +7,10 @@
 #include <QBrush>
 #include <QGraphicsScene>
 
+QPen ShapeModel::pen = QPen();
+QBrush ShapeModel::brush = QBrush();
+int ShapeModel::thickness = 10;
+
 void ShapeModel::mousePressed(const QPoint &mousePos, IGraphicsView *view) {
     if (isDrawing)
         return;

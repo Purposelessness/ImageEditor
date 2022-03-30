@@ -7,6 +7,8 @@
 #include "shapeparametersinterface.h"
 
 class ShapeCategory : public ToolCategory {
+Q_OBJECT
+
 public:
     explicit ShapeCategory(const QString &name = tr("ShapeCategory"));
 
