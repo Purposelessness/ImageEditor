@@ -3,7 +3,7 @@
 
 #include "../toolmodel.h"
 
-#include <QGraphicsItem>
+#include <QAbstractGraphicsShapeItem>
 
 class ShapeModel : public IToolModel {
 public:
@@ -11,12 +11,15 @@ public:
     void mouseMoved(const QPoint &mousePos, IGraphicsView *view) override;
     void mouseReleased(const QPoint &mousePos, IGraphicsView *view) override;
 
-    static void setFillColor(const QColor &color);
-    static void setLineColor(const QColor &color);
-    static void setThickness(const int &value);
+    void setFillColor(const QColor &color);
+    void setLineColor(const QColor &color);
+    void setThickness(const int &value);
+
+signals:
+    void mouseReleased();
 
 protected:
-    virtual QGraphicsItem *drawItem(const QRectF &rect, const QPen &pen, const QBrush &brush) = 0;
+    virtual QAbstractGraphicsShapeItem *drawItem(const QRectF &rect, const QPen &pen, const QBrush &brush) = 0;
     virtual void resizeItem(const QRectF &rect) = 0;
 
 private:
@@ -24,7 +27,7 @@ private:
     static QPen pen;
     static int thickness;
 
-    QGraphicsItem *item;
+    QAbstractGraphicsShapeItem *item = nullptr;
 
     bool isDrawing = false;
 

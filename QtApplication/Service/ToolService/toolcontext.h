@@ -23,6 +23,7 @@ protected slots:
 
 private:
     ToolUnit *currentTool;
+    QString currentToolName;
 };
 
 

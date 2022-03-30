@@ -10,8 +10,12 @@ class Shape : public Tool {
 public:
     explicit Shape(QString name, ToolUnitView *view, ShapeModel *model);
 
-public slots:
-    void update();
+    void setFillColor(const QColor& color);
+    void setLineColor(const QColor &color);
+    void setThickness(const int &value);
+
+private:
+    ShapeModel *model;
 };
 
 

@@ -44,14 +44,31 @@ void ShapeModel::mouseReleased(const QPoint &mousePos, IGraphicsView *view) {
 }
 
 void ShapeModel::setFillColor(const QColor &color) {
-    brush.setColor(color);
+    if (color.isValid()) {
+        brush.setStyle(Qt::SolidPattern);
+        brush.setColor(color);
+    } else {
+        brush.setStyle(Qt::NoBrush);
+    }
+    qDebug(core()) << "Setting fill color to" << color.name();
+    if (item)
+        item->setBrush(brush);
 }
 
 void ShapeModel::setLineColor(const QColor &color) {
-    pen.setColor(color);
+    if (color.isValid()) {
+        pen.setStyle(Qt::SolidLine);
+        pen.setColor(color);
+    } else {
+        pen.setStyle(Qt::NoPen);
+    }
+    if (item)
+        item->setPen(pen);
 }
 
 void ShapeModel::setThickness(const int &value) {
     thickness = value;
     pen.setWidth(thickness);
+    if (item)
+        item->setPen(pen);
 }

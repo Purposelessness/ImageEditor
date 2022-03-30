@@ -10,7 +10,9 @@ class ShapeCategory : public ToolCategory {
 Q_OBJECT
 
 public:
-    explicit ShapeCategory(const QString &name = tr("ShapeCategory"));
+    explicit ShapeCategory(const QString &name = tr("ShapeCategory"),
+                           ToolCategoryView *view = new ShapeCategoryView(tr("ShapeCategory")),
+                           ToolCategoryModel *model = new ShapeCategoryModel());
 
     QWidget *getAlternativeWidget() override;
 
@@ -21,6 +23,7 @@ private slots:
 
 private:
     ShapeParametersInterface *parametersInterface;
+    ShapeCategoryModel *shapeModel;
 };
 
 

@@ -3,10 +3,13 @@
 
 #include "../toolcategorymodel.h"
 
+class Shape;
+
 class ShapeCategoryModel : public ToolCategoryModel {
 public:
     ShapeCategoryModel() = default;
     void createTools() override;
+
 };
 
 
