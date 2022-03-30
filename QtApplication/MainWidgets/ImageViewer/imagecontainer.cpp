@@ -11,6 +11,7 @@ ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(n
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setViewportMargins(-2, -2, -2, -2);
     setBackgroundRole(QPalette::Mid);
+    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
     connect(this, SIGNAL(mousePressed(const QPoint&)), &painter, SLOT(onMousePressed(const QPoint&)));
     connect(this, SIGNAL(mouseMoved(const QPoint&)), &painter, SLOT(onMouseMoved(const QPoint&)));

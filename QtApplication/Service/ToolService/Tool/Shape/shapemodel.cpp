@@ -50,7 +50,6 @@ void ShapeModel::setFillColor(const QColor &color) {
     } else {
         brush.setStyle(Qt::NoBrush);
     }
-    qDebug(core()) << "Setting fill color to" << color.name();
     if (item)
         item->setBrush(brush);
 }
