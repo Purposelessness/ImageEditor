@@ -120,5 +120,5 @@ QColor ShapeParametersInterface::getLineColor() const {
 }
 
 int ShapeParametersInterface::getThicknessValue() const {
-    return thicknessValue;
+    return thickness;
 }

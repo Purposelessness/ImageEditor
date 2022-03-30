@@ -13,24 +13,13 @@ Q_OBJECT
 public:
     explicit Painter(IGraphicsView *graphicsView);
 
-signals:
-    void drawingFinished(QGraphicsItem *item);
-
 public slots:
     void onMousePressed(const QPoint& mousePos);
     void onMouseMoved(const QPoint& mousePos);
     void onMouseReleased(const QPoint& mousePos);
 
 private:
-    QGraphicsScene *scene;
-    IGraphicsView *graphicsView;
-    QGraphicsEllipseItem *ellipseItem;
-    QPen defaultPen;
-    QBrush defaultBrush;
-
-    bool isDrawing = false;
-
-    int x = 0, y = 0;
+    IGraphicsView *view;
 };
 
 

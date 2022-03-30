@@ -10,7 +10,7 @@
 #include <QString>
 #include "QHash"
 
-class ToolService : ToolContext {
+class ToolService : public ToolContext {
 Q_OBJECT
 
 public:

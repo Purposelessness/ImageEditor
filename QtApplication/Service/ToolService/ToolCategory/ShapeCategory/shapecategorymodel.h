@@ -2,8 +2,6 @@
 #define IMAGEEDITOR_SHAPECATEGORYMODEL_H
 
 #include "../toolcategorymodel.h"
-#include "../../Tool/Brush-like/Brush/brush.h"
-#include "../../Tool/Brush-like/Pen/pen.h"
 
 class ShapeCategoryModel : public ToolCategoryModel {
 public:

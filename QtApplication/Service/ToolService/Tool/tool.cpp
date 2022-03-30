@@ -2,8 +2,7 @@
 
 #include <utility>
 
-Tool::Tool(QString name, ToolUnitView *view, IToolModel *model) : ToolUnit(std::move(name)), view(view),
-                                                                  model(model) {
+Tool::Tool(QString name, ToolUnitView *view, IToolModel *model) : ToolUnit(std::move(name)), view(view), model(model) {
     connect(view->getAction(), SIGNAL(triggered(bool)), this, SLOT(onActionTriggered()));
 }
 

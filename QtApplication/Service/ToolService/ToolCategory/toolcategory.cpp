@@ -7,7 +7,6 @@ ToolCategory::ToolCategory(QString name, ToolCategoryView *view, ToolCategoryMod
                                                                                              view(view), model(model) {
     connect(model, SIGNAL(toolAdded(QAction*)), this, SLOT(onToolAdded(QAction*)));
     connect(view->getAction(), SIGNAL(triggered(bool)), this, SLOT(onActionTriggered()));
-    connect(model, SIGNAL(toolWidgetEnabled(bool)), this, SLOT(onToolWidgetEnabled(bool)));
     model->createTools();
 }
 

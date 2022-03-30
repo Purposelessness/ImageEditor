@@ -8,9 +8,14 @@
 
 class ShapeCategory : public ToolCategory {
 public:
-    explicit ShapeCategory(const QString& name = tr("ShapeCategory"));
+    explicit ShapeCategory(const QString &name = tr("ShapeCategory"));
 
     QWidget *getAlternativeWidget() override;
+
+private slots:
+    void onFillColorChanged(const QColor &color);
+    void onLineColorChanged(const QColor &color);
+    void onThicknessChanged(const int &value);
 
 private:
     ShapeParametersInterface *parametersInterface;

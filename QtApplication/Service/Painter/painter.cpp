@@ -1,39 +1,18 @@
 #include "painter.h"
+#include "../ToolService/toolservice.h"
 #include "../UndoService/Command/additemcommand.h"
-#include "../../logger.h"
+#include "../ToolService/Tool/toolmodel.h"
 
-Painter::Painter(IGraphicsView *graphicsView) : scene(graphicsView->getScene()), graphicsView(graphicsView),
-                                                defaultPen(Qt::black), defaultBrush(Qt::blue),
-                                                ellipseItem(nullptr) {}
+Painter::Painter(IGraphicsView *graphicsView) : view(graphicsView) {}
 
 void Painter::onMousePressed(const QPoint& mousePos) {
-    if (isDrawing)
-        return;
-    x = mousePos.x();
-    y = mousePos.y();
-    auto rect = QRectF(x, y, 0, 0);
-    ellipseItem = scene->addEllipse(rect, defaultPen, defaultBrush);
-    isDrawing = true;
+    ToolService::getInstance().getCurrentToolModel()->mousePressed(mousePos, view);
 }
 
 void Painter::onMouseMoved(const QPoint& mousePos) {
-    if (!isDrawing || !ellipseItem)
-        return;
-    auto rect = QRectF(x, y, mousePos.x() - x, mousePos.y() - y);
-    ellipseItem->setRect(rect);
+    ToolService::getInstance().getCurrentToolModel()->mouseMoved(mousePos, view);
 }
 
 void Painter::onMouseReleased(const QPoint& mousePos) {
-    isDrawing = false;
-    auto rect = QRectF(x, y, mousePos.x() - x, mousePos.y() - y);
-    if (rect.isNull()) {
-        qDebug(service()) << "Rect is NULL";
-        delete ellipseItem;
-        ellipseItem = nullptr;
-        return;
-    }
-    ellipseItem->setRect(rect);
-    new AddItemCommand(ellipseItem);
-    emit drawingFinished(ellipseItem);
-    ellipseItem = nullptr;
+    ToolService::getInstance().getCurrentToolModel()->mouseReleased(mousePos, view);
 }

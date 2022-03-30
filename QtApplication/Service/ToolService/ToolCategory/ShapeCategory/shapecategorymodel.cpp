@@ -1,8 +1,8 @@
 #include "shapecategorymodel.h"
+#include "../../Tool/Shape/Ellipse/ellipse.h"
 
 void ShapeCategoryModel::createTools() {
-    auto brush = new Brush();
-    addTool(brush);
-    addTool(new Pen());
-    setTool(brush->toString());
+    auto ellipse = new Ellipse();
+    addTool(ellipse);
+    setTool(ellipse->toString());
 }
