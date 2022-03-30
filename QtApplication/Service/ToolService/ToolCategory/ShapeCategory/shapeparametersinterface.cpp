@@ -54,8 +54,10 @@ void ShapeParametersInterface::setFillColor(const QColor& color) {
     fillColor = color;
     if (color.isValid()) {
         fillColorPicker->setStyleSheet(QString("background-color: %1").arg(color.name()));
+        fillMaterialPicker->setText(tr("Solid"));
     } else {
         fillColorPicker->setStyleSheet(QString("background-color: %1").arg(QColor(Qt::lightGray).name()));
+        fillMaterialPicker->setText(tr("None"));
     }
     emit fillColorChanged(fillColor);
 }
@@ -66,8 +68,10 @@ void ShapeParametersInterface::setLineColor(const QColor& color) {
     lineColor = color;
     if (color.isValid()) {
         lineColorPicker->setStyleSheet(QString("background-color: %1").arg(color.name()));
+        lineMaterialPicker->setText(tr("Solid"));
     } else {
         lineColorPicker->setStyleSheet(QString("background-color: %1").arg(QColor(Qt::lightGray).name()));
+        lineMaterialPicker->setText(tr("None"));
     }
     emit lineColorChanged(lineColor);
 }
@@ -78,6 +82,8 @@ void ShapeParametersInterface::onNoneFillAction() {
 }
 
 void ShapeParametersInterface::onSolidFillAction() {
+    if (fillColor.isValid())
+        return;
     fillMaterialPicker->setText(tr("Solid"));
     if (prevFillColor.isValid()) {
         setFillColor(prevFillColor);
@@ -92,6 +98,8 @@ void ShapeParametersInterface::onNoneLineAction() {
 }
 
 void ShapeParametersInterface::onSolidLineAction() {
+    if (lineColor.isValid())
+        return;
     lineMaterialPicker->setText(tr("Solid"));
     if (prevLineColor.isValid()) {
         setLineColor(prevLineColor);
