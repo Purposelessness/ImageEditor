@@ -109,6 +109,7 @@ void ShapeParametersInterface::onSolidLineAction() {
 }
 
 void ShapeParametersInterface::onThicknessChanged(int value) {
+    thicknessSlider->setToolTip(QString::number(value));
     emit thicknessChanged(value);
 }
 
