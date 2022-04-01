@@ -28,7 +28,7 @@ void ShapeModel::mouseMoved(const QPoint &mousePos, IGraphicsView *view) {
     auto rect = QRectF(x, y, mousePos.x() - x, mousePos.y() - y);
     resizeItem(rect);
 }
-
+// TODO: mouse released outside view bug
 void ShapeModel::mouseReleased(const QPoint &mousePos, IGraphicsView *view) {
     isDrawing = false;
     auto rect = QRectF(x, y, mousePos.x() - x, mousePos.y() - y);
@@ -56,10 +56,9 @@ void ShapeModel::setFillColor(const QColor &color) {
 
 void ShapeModel::setLineColor(const QColor &color) {
     if (color.isValid()) {
-        pen.setStyle(Qt::SolidLine);
         pen.setColor(color);
     } else {
-        pen.setStyle(Qt::NoPen);
+        pen.setColor(QColor(0, 0, 0, 0));
     }
     if (item)
         item->setPen(pen);
