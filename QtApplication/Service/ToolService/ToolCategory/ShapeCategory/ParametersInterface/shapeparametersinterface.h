@@ -1,13 +1,14 @@
 #ifndef IMAGEEDITOR_SHAPEPARAMETERSINTERFACE_H
 #define IMAGEEDITOR_SHAPEPARAMETERSINTERFACE_H
 
-#include "../../toolunitview.h"
+#include "../../../toolunitview.h"
+#include "parametersinterface.h"
 
 #include <QSlider>
 #include <QPushButton>
 #include <QToolButton>
 
-class ShapeParametersInterface : public QObject, public ToolUnitView {
+class ShapeParametersInterface : public ParametersInterface, public ToolUnitView {
 Q_OBJECT
 
 public:
@@ -17,11 +18,6 @@ public:
     [[nodiscard]] QColor getLineColor() const;
     [[nodiscard]] int getThicknessValue() const;
     void resetParameters();
-
-signals:
-    void fillColorChanged(const QColor &color);
-    void lineColorChanged(const QColor &color);
-    void thicknessChanged(const int &value);
 
 private slots:
     void onNoneFillAction();
@@ -41,9 +37,8 @@ private:
     QPushButton *fillColorPicker, *lineColorPicker;
     QToolButton *fillMaterialPicker, *lineMaterialPicker;
     QColor defaultFillColor = QColor(0, 168, 243), defaultLineColor = QColor(Qt::black);
-    QColor fillColor = QColor(), prevFillColor = QColor();
-    QColor lineColor = QColor(), prevLineColor = QColor();
-    int thickness = 1;
+    QColor prevFillColor = QColor();
+    QColor prevLineColor = QColor();
 };
 
 

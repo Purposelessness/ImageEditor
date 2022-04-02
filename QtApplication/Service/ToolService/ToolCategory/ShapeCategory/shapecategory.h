@@ -4,7 +4,8 @@
 #include "../toolcategory.h"
 #include "shapecategoryview.h"
 #include "shapecategorymodel.h"
-#include "shapeparametersinterface.h"
+#include "ParametersInterface/shapeparametersinterface.h"
+#include "ParametersInterface/lineparametersinterface.h"
 
 class ShapeCategory : public ToolCategory {
 Q_OBJECT
@@ -17,12 +18,11 @@ public:
     QWidget *getAlternativeWidget() override;
 
 private slots:
-    void onFillColorChanged(const QColor &color);
-    void onLineColorChanged(const QColor &color);
-    void onThicknessChanged(const int &value);
+    void onParametersChanged(FigureData *figureData);
 
 private:
-    ShapeParametersInterface *parametersInterface;
+    ShapeParametersInterface *shapeParametersInterface;
+    LineParametersInterface *lineParametersInterface;
     ShapeCategoryModel *shapeModel;
 };
 

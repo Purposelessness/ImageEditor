@@ -2,30 +2,21 @@
 #include "../../Tool/Shape/shapemodel.h"
 #include "../../Tool/Shape/shape.h"
 
-
-ShapeCategory::ShapeCategory(const QString &name, ToolCategoryView *view, ToolCategoryModel *model) : ToolCategory(name, view, model),
-                                                    parametersInterface(new ShapeParametersInterface(tr("ShapeCategory"), this)) {
-    connect(parametersInterface, SIGNAL(fillColorChanged(const QColor&)), this, SLOT(onFillColorChanged(const QColor&)));
-    connect(parametersInterface, SIGNAL(lineColorChanged(const QColor&)), this, SLOT(onLineColorChanged(const QColor&)));
-    connect(parametersInterface, SIGNAL(thicknessChanged(const int&)), this, SLOT(onThicknessChanged(const int&)));
+ShapeCategory::ShapeCategory(const QString &name, ToolCategoryView *view, ToolCategoryModel *model) :
+            ToolCategory(name, view, model), lineParametersInterface(new LineParametersInterface(tr("LineCategory"), this)),
+            shapeParametersInterface(new ShapeParametersInterface(tr("ShapeCategory"), this)) {
+    connect(lineParametersInterface, SIGNAL(update(FigureData*)), this, SLOT(onParametersChanged(FigureData*)));
+    connect(shapeParametersInterface, SIGNAL(update(FigureData*)), this, SLOT(onParametersChanged(FigureData*)));
     shapeModel = dynamic_cast<ShapeCategoryModel *>(model);
-    parametersInterface->getWidget()->setParent(nullptr);
-    parametersInterface->getWidget()->show();
-    parametersInterface->resetParameters();
+    shapeParametersInterface->getWidget()->setParent(nullptr);
+    shapeParametersInterface->getWidget()->show();
+    shapeParametersInterface->resetParameters();
 }
 
 QWidget *ShapeCategory::getAlternativeWidget() {
-    return parametersInterface->getWidget();
+    return shapeParametersInterface->getWidget();
 }
 
-void ShapeCategory::onFillColorChanged(const QColor &color) {
-    dynamic_cast<Shape *>(shapeModel->getCurrentTool())->setFillColor(color);
-}
+void ShapeCategory::onParametersChanged(FigureData *figureData) {
 
-void ShapeCategory::onLineColorChanged(const QColor &color) {
-    dynamic_cast<Shape *>(shapeModel->getCurrentTool())->setLineColor(color);
-}
-
-void ShapeCategory::onThicknessChanged(const int &value) {
-    dynamic_cast<Shape *>(shapeModel->getCurrentTool())->setThickness(value);
 }

@@ -6,7 +6,7 @@
 #include <QColorDialog>
 
 ShapeParametersInterface::ShapeParametersInterface(const QString &name, QObject *parent, QWidget *widget)
-        : QObject(parent), ToolUnitView(name, widget),
+        : ParametersInterface(parent), ToolUnitView(name, widget),
           fillColorPicker(new QPushButton()),
           fillMaterialPicker(new QToolButton()),
           lineColorPicker(new QPushButton()),
@@ -41,17 +41,17 @@ void ShapeParametersInterface::resetParameters() {
 }
 
 void ShapeParametersInterface::pickFillColor() {
-    setFillColor(QColorDialog::getColor(fillColor, nullptr, tr("Fill color")));
+    setFillColor(QColorDialog::getColor(figureData.fillColor, nullptr, tr("Fill color")));
 }
 
 void ShapeParametersInterface::pickLineColor() {
-    setLineColor(QColorDialog::getColor(lineColor, nullptr, tr("Line color")));
+    setLineColor(QColorDialog::getColor(figureData.lineColor, nullptr, tr("Line color")));
 }
 
 void ShapeParametersInterface::setFillColor(const QColor& color) {
-    if (fillColor != QColor())
-        prevFillColor = fillColor;
-    fillColor = color;
+    if (figureData.fillColor != QColor())
+        prevFillColor = figureData.fillColor;
+    figureData.fillColor = color;
     if (color.isValid()) {
         fillColorPicker->setStyleSheet(QString("background-color: %1").arg(color.name()));
         fillMaterialPicker->setText(tr("Solid"));
@@ -59,13 +59,13 @@ void ShapeParametersInterface::setFillColor(const QColor& color) {
         fillColorPicker->setStyleSheet(QString("background-color: %1").arg(QColor(Qt::lightGray).name()));
         fillMaterialPicker->setText(tr("None"));
     }
-    emit fillColorChanged(fillColor);
+    emit update(&figureData);
 }
 
 void ShapeParametersInterface::setLineColor(const QColor& color) {
-    if (lineColor != QColor())
-        prevLineColor = lineColor;
-    lineColor = color;
+    if (figureData.lineColor != QColor())
+        prevLineColor = figureData.lineColor;
+    figureData.lineColor = color;
     if (color.isValid()) {
         lineColorPicker->setStyleSheet(QString("background-color: %1").arg(color.name()));
         lineMaterialPicker->setText(tr("Solid"));
@@ -73,7 +73,7 @@ void ShapeParametersInterface::setLineColor(const QColor& color) {
         lineColorPicker->setStyleSheet(QString("background-color: %1").arg(QColor(Qt::lightGray).name()));
         lineMaterialPicker->setText(tr("None"));
     }
-    emit lineColorChanged(lineColor);
+    emit update(&figureData);
 }
 
 void ShapeParametersInterface::onNoneFillAction() {
@@ -82,7 +82,7 @@ void ShapeParametersInterface::onNoneFillAction() {
 }
 
 void ShapeParametersInterface::onSolidFillAction() {
-    if (fillColor.isValid())
+    if (figureData.fillColor.isValid())
         return;
     fillMaterialPicker->setText(tr("Solid"));
     if (prevFillColor.isValid()) {
@@ -98,7 +98,7 @@ void ShapeParametersInterface::onNoneLineAction() {
 }
 
 void ShapeParametersInterface::onSolidLineAction() {
-    if (lineColor.isValid())
+    if (figureData.lineColor.isValid())
         return;
     lineMaterialPicker->setText(tr("Solid"));
     if (prevLineColor.isValid()) {
@@ -110,7 +110,8 @@ void ShapeParametersInterface::onSolidLineAction() {
 
 void ShapeParametersInterface::onThicknessChanged(int value) {
     thicknessSlider->setToolTip(QString::number(value));
-    emit thicknessChanged(value);
+    figureData.thickness = value;
+    emit update(&figureData);
 }
 
 void ShapeParametersInterface::createColorPicker(const QString& name, QPushButton *colorPickerButton, QToolButton *materialPickerButton) {
@@ -128,13 +129,13 @@ void ShapeParametersInterface::createColorPicker(const QString& name, QPushButto
 }
 
 QColor ShapeParametersInterface::getFillColor() const {
-    return fillColor;
+    return figureData.fillColor;
 }
 
 QColor ShapeParametersInterface::getLineColor() const {
-    return lineColor;
+    return figureData.lineColor;
 }
 
 int ShapeParametersInterface::getThicknessValue() const {
-    return thickness;
+    return figureData.thickness;
 }
