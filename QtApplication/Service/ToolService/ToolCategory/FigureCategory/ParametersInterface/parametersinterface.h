@@ -2,12 +2,7 @@
 #define IMAGEEDITOR_PARAMETERSINTERFACE_H
 
 #include "../../../toolunitview.h"
-
-struct FigureData {
-    QColor fillColor {QColor(Qt::green)};
-    QColor lineColor {QColor(Qt::black)};
-    int thickness {10};
-};
+#include "../../../Tool/Figure/shape.h"
 
 class ParametersInterface : public QObject {
 Q_OBJECT

@@ -35,6 +35,8 @@ ShapeParametersInterface::ShapeParametersInterface(const QString &name, QObject 
 }
 
 void ShapeParametersInterface::resetParameters() {
+    figureData.fillColor = QColor();
+    figureData.lineColor = QColor();
     onNoneFillAction();
     onSolidLineAction();
     thicknessSlider->setValue(10);
@@ -98,8 +100,9 @@ void ShapeParametersInterface::onNoneLineAction() {
 }
 
 void ShapeParametersInterface::onSolidLineAction() {
-    if (figureData.lineColor.isValid())
+    if (figureData.lineColor.isValid()) {
         return;
+    }
     lineMaterialPicker->setText(tr("Solid"));
     if (prevLineColor.isValid()) {
         setLineColor(prevLineColor);

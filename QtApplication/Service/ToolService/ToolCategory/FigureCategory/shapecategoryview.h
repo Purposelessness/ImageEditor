@@ -5,7 +5,7 @@
 
 class ShapeCategoryView : public ToolCategoryView {
 public:
-    explicit ShapeCategoryView(const QString& name = "ShapeCategory");
+    explicit ShapeCategoryView(const QString& name = "FigureCategory");
 };
 
 

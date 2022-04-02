@@ -8,7 +8,7 @@ public:
     explicit EllipseModel() = default;
 
 protected:
-    QAbstractGraphicsShapeItem *drawItem(const QRectF &rect, const QPen &pen, const QBrush &brush) override;
+    QAbstractGraphicsShapeItem *drawItem(const QRectF &rect) override;
     void resizeItem(const QRectF &rect) override;
 
 private:

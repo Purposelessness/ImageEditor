@@ -17,7 +17,9 @@ void ShapeModel::mousePressed(const QPoint &mousePos, IGraphicsView *view) {
     x = mousePos.x();
     y = mousePos.y();
     auto rect = QRectF(x, y, 0, 0);
-    item = drawItem(rect, pen, brush);
+    item = drawItem(rect);
+    item->setPen(pen);
+    item->setBrush(brush);
     view->addItem(item);
     isDrawing = true;
 }
@@ -28,7 +30,7 @@ void ShapeModel::mouseMoved(const QPoint &mousePos, IGraphicsView *view) {
     auto rect = QRectF(x, y, mousePos.x() - x, mousePos.y() - y);
     resizeItem(rect);
 }
-// TODO: mouse released outside view bug
+
 void ShapeModel::mouseReleased(const QPoint &mousePos, IGraphicsView *view) {
     isDrawing = false;
     auto rect = QRectF(x, y, mousePos.x() - x, mousePos.y() - y);

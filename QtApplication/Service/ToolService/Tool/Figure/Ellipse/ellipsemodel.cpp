@@ -1,9 +1,7 @@
 #include "ellipsemodel.h"
 
-QAbstractGraphicsShapeItem *EllipseModel::drawItem(const QRectF &rect, const QPen &pen, const QBrush &brush) {
+QAbstractGraphicsShapeItem *EllipseModel::drawItem(const QRectF &rect) {
     ellipse = new QGraphicsEllipseItem(rect);
-    ellipse->setPen(pen);
-    ellipse->setBrush(brush);
     return ellipse;
 }
 

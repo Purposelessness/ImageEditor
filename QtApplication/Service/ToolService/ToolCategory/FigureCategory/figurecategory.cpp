@@ -1,22 +1,20 @@
-#include "shapecategory.h"
-#include "../../Tool/Shape/shapemodel.h"
-#include "../../Tool/Shape/shape.h"
+#include "figurecategory.h"
 
-ShapeCategory::ShapeCategory(const QString &name, ToolCategoryView *view, ToolCategoryModel *model) :
+FigureCategory::FigureCategory(const QString &name, ToolCategoryView *view, ToolCategoryModel *model) :
             ToolCategory(name, view, model), lineParametersInterface(new LineParametersInterface(tr("LineCategory"), this)),
-            shapeParametersInterface(new ShapeParametersInterface(tr("ShapeCategory"), this)) {
+            shapeParametersInterface(new ShapeParametersInterface(tr("FigureCategory"), this)) {
     connect(lineParametersInterface, SIGNAL(update(FigureData*)), this, SLOT(onParametersChanged(FigureData*)));
     connect(shapeParametersInterface, SIGNAL(update(FigureData*)), this, SLOT(onParametersChanged(FigureData*)));
-    shapeModel = dynamic_cast<ShapeCategoryModel *>(model);
+    figureModel = dynamic_cast<FigureCategoryModel *>(model);
     shapeParametersInterface->getWidget()->setParent(nullptr);
     shapeParametersInterface->getWidget()->show();
     shapeParametersInterface->resetParameters();
 }
 
-QWidget *ShapeCategory::getAlternativeWidget() {
+QWidget *FigureCategory::getAlternativeWidget() {
     return shapeParametersInterface->getWidget();
 }
 
-void ShapeCategory::onParametersChanged(FigureData *figureData) {
-
+void FigureCategory::onParametersChanged(FigureData *figureData) {
+    dynamic_cast<IFigure *>(figureModel->getCurrentTool())->setData(figureData);
 }

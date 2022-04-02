@@ -1,7 +1,7 @@
 #include "painter.h"
 #include "../ToolService/toolservice.h"
 #include "../UndoService/Command/additemcommand.h"
-#include "../ToolService/Tool/toolmodel.h"
+#include "../ToolService/Tool/itoolmodel.h"
 
 Painter::Painter(IGraphicsView *graphicsView) : view(graphicsView) {}
 

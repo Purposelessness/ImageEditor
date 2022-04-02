@@ -1,7 +1,7 @@
 #include "toolservice.h"
 #include "../../logger.h"
 #include "ToolCategory/BrushCategory/brushcategory.h"
-#include "ToolCategory/ShapeCategory/shapecategory.h"
+#include "ToolCategory/FigureCategory/figurecategory.h"
 
 ToolService::ToolService() : bar(nullptr), dock(nullptr) {
     createTools();
@@ -9,7 +9,7 @@ ToolService::ToolService() : bar(nullptr), dock(nullptr) {
 
 void ToolService::createTools() {
     addTool(new BrushCategory());
-    addTool(new ShapeCategory());
+    addTool(new FigureCategory());
     setTool("BrushCategory");
 }
 

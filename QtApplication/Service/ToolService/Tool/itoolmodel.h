@@ -1,5 +1,5 @@
-#ifndef IMAGEEDITOR_TOOLMODEL_H
-#define IMAGEEDITOR_TOOLMODEL_H
+#ifndef IMAGEEDITOR_ITOOLMODEL_H
+#define IMAGEEDITOR_ITOOLMODEL_H
 
 class IGraphicsView;
 class QPoint;
@@ -12,4 +12,4 @@ public:
 };
 
 
-#endif //IMAGEEDITOR_TOOLMODEL_H
+#endif //IMAGEEDITOR_ITOOLMODEL_H

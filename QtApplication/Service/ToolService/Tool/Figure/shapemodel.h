@@ -1,7 +1,7 @@
 #ifndef IMAGEEDITOR_SHAPEMODEL_H
 #define IMAGEEDITOR_SHAPEMODEL_H
 
-#include "../toolmodel.h"
+#include "../itoolmodel.h"
 
 #include <QAbstractGraphicsShapeItem>
 
@@ -15,11 +15,8 @@ public:
     void setLineColor(const QColor &color);
     void setThickness(const int &value);
 
-signals:
-    void mouseReleased();
-
 protected:
-    virtual QAbstractGraphicsShapeItem *drawItem(const QRectF &rect, const QPen &pen, const QBrush &brush) = 0;
+    virtual QAbstractGraphicsShapeItem *drawItem(const QRectF &rect) = 0;
     virtual void resizeItem(const QRectF &rect) = 0;
 
 private:

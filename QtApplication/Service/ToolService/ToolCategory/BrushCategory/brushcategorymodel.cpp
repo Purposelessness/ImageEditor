@@ -1,5 +1,5 @@
 #include "brushcategorymodel.h"
-#include "../../Tool/Shape/Ellipse/ellipse.h"
+#include "../../Tool/Figure/Ellipse/ellipse.h"
 
 void BrushCategoryModel::createTools() {
     auto ellipse = new Ellipse();

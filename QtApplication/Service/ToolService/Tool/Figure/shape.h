@@ -1,18 +1,17 @@
 #ifndef IMAGEEDITOR_SHAPE_H
 #define IMAGEEDITOR_SHAPE_H
 
+#include "ifigure.h"
 #include "../tool.h"
 #include "shapemodel.h"
 
 class ToolUnitView;
 
-class Shape : public Tool {
+class Shape : public IFigure, public Tool {
 public:
     explicit Shape(QString name, ToolUnitView *view, ShapeModel *model);
 
-    void setFillColor(const QColor& color);
-    void setLineColor(const QColor &color);
-    void setThickness(const int &value);
+    void setData(FigureData *figureData) override;
 
 private:
     ShapeModel *model;
