@@ -24,6 +24,7 @@ public:
     explicit IFigure(QString name, ToolUnitView *view, IToolModel *model);
 
     virtual void setData(FigureData *figureData) = 0;
+    virtual FigureType getType() = 0;
 
 signals:
     void showParametersInterface(FigureType type);

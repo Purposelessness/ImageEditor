@@ -51,7 +51,6 @@ void ShapeParametersInterface::pickLineColor() {
 }
 
 void ShapeParametersInterface::setFillColor(const QColor& color) {
-    qDebug() << "Setting fill color to" << color;
     if (figureData.fillColor != QColor())
         prevFillColor = figureData.fillColor;
     figureData.fillColor = color;

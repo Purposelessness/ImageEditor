@@ -54,7 +54,6 @@ void ShapeModel::setFillColor(const QColor &color) {
     }
     if (item)
         item->setBrush(brush);
-    qDebug() << "Brush color is" <<  color;
 }
 
 void ShapeModel::setLineColor(const QColor &color) {

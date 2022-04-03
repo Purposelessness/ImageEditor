@@ -13,6 +13,7 @@ public:
     explicit Shape(QString name, ToolUnitView *view, ShapeModel *model);
 
     void setData(FigureData *figureData) override;
+    FigureType getType() override;
 
 protected slots:
     void onShapeDrawn();

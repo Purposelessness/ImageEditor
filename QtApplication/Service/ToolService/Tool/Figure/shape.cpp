@@ -15,3 +15,7 @@ void Shape::setData(FigureData *figureData) {
 void Shape::onShapeDrawn() {
     emit showParametersInterface(shape);
 }
+
+FigureType Shape::getType() {
+    return shape;
+}

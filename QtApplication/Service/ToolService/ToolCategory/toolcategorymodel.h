@@ -10,6 +10,7 @@ Q_OBJECT
 public:
     virtual void createTools() = 0;
     virtual void addTool(Tool *tool);
+    void setTool(const QString &name) override;
 
 signals:
     void toolAdded(QAction *action);

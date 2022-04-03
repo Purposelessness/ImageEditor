@@ -21,7 +21,8 @@ protected slots:
     void onActionTriggered() override;
 
 private slots:
-    void onParametersChanged(FigureData *figureData);
+    void onLineParametersChanged(FigureData *figureData);
+    void onShapeParametersChanged(FigureData *figureData);
     void showParametersInterface(FigureType figureType);
 
 private:

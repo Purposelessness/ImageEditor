@@ -14,12 +14,20 @@ public:
 
     void createTools() override;
     void addTool(Tool *tool) override;
+    void setTool(const QString &name) override;
+    void updateFigureParameters(FigureData *figureData, FigureType figureType);
 
 signals:
     void showInterface(FigureType figureType);
 
 private slots:
     void onFigureDrawn(FigureType figureType);
+
+private:
+    void updateFigureData();
+
+    FigureData lineData {};
+    FigureData shapeData {};
 };
 
 

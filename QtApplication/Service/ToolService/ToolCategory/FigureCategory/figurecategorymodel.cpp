@@ -22,3 +22,38 @@ void FigureCategoryModel::addTool(Tool *tool) {
 void FigureCategoryModel::onFigureDrawn(FigureType figureType) {
     emit showInterface(figureType);
 }
+
+void FigureCategoryModel::setTool(const QString &name) {
+    ToolCategoryModel::setTool(name);
+    updateFigureData();
+}
+
+void FigureCategoryModel::updateFigureParameters(FigureData *figureData, FigureType figureType) {
+    switch (figureType) {
+        case line:
+            lineData = *figureData;
+            break;
+        case shape:
+            shapeData = *figureData;
+            break;
+        case none:
+            break;
+    }
+    updateFigureData();
+}
+
+void FigureCategoryModel::updateFigureData() {
+    if (!getCurrentTool())
+        return;
+    auto tool = dynamic_cast<IFigure *>(getCurrentTool());
+    switch (tool->getType()) {
+        case line:
+            tool->setData(&lineData);
+            break;
+        case shape:
+            tool->setData(&shapeData);
+            break;
+        case none:
+            break;
+    }
+}

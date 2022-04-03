@@ -5,10 +5,15 @@ Line::Line(QString name, ToolUnitView *view, LineModel *model) : IFigure(std::mo
 }
 
 void Line::setData(FigureData *figureData) {
-    model->setColor(figureData->lineColor);
+    if (figureData->lineColor.isValid())
+        model->setColor(figureData->lineColor);
     model->setThickness(figureData->thickness);
 }
 
 void Line::onLineDrawn() {
     emit showParametersInterface(line);
+}
+
+FigureType Line::getType() {
+    return line;
 }

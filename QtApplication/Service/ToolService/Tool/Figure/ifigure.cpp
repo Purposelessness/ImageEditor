@@ -2,6 +2,4 @@
 
 #include <utility>
 
-IFigure::IFigure(QString name, ToolUnitView *view, IToolModel *model) : Tool(std::move(name), view, model) {
-
-}
+IFigure::IFigure(QString name, ToolUnitView *view, IToolModel *model) : Tool(std::move(name), view, model) {}

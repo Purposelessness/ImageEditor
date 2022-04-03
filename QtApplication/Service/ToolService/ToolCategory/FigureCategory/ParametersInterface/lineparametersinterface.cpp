@@ -40,6 +40,7 @@ void LineParametersInterface::setColor(const QColor& newColor) {
 void LineParametersInterface::onThicknessChanged(int value) {
     thicknessSlider->setToolTip(QString::number(value));
     figureData.thickness = value;
+    qDebug() << "Thickness change to" << value;
     emit update(&figureData);
 }
 
