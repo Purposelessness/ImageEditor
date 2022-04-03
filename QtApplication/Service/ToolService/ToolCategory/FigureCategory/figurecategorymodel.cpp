@@ -12,3 +12,13 @@ void FigureCategoryModel::createTools() {
     addTool(line);
     setTool(ellipse->toString());
 }
+
+void FigureCategoryModel::addTool(Tool *tool) {
+    tool = dynamic_cast<IFigure *>(tool);
+    connect(tool, SIGNAL(showParametersInterface(FigureType)), this, SLOT(onFigureDrawn(FigureType)));
+    ToolCategoryModel::addTool(tool);
+}
+
+void FigureCategoryModel::onFigureDrawn(FigureType figureType) {
+    emit showInterface(figureType);
+}

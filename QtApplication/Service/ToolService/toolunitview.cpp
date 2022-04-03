@@ -25,3 +25,19 @@ QWidget *ToolUnitView::getWidget() {
 void ToolUnitView::addWidget(QWidget *widget) {
     layout->addWidget(widget);
 }
+
+void ToolUnitView::setWidget(QWidget *widget) {
+    if (!stashedWidget)
+        stashedWidget = mainWidget;
+    mainWidget = widget;
+}
+
+void ToolUnitView::resetWidget() {
+    if (!stashedWidget) {
+        qDebug() << "StashedWidget is null";
+        return;
+    }
+    qDebug() << "StashedWidget is not null";
+    mainWidget = stashedWidget;
+    stashedWidget = nullptr;
+}

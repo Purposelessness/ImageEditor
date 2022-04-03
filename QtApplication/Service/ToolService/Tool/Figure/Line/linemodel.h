@@ -7,6 +7,8 @@
 #include <QPen>
 
 class LineModel : public IToolModel {
+Q_OBJECT
+
 public:
     void mousePressed(const QPoint &mousePos, IGraphicsView *view) override;
     void mouseMoved(const QPoint &mousePos, IGraphicsView *view) override;
@@ -14,6 +16,9 @@ public:
 
     void setColor(const QColor &color);
     void setThickness(const int &value);
+
+signals:
+    void lineDrawn();
 
 private:
     QPen pen = QPen();

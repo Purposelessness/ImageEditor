@@ -17,9 +17,9 @@ public:
     IToolModel *getModel() final;
     QWidget *getAlternativeWidget() override;
 
-private slots:
-    void onToolAdded(QAction *action);
-    void onActionTriggered();
+protected slots:
+    virtual void onToolAdded(QAction *action);
+    virtual void onActionTriggered();
 
 private:
     ToolCategoryView *view;

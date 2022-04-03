@@ -6,6 +6,8 @@
 #include <QAbstractGraphicsShapeItem>
 
 class ShapeModel : public IToolModel {
+Q_OBJECT
+
 public:
     void mousePressed(const QPoint &mousePos, IGraphicsView *view) override;
     void mouseMoved(const QPoint &mousePos, IGraphicsView *view) override;
@@ -14,6 +16,9 @@ public:
     void setFillColor(const QColor &color);
     void setLineColor(const QColor &color);
     void setThickness(const int &value);
+
+signals:
+    void shapeDrawn();
 
 protected:
     virtual QAbstractGraphicsShapeItem *drawItem(const QRectF &rect) = 0;

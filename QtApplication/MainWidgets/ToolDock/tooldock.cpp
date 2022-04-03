@@ -18,3 +18,7 @@ void ToolDock::setWidget(QWidget *widget) {
 void ToolDock::setWindowTitle(const QString& title) {
     QWidget::setWindowTitle(title);
 }
+
+void ToolDock::show() {
+    QDockWidget::show();
+}

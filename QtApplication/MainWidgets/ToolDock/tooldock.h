@@ -11,6 +11,7 @@ public:
 
     void setWidget(QWidget *widget) override;
     void setWindowTitle(const QString &title) override;
+    void show() override;
 };
 
 

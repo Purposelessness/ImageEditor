@@ -2,16 +2,20 @@
 #define IMAGEEDITOR_SHAPE_H
 
 #include "ifigure.h"
-#include "../tool.h"
 #include "shapemodel.h"
 
 class ToolUnitView;
 
-class Shape : public IFigure, public Tool {
+class Shape : public IFigure {
+Q_OBJECT
+
 public:
     explicit Shape(QString name, ToolUnitView *view, ShapeModel *model);
 
     void setData(FigureData *figureData) override;
+
+protected slots:
+    void onShapeDrawn();
 
 private:
     ShapeModel *model;

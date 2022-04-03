@@ -13,7 +13,7 @@ void ToolService::createTools() {
     setTool("BrushCategory");
 }
 
-ToolService& ToolService::getInstance() {
+ToolService &ToolService::getInstance() {
     static ToolService instance;
     return instance;
 }
@@ -24,14 +24,14 @@ void ToolService::addTool(ToolUnit *tool) {
     addToolToBar(tool);
 }
 
-void ToolService::setTool(const QString& name) {
+void ToolService::setTool(const QString &name) {
     ToolContext::setTool(name);
     updateToolDock();
 }
 
 void ToolService::setToolBar(IToolBar *toolBar) {
     bar = toolBar;
-    for (auto tool : tools)
+    for (auto tool: tools)
         addToolToBar(tool);
     qDebug(toolService()) << "ToolBar linked to ToolService";
 }
@@ -48,6 +48,8 @@ void ToolService::setToolDock(IToolDock *toolDock) {
 }
 
 void ToolService::updateToolDock() {
-    if (dock)
+    if (dock) {
+        dock->show();
         dock->setWidget(getCurrentTool()->getWidget());
+    }
 }

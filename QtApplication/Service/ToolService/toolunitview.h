@@ -13,9 +13,12 @@ public:
     QAction *getAction();
     QWidget *getWidget();
     void addWidget(QWidget *widget);
+    void setWidget(QWidget *widget);
+    void resetWidget();
 
 private:
-    QWidget *mainWidget;
+    QWidget *mainWidget = nullptr;
+    QWidget *stashedWidget = nullptr;
     QAction *action;
     QVBoxLayout *layout;
 };

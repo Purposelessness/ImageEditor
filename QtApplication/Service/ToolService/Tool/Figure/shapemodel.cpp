@@ -34,7 +34,7 @@ void ShapeModel::mouseMoved(const QPoint &mousePos, IGraphicsView *view) {
 void ShapeModel::mouseReleased(const QPoint &mousePos, IGraphicsView *view) {
     isDrawing = false;
     auto rect = QRectF(x, y, mousePos.x() - x, mousePos.y() - y);
-    if (rect.isNull()) {
+    if (rect.isNull() || !item) {
         qDebug(core()) << "Rect is NULL";
         delete item;
         item = nullptr;
@@ -42,7 +42,7 @@ void ShapeModel::mouseReleased(const QPoint &mousePos, IGraphicsView *view) {
     }
     resizeItem(rect);
     new AddItemCommand(item);
-    item = nullptr;
+    emit shapeDrawn();
 }
 
 void ShapeModel::setFillColor(const QColor &color) {
@@ -54,6 +54,7 @@ void ShapeModel::setFillColor(const QColor &color) {
     }
     if (item)
         item->setBrush(brush);
+    qDebug() << "Brush color is" <<  color;
 }
 
 void ShapeModel::setLineColor(const QColor &color) {

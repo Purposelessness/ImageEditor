@@ -2,7 +2,7 @@
 #define IMAGEEDITOR_FIGURECATEGORY_H
 
 #include "../toolcategory.h"
-#include "shapecategoryview.h"
+#include "figurecategoryview.h"
 #include "figurecategorymodel.h"
 #include "ParametersInterface/shapeparametersinterface.h"
 #include "ParametersInterface/lineparametersinterface.h"
@@ -12,18 +12,23 @@ Q_OBJECT
 
 public:
     explicit FigureCategory(const QString &name = tr("FigureCategory"),
-                            ToolCategoryView *view = new ShapeCategoryView(tr("FigureCategory")),
-                            ToolCategoryModel *model = new FigureCategoryModel());
+                            ToolCategoryView *newView = new FigureCategoryView(tr("FigureCategory")),
+                            ToolCategoryModel *newModel = new FigureCategoryModel());
 
     QWidget *getAlternativeWidget() override;
 
+protected slots:
+    void onActionTriggered() override;
+
 private slots:
     void onParametersChanged(FigureData *figureData);
+    void showParametersInterface(FigureType figureType);
 
 private:
     ShapeParametersInterface *shapeParametersInterface;
     LineParametersInterface *lineParametersInterface;
-    FigureCategoryModel *figureModel;
+    FigureCategoryModel *model;
+    FigureCategoryView *view;
 };
 
 

@@ -7,11 +7,16 @@
 
 class ToolUnitView;
 
-class Line : public IFigure, public Tool {
+class Line : public IFigure {
+Q_OBJECT
+
 public:
     explicit Line(QString name = tr("Line"), ToolUnitView *view = new ToolUnitView(tr("Line")), LineModel *model = new LineModel());
 
     void setData(FigureData *figureData) override;
+
+protected slots:
+    void onLineDrawn();
 
 private:
     LineModel *model;

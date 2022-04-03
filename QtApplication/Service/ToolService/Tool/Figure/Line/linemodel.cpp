@@ -30,7 +30,7 @@ void LineModel::mouseReleased(const QPoint &mousePos, IGraphicsView *view) {
     }
     item->setLine(x, y, mousePos.x(), mousePos.y());
     new AddItemCommand(item);
-    item = nullptr;
+    emit lineDrawn();
 }
 
 void LineModel::setColor(const QColor &color) {
