@@ -19,3 +19,11 @@ void Shape::onShapeDrawn() {
 FigureType Shape::getType() {
     return shape;
 }
+
+void Shape::unlock() {
+    model->unlock();
+}
+
+void Shape::lock() {
+    model->lock();
+}

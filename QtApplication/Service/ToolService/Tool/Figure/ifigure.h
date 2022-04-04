@@ -25,6 +25,8 @@ public:
 
     virtual void setData(FigureData *figureData) = 0;
     virtual FigureType getType() = 0;
+    virtual void unlock() = 0;
+    virtual void lock() = 0;
 
 signals:
     void showParametersInterface(FigureType type);

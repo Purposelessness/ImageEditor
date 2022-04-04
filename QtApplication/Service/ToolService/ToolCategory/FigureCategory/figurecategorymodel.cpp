@@ -2,6 +2,7 @@
 #include "../../Tool/Figure/Ellipse/ellipse.h"
 #include "../../Tool/Figure/Rect/rect.h"
 #include "../../Tool/Figure/Line/line.h"
+#include "../../Tool/Figure/Triangle/triangle.h"
 
 void FigureCategoryModel::createTools() {
     auto ellipse = new Ellipse();
@@ -10,6 +11,8 @@ void FigureCategoryModel::createTools() {
     addTool(rect);
     auto line = new Line();
     addTool(line);
+    auto triangle = new Triangle();
+    addTool(triangle);
     setTool(ellipse->toString());
 }
 
@@ -56,4 +59,8 @@ void FigureCategoryModel::updateFigureData() {
         case none:
             break;
     }
+}
+
+void FigureCategoryModel::lockItem() {
+    dynamic_cast<IFigure *>(getCurrentTool())->lock();
 }
