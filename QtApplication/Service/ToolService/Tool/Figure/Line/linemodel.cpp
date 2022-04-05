@@ -23,12 +23,12 @@ void LineModel::mouseMoved(const QPoint &mousePos, IGraphicsView *view) {
 void LineModel::mouseReleased(const QPoint &mousePos, IGraphicsView *view) {
     isDrawing = false;
     if (x == mousePos.x() && y == mousePos.y() || !item) {
-        qDebug(core()) << "Line is NULL";
         delete item;
         item = nullptr;
         return;
     }
     item->setLine(x, y, mousePos.x(), mousePos.y());
+    item->setFlag(QGraphicsItem::ItemIsSelectable);
     new AddItemCommand(item);
     emit lineDrawn();
 }

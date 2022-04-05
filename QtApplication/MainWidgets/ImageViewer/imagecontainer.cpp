@@ -5,13 +5,13 @@
 #include <QColorSpace>
 #include <QMouseEvent>
 
-ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(new QGraphicsScene),
+ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(new QGraphicsScene), painterPath(QPainterPath()),
                                                   pixmapItem(nullptr), painter(Painter(this)) {
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setViewportMargins(-2, -2, -2, -2);
     setBackgroundRole(QPalette::Mid);
-    setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
 
     connect(this, SIGNAL(mousePressed(const QPoint&)), &painter, SLOT(onMousePressed(const QPoint&)));
     connect(this, SIGNAL(mouseMoved(const QPoint&)), &painter, SLOT(onMouseMoved(const QPoint&)));
@@ -56,11 +56,20 @@ void ImageContainer::mousePressEvent(QMouseEvent *event) {
 void ImageContainer::mouseMoveEvent(QMouseEvent *event) {
     emit mouseMoved(event->pos());
     QGraphicsView::mouseMoveEvent(event);
+    scene->update();
 }
 
 void ImageContainer::mouseReleaseEvent(QMouseEvent *event) {
     emit mouseReleased(event->pos());
     QGraphicsView::mouseReleaseEvent(event);
+}
+
+void ImageContainer::mouseDoubleClickEvent(QMouseEvent *event) {
+    painterPath.clear();
+    painterPath.addEllipse(event->pos(), selectRadius, selectRadius);
+    scene->setSelectionArea(painterPath);
+    qDebug() << scene->selectedItems().length();
+    QGraphicsView::mouseDoubleClickEvent(event);
 }
 
 void ImageContainer::onDrawingFinished(QGraphicsItem *item) {

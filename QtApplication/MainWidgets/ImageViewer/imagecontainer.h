@@ -32,15 +32,17 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
-
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 private:
     QGraphicsScene *scene;
     QGraphicsPixmapItem *pixmapItem;
     Painter painter;
     QPixmap pixmap;
+    QPainterPath painterPath;
 
     float scaleValue = 1;
+    const int selectRadius = 5;
 };
 
 

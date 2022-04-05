@@ -33,14 +33,29 @@ void ShapeModel::mouseMoved(const QPoint &mousePos, IGraphicsView *view) {
 
 void ShapeModel::mouseReleased(const QPoint &mousePos, IGraphicsView *view) {
     isDrawing = false;
-    auto rect = QRectF(x, y, mousePos.x() - x, mousePos.y() - y);
+    qreal left, top, width, height;
+    if (x <= mousePos.x()) {
+        left = x;
+        width = mousePos.x() - x;
+    } else {
+        left = mousePos.x();
+        width = x - mousePos.x();
+    }
+    if (y <= mousePos.y()) {
+        top = y;
+        height = mousePos.y() - y;
+    } else {
+        top = mousePos.y();
+        height = y - mousePos.y();
+    }
+    auto rect = QRectF(left, top, width, height);
     if (rect.isNull() || !item) {
-        qDebug(core()) << "Rect is NULL";
         delete item;
         item = nullptr;
         return;
     }
     resizeItem(rect);
+    item->setFlag(QGraphicsItem::ItemIsSelectable);
     new AddItemCommand(item);
     emit shapeDrawn();
 }
