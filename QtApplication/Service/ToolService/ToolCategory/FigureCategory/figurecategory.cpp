@@ -40,7 +40,6 @@ void FigureCategory::showParametersInterface(FigureType figureType) {
 }
 
 void FigureCategory::onActionTriggered() {
-    model->lockItem();
     showParametersInterface(none);
     ToolCategory::onActionTriggered();
 }

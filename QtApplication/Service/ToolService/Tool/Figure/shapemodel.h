@@ -17,9 +17,6 @@ public:
     void setLineColor(const QColor &color);
     void setThickness(const int &value);
 
-    void unlock();
-    void lock();
-
 signals:
     void shapeDrawn();
 

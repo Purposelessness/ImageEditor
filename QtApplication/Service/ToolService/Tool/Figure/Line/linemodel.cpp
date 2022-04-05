@@ -6,7 +6,6 @@
 void LineModel::mousePressed(const QPoint &mousePos, IGraphicsView *view) {
     if (isDrawing)
         return;
-    lock();
     x = mousePos.x();
     y = mousePos.y();
     item = new QGraphicsLineItem(x, y, x, y);
@@ -30,7 +29,6 @@ void LineModel::mouseReleased(const QPoint &mousePos, IGraphicsView *view) {
         return;
     }
     item->setLine(x, y, mousePos.x(), mousePos.y());
-    unlock();
     new AddItemCommand(item);
     emit lineDrawn();
 }
@@ -46,14 +44,4 @@ void LineModel::setThickness(const int &value) {
     pen.setWidth(thickness);
     if (item)
         item->setPen(pen);
-}
-
-void LineModel::unlock() {
-    if (item)
-        item->setFlag(QGraphicsItem::ItemIsMovable);
-}
-
-void LineModel::lock() {
-    if (item)
-        item->setFlag(QGraphicsItem::ItemIsMovable, false);
 }

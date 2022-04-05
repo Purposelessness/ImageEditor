@@ -17,11 +17,3 @@ void Line::onLineDrawn() {
 FigureType Line::getType() {
     return line;
 }
-
-void Line::unlock() {
-    model->unlock();
-}
-
-void Line::lock() {
-    model->lock();
-}

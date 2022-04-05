@@ -15,8 +15,6 @@ public:
 
     void setData(FigureData *figureData) override;
     FigureType getType() override;
-    void lock() override;
-    void unlock() override;
 
 protected slots:
     void onLineDrawn();

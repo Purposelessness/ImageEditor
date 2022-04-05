@@ -14,7 +14,6 @@ int ShapeModel::thickness = 10;
 void ShapeModel::mousePressed(const QPoint &mousePos, IGraphicsView *view) {
     if (isDrawing)
         return;
-    lock();
     x = mousePos.x();
     y = mousePos.y();
     auto rect = QRectF(x, y, 0, 0);
@@ -42,7 +41,6 @@ void ShapeModel::mouseReleased(const QPoint &mousePos, IGraphicsView *view) {
         return;
     }
     resizeItem(rect);
-    unlock();
     new AddItemCommand(item);
     emit shapeDrawn();
 }
@@ -73,14 +71,4 @@ void ShapeModel::setThickness(const int &value) {
     pen.setWidth(thickness);
     if (item)
         item->setPen(pen);
-}
-
-void ShapeModel::unlock() {
-    if (item)
-        item->setFlag(QGraphicsItem::ItemIsMovable);
-}
-
-void ShapeModel::lock() {
-    if (item)
-        item->setFlag(QGraphicsItem::ItemIsMovable, false);
 }

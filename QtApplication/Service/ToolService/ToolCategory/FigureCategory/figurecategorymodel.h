@@ -17,8 +17,6 @@ public:
     void setTool(const QString &name) override;
     void updateFigureParameters(FigureData *figureData, FigureType figureType);
 
-    void lockItem();
-
 signals:
     void showInterface(FigureType figureType);
 

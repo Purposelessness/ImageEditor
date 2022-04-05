@@ -6,8 +6,6 @@
 
 #include "toolunit.h"
 
-// TODO: generic context
-
 class ToolContext : public QObject {
 Q_OBJECT
 
