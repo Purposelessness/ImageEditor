@@ -39,9 +39,11 @@ private:
     class : public QGraphicsObject {
     private:
         bool sceneEventFilter(QGraphicsItem *watched, QEvent *event) override {
-            if (event->type() == QEvent::GraphicsSceneMouseDoubleClick) {
+            if (watched->isSelected())
+                return false;
+
+            if (event->type() == QEvent::GraphicsSceneMouseDoubleClick)
                 watched->setSelected(true);
-            }
             return true;
         }
         [[nodiscard]] QRectF boundingRect() const final { return QRect(); }
@@ -55,7 +57,7 @@ private:
     QGraphicsItem *selectedItem = nullptr;
 
     float scaleValue = 1;
-    bool itemSelected = false, processing = false;
+    bool itemSelected = false;
 };
 
 

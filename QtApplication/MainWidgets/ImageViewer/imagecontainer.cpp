@@ -50,18 +50,21 @@ void ImageContainer::resizeEvent(QResizeEvent *event) {
 }
 
 void ImageContainer::mousePressEvent(QMouseEvent *event) {
-    emit mousePressed(event->pos());
+    if (!itemSelected)
+        emit mousePressed(event->pos());
     QGraphicsView::mousePressEvent(event);
 }
 
 void ImageContainer::mouseMoveEvent(QMouseEvent *event) {
-    emit mouseMoved(event->pos());
+    if (!itemSelected)
+        emit mouseMoved(event->pos());
     QGraphicsView::mouseMoveEvent(event);
     scene->update();
 }
 
 void ImageContainer::mouseReleaseEvent(QMouseEvent *event) {
-    emit mouseReleased(event->pos());
+    if (!itemSelected)
+        emit mouseReleased(event->pos());
     QGraphicsView::mouseReleaseEvent(event);
 }
 
@@ -80,7 +83,7 @@ void ImageContainer::onDrawingFinished(QGraphicsItem *item) {
 
 void ImageContainer::addItem(QGraphicsItem *item) {
     scene->addItem(item);
-    item->setFlag(QGraphicsItem::ItemIsSelectable);
+    item->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
     item->installSceneEventFilter(&eventFilter);
     onDrawingFinished(item);
 }
@@ -93,8 +96,10 @@ void ImageContainer::onSelectionChanged() {
     auto list = scene->selectedItems();
     if (list.length() <= 0) {
         selectedItem = nullptr;
+        itemSelected = false;
     } else if (list.length() == 1) {
         selectedItem = list.value(0);
+        itemSelected = true;
     } else {
         if (!selectedItem)
             selectedItem = list.value(0);
