@@ -5,8 +5,7 @@
 #include <QColorSpace>
 #include <QMouseEvent>
 
-ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(new QGraphicsScene), painterPath(QPainterPath()),
-                                                  pixmapItem(nullptr), painter(Painter(this)) {
+ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(new QGraphicsScene), painter(Painter(this)) {
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setViewportMargins(-2, -2, -2, -2);
@@ -16,8 +15,10 @@ ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(n
     connect(this, SIGNAL(mousePressed(const QPoint&)), &painter, SLOT(onMousePressed(const QPoint&)));
     connect(this, SIGNAL(mouseMoved(const QPoint&)), &painter, SLOT(onMouseMoved(const QPoint&)));
     connect(this, SIGNAL(mouseReleased(const QPoint&)), &painter, SLOT(onMouseReleased(const QPoint&)));
+    connect(scene, SIGNAL(selectionChanged()), this, SLOT(onSelectionChanged()));
 
     setScene(scene);
+    scene->addItem(&eventFilter);
 }
 
 void ImageContainer::setImage(const QImage& newImage) {
@@ -64,14 +65,6 @@ void ImageContainer::mouseReleaseEvent(QMouseEvent *event) {
     QGraphicsView::mouseReleaseEvent(event);
 }
 
-void ImageContainer::mouseDoubleClickEvent(QMouseEvent *event) {
-    painterPath.clear();
-    painterPath.addEllipse(event->pos(), selectRadius, selectRadius);
-    scene->setSelectionArea(painterPath);
-    qDebug() << scene->selectedItems().length();
-    QGraphicsView::mouseDoubleClickEvent(event);
-}
-
 void ImageContainer::onDrawingFinished(QGraphicsItem *item) {
     bool ok = true;
     auto transform = item->itemTransform(pixmapItem, &ok);
@@ -87,9 +80,24 @@ void ImageContainer::onDrawingFinished(QGraphicsItem *item) {
 
 void ImageContainer::addItem(QGraphicsItem *item) {
     scene->addItem(item);
+    item->setFlag(QGraphicsItem::ItemIsSelectable);
+    item->installSceneEventFilter(&eventFilter);
     onDrawingFinished(item);
 }
 
 QGraphicsScene *ImageContainer::getScene() {
     return scene;
+}
+
+void ImageContainer::onSelectionChanged() {
+    auto list = scene->selectedItems();
+    if (list.length() <= 0) {
+        selectedItem = nullptr;
+    } else if (list.length() == 1) {
+        selectedItem = list.value(0);
+    } else {
+        if (!selectedItem)
+            selectedItem = list.value(0);
+        selectedItem->setSelected(false);
+    }
 }

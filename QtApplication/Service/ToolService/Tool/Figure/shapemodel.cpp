@@ -55,7 +55,7 @@ void ShapeModel::mouseReleased(const QPoint &mousePos, IGraphicsView *view) {
         return;
     }
     resizeItem(rect);
-    item->setFlag(QGraphicsItem::ItemIsSelectable);
+//    item->setFlag(QGraphicsItem::ItemIsSelectable);
     new AddItemCommand(item);
     emit shapeDrawn();
 }

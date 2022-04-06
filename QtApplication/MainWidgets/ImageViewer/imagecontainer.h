@@ -6,23 +6,22 @@
 
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
+#include <QEvent>
 
 class ImageContainer : public QGraphicsView, public IGraphicsView {
 Q_OBJECT
 
 public:
     explicit ImageContainer(QWidget *parent = nullptr);
-
-    void setImage(const QImage& newImage);
+    void setImage(const QImage &newImage);
     void scale(float newScaleValue);
-
     void addItem(QGraphicsItem *item) override;
     QGraphicsScene *getScene() override;
 
 signals:
-    void mousePressed(const QPoint& mousePos);
-    void mouseMoved(const QPoint& mousePos);
-    void mouseReleased(const QPoint& mousePos);
+    void mousePressed(const QPoint &mousePos);
+    void mouseMoved(const QPoint &mousePos);
+    void mouseReleased(const QPoint &mousePos);
 
 public slots:
     void onDrawingFinished(QGraphicsItem *item);
@@ -32,17 +31,31 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
-    void mouseDoubleClickEvent(QMouseEvent *event) override;
+
+private slots:
+    void onSelectionChanged();
 
 private:
+    class : public QGraphicsObject {
+    private:
+        bool sceneEventFilter(QGraphicsItem *watched, QEvent *event) override {
+            if (event->type() == QEvent::GraphicsSceneMouseDoubleClick) {
+                watched->setSelected(true);
+            }
+            return true;
+        }
+        [[nodiscard]] QRectF boundingRect() const final { return QRect(); }
+        [[maybe_unused]] void paint(QPainter *qPainter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override {}
+    } eventFilter;
+
     QGraphicsScene *scene;
-    QGraphicsPixmapItem *pixmapItem;
+    QGraphicsPixmapItem *pixmapItem = nullptr;
     Painter painter;
     QPixmap pixmap;
-    QPainterPath painterPath;
+    QGraphicsItem *selectedItem = nullptr;
 
     float scaleValue = 1;
-    const int selectRadius = 5;
+    bool itemSelected = false, processing = false;
 };
 
 

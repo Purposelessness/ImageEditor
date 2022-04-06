@@ -34,10 +34,8 @@ void ToolUnitView::setWidget(QWidget *widget) {
 
 void ToolUnitView::resetWidget() {
     if (!stashedWidget) {
-        qDebug() << "StashedWidget is null";
         return;
     }
-    qDebug() << "StashedWidget is not null";
     mainWidget = stashedWidget;
     stashedWidget = nullptr;
 }
