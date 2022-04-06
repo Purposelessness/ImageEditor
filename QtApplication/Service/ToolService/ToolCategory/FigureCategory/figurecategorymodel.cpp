@@ -14,46 +14,33 @@ void FigureCategoryModel::createTools() {
 }
 
 void FigureCategoryModel::addTool(Tool *tool) {
-    tool = dynamic_cast<IFigure *>(tool);
-    connect(tool, SIGNAL(showParametersInterface(FigureType)), this, SLOT(onFigureDrawn(FigureType)));
+    auto figure = dynamic_cast<Figure *>(tool);
+    connect(figure, SIGNAL(selected(Figure*)), this, SLOT(onFigureSelected(Figure*)));
+    connect(figure, SIGNAL(deselected()), this, SLOT(onFigureDeselected()));
     ToolCategoryModel::addTool(tool);
 }
 
-void FigureCategoryModel::onFigureDrawn(FigureType figureType) {
-    emit showInterface(figureType);
-}
-
-void FigureCategoryModel::setTool(const QString &name) {
-    ToolCategoryModel::setTool(name);
-    updateFigureData();
-}
-
-void FigureCategoryModel::updateFigureParameters(FigureData *figureData, FigureType figureType) {
-    switch (figureType) {
+void FigureCategoryModel::updateFigureParameters(Figure *figure, FigureData *figureData) {
+    if (!figure)
+        return;
+    switch (figure->getType()) {
         case line:
             lineData = *figureData;
+            figure->setData(&lineData);
             break;
         case shape:
             shapeData = *figureData;
+            figure->setData(&shapeData);
             break;
         case none:
             break;
     }
-    updateFigureData();
 }
 
-void FigureCategoryModel::updateFigureData() {
-    if (!getCurrentTool())
-        return;
-    auto tool = dynamic_cast<IFigure *>(getCurrentTool());
-    switch (tool->getType()) {
-        case line:
-            tool->setData(&lineData);
-            break;
-        case shape:
-            tool->setData(&shapeData);
-            break;
-        case none:
-            break;
-    }
+void FigureCategoryModel::onFigureSelected(Figure *figure) {
+    emit figureSelected(figure);
+}
+
+void FigureCategoryModel::onFigureDeselected() {
+    emit figureDeselected();
 }

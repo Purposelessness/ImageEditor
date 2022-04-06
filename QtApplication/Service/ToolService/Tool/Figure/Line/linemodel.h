@@ -16,15 +16,20 @@ public:
 
     void setColor(const QColor &color);
     void setThickness(const int &value);
+    QGraphicsLineItem *getGraphicsItem();
+
+    void onItemSelected(QGraphicsLineItem *graphicsLineItem);
+    void onItemDeselected();
 
 signals:
-    void lineDrawn();
+    void itemSelected();
+    void itemDeselected();
 
 private:
     QPen pen = QPen();
     int thickness = 10;
 
-    QGraphicsLineItem *item = nullptr;
+    QGraphicsLineItem *item = nullptr, *selectedItem = nullptr;
 
     bool isDrawing = false;
 

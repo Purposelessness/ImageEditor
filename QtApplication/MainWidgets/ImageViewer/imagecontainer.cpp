@@ -1,9 +1,12 @@
 #include "imagecontainer.h"
 #include "../../logger.h"
 #include "../../Service/UndoService/undoservice.h"
+#include "../../Service/ToolService/toolservice.h"
+#include "../../Service/ToolService/ToolCategory/FigureCategory/figurecategory.h"
 
 #include <QColorSpace>
 #include <QMouseEvent>
+#include <QGraphicsItem>
 
 ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(new QGraphicsScene), painter(Painter(this)) {
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

@@ -2,8 +2,9 @@
 
 #include <utility>
 
-Shape::Shape(QString name, ToolUnitView *view, ShapeModel *model) : IFigure(std::move(name), view, model), model(model) {
-    connect(model, SIGNAL(shapeDrawn()), this, SLOT(onShapeDrawn()));
+Shape::Shape(QString name, ToolUnitView *view, ShapeModel *model) : Figure(std::move(name), view, model), model(model) {
+    connect(model, SIGNAL(itemSelected()), this, SLOT(onItemSelected()));
+    connect(model, SIGNAL(itemDeselected()), this, SLOT(onItemDeselected()));
 }
 
 void Shape::setData(FigureData *figureData) {
@@ -12,10 +13,14 @@ void Shape::setData(FigureData *figureData) {
     model->setThickness(figureData->thickness);
 }
 
-void Shape::onShapeDrawn() {
-    emit showParametersInterface(shape);
-}
-
 FigureType Shape::getType() {
     return shape;
+}
+
+void Shape::onItemSelected() {
+    emit selected(this);
+}
+
+void Shape::onItemDeselected() {
+    emit deselected();
 }

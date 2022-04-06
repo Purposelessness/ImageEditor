@@ -1,7 +1,8 @@
 #include "rectmodel.h"
+#include "rectitem.h"
 
 QAbstractGraphicsShapeItem *RectModel::drawItem(const QRectF &rect) {
-    rectangle = new QGraphicsRectItem();
+    rectangle = new RectItem(this);
     return rectangle;
 }
 

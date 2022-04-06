@@ -1,7 +1,8 @@
 #include "line.h"
 
-Line::Line(QString name, ToolUnitView *view, LineModel *model) : IFigure(std::move(name), view, model), model(model) {
-    connect(model, SIGNAL(lineDrawn()), this, SLOT(onLineDrawn()));
+Line::Line(QString name, ToolUnitView *view, LineModel *model) : Figure(std::move(name), view, model), model(model) {
+    connect(model, SIGNAL(itemSelected()), this, SLOT(onItemSelected()));
+    connect(model, SIGNAL(itemDeselected()), this, SLOT(onItemDeselected()));
 }
 
 void Line::setData(FigureData *figureData) {
@@ -10,10 +11,14 @@ void Line::setData(FigureData *figureData) {
     model->setThickness(figureData->thickness);
 }
 
-void Line::onLineDrawn() {
-    emit showParametersInterface(line);
-}
-
 FigureType Line::getType() {
     return line;
+}
+
+void Line::onItemSelected() {
+    emit selected(this);
+}
+
+void Line::onItemDeselected() {
+    emit deselected();
 }

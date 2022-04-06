@@ -1,7 +1,9 @@
 #include "ellipsemodel.h"
+#include "ellipseitem.h"
 
 QAbstractGraphicsShapeItem *EllipseModel::drawItem(const QRectF &rect) {
-    ellipse = new QGraphicsEllipseItem(rect);
+    ellipse = new EllipseItem(this);
+    ellipse->setRect(rect);
     return ellipse;
 }
 

@@ -1,13 +1,13 @@
 #ifndef IMAGEEDITOR_LINE_H
 #define IMAGEEDITOR_LINE_H
 
-#include "../ifigure.h"
+#include "../figure.h"
 #include "../../tool.h"
 #include "linemodel.h"
 
 class ToolUnitView;
 
-class Line : public IFigure {
+class Line : public Figure {
 Q_OBJECT
 
 public:
@@ -16,8 +16,9 @@ public:
     void setData(FigureData *figureData) override;
     FigureType getType() override;
 
-protected slots:
-    void onLineDrawn();
+private slots:
+    void onItemSelected();
+    void onItemDeselected();
 
 private:
     LineModel *model;

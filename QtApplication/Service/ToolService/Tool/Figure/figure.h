@@ -1,5 +1,5 @@
-#ifndef IMAGEEDITOR_IFIGURE_H
-#define IMAGEEDITOR_IFIGURE_H
+#ifndef IMAGEEDITOR_FIGURE_H
+#define IMAGEEDITOR_FIGURE_H
 
 #include "../tool.h"
 
@@ -17,17 +17,20 @@ enum FigureType {
     none
 };
 
-class IFigure : public Tool {
+class QGraphicsItem;
+
+class Figure : public Tool {
 Q_OBJECT
 
 public:
-    explicit IFigure(QString name, ToolUnitView *view, IToolModel *model);
+    explicit Figure(QString name, ToolUnitView *view, IToolModel *model);
 
     virtual void setData(FigureData *figureData) = 0;
     virtual FigureType getType() = 0;
 
 signals:
-    void showParametersInterface(FigureType type);
+    void selected(Figure *figure);
+    void deselected();
 };
 
-#endif //IMAGEEDITOR_IFIGURE_H
+#endif //IMAGEEDITOR_FIGURE_H

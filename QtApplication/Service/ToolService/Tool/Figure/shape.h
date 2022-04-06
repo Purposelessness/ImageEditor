@@ -1,12 +1,12 @@
 #ifndef IMAGEEDITOR_SHAPE_H
 #define IMAGEEDITOR_SHAPE_H
 
-#include "ifigure.h"
+#include "figure.h"
 #include "shapemodel.h"
 
 class ToolUnitView;
 
-class Shape : public IFigure {
+class Shape : public Figure {
 Q_OBJECT
 
 public:
@@ -15,8 +15,9 @@ public:
     void setData(FigureData *figureData) override;
     FigureType getType() override;
 
-protected slots:
-    void onShapeDrawn();
+private slots:
+    void onItemSelected();
+    void onItemDeselected();
 
 private:
     ShapeModel *model;

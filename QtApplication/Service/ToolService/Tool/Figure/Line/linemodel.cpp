@@ -1,14 +1,15 @@
 #include "linemodel.h"
+#include "lineitem.h"
 #include "../../../../../MainWidgets/ImageViewer/igraphicsview.h"
 #include "../../../../UndoService/Command/additemcommand.h"
-#include "../../../../../logger.h"
 
 void LineModel::mousePressed(const QPoint &mousePos, IGraphicsView *view) {
     if (isDrawing)
         return;
     x = mousePos.x();
     y = mousePos.y();
-    item = new QGraphicsLineItem(x, y, x, y);
+    item = new LineItem(this);
+    item->setLine(x, y, x, y);
     item->setPen(pen);
     view->addItem(item);
     isDrawing = true;
@@ -30,18 +31,31 @@ void LineModel::mouseReleased(const QPoint &mousePos, IGraphicsView *view) {
     item->setLine(x, y, mousePos.x(), mousePos.y());
     item->setFlag(QGraphicsItem::ItemIsSelectable);
     new AddItemCommand(item);
-    emit lineDrawn();
 }
 
 void LineModel::setColor(const QColor &color) {
     pen.setColor(color);
-    if (item)
-        item->setPen(pen);
+    if (selectedItem)
+        selectedItem->setPen(pen);
 }
 
 void LineModel::setThickness(const int &value) {
     thickness = value;
     pen.setWidth(thickness);
-    if (item)
-        item->setPen(pen);
+    if (selectedItem)
+        selectedItem->setPen(pen);
+}
+
+QGraphicsLineItem *LineModel::getGraphicsItem() {
+    return item;
+}
+
+void LineModel::onItemSelected(QGraphicsLineItem *graphicsLineItem) {
+    selectedItem = graphicsLineItem;
+    emit itemSelected();
+}
+
+void LineModel::onItemDeselected() {
+    selectedItem = nullptr;
+    emit itemDeselected();
 }

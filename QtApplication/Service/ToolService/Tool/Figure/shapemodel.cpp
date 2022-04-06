@@ -55,9 +55,7 @@ void ShapeModel::mouseReleased(const QPoint &mousePos, IGraphicsView *view) {
         return;
     }
     resizeItem(rect);
-//    item->setFlag(QGraphicsItem::ItemIsSelectable);
     new AddItemCommand(item);
-    emit shapeDrawn();
 }
 
 void ShapeModel::setFillColor(const QColor &color) {
@@ -67,8 +65,8 @@ void ShapeModel::setFillColor(const QColor &color) {
     } else {
         brush.setStyle(Qt::NoBrush);
     }
-    if (item)
-        item->setBrush(brush);
+    if (selectedItem)
+        selectedItem->setBrush(brush);
 }
 
 void ShapeModel::setLineColor(const QColor &color) {
@@ -77,13 +75,23 @@ void ShapeModel::setLineColor(const QColor &color) {
     } else {
         pen.setColor(QColor(0, 0, 0, 0));
     }
-    if (item)
-        item->setPen(pen);
+    if (selectedItem)
+        selectedItem->setPen(pen);
 }
 
 void ShapeModel::setThickness(const int &value) {
     thickness = value;
     pen.setWidth(thickness);
-    if (item)
-        item->setPen(pen);
+    if (selectedItem)
+        selectedItem->setPen(pen);
+}
+
+void ShapeModel::onItemSelected(QAbstractGraphicsShapeItem *abstractGraphicsShapeItem) {
+    selectedItem = abstractGraphicsShapeItem;
+    emit itemSelected();
+}
+
+void ShapeModel::onItemDeselected() {
+    selectedItem = nullptr;
+    emit itemDeselected();
 }

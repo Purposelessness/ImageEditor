@@ -21,15 +21,20 @@ protected slots:
     void onActionTriggered() override;
 
 private slots:
+    void onFigureSelected(Figure *figure);
+    void onFigureDeselected();
     void onLineParametersChanged(FigureData *figureData);
     void onShapeParametersChanged(FigureData *figureData);
-    void showParametersInterface(FigureType figureType);
 
 private:
+    void showParametersInterface(FigureType figureType);
+
     ShapeParametersInterface *shapeParametersInterface;
     LineParametersInterface *lineParametersInterface;
     FigureCategoryModel *model;
     FigureCategoryView *view;
+
+    Figure *selectedFigure = nullptr;
 };
 
 

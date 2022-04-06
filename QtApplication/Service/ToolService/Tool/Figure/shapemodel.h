@@ -17,8 +17,12 @@ public:
     void setLineColor(const QColor &color);
     void setThickness(const int &value);
 
+    void onItemSelected(QAbstractGraphicsShapeItem *abstractGraphicsShapeItem);
+    void onItemDeselected();
+
 signals:
-    void shapeDrawn();
+    void itemSelected();
+    void itemDeselected();
 
 protected:
     virtual QAbstractGraphicsShapeItem *drawItem(const QRectF &rect) = 0;
@@ -29,7 +33,7 @@ private:
     static QPen pen;
     static int thickness;
 
-    QAbstractGraphicsShapeItem *item = nullptr;
+    QAbstractGraphicsShapeItem *item = nullptr, *selectedItem = nullptr;
 
     bool isDrawing = false;
 
