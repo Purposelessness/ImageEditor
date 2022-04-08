@@ -12,7 +12,7 @@ public:
     State *getState();
 
 protected:
-    QHash<QString, State> states;
+    QHash<QString, State *> states;
 
 private:
     State *currentState;
