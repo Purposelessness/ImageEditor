@@ -3,36 +3,39 @@
 #ifndef IMAGEEDITOR_TOOLSERVICE_H
 #define IMAGEEDITOR_TOOLSERVICE_H
 
-#include "toolcontext.h"
+
+#include "../../Core/StateMachine/context.h"
+#include "ToolCategory/toolcategory.h"
 #include "../../MainWidgets/ToolBar/itoolbar.h"
 #include "../../MainWidgets/ToolDock/itooldock.h"
 
-#include <QString>
-#include "QHash"
-
-class ToolService : public ToolContext {
+class ToolService : Context<ToolCategory>, QObject {
 Q_OBJECT
 
 public:
-    static ToolService& getInstance();
-    void setTool(const QString& name) final;
-    void addTool(ToolUnit *tool) final;
+    static ToolService &getInstance();
+
+    void addCategory(ToolCategory *category);
+    ToolCategory *getCategory();
+    
     void setToolBar(IToolBar *toolBar);
     void setToolDock(IToolDock *toolDock);
+
+public slots:
+    void setCategory(const QString &name);
 
 private slots:
     void updateToolDock();
 
 private:
     ToolService();
-    ToolService(const ToolService& root) = delete;
-    ToolService& operator=(const ToolService&) = delete;
+    ToolService(const ToolService &root) = delete;
+    ToolService &operator=(const ToolService &) = delete;
 
-    void createTools();
     void addToolToBar(ToolUnit *tool);
 
-    IToolBar *bar;
-    IToolDock *dock;
+    IToolBar *toolBar = nullptr;
+    IToolDock *toolDock = nullptr;
 };
 
 

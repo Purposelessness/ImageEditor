@@ -3,14 +3,10 @@
 #include "ToolCategory/BrushCategory/brushcategory.h"
 #include "ToolCategory/FigureCategory/figurecategory.h"
 
-ToolService::ToolService() : bar(nullptr), dock(nullptr) {
-    createTools();
-}
-
-void ToolService::createTools() {
-    addTool(new BrushCategory());
-    addTool(new FigureCategory());
-    setTool("BrushCategory");
+ToolService::ToolService() {
+    addCategory(new BrushCategory());
+    addCategory(new FigureCategory());
+    setCategory("BrushCategory");
 }
 
 ToolService &ToolService::getInstance() {
@@ -18,38 +14,43 @@ ToolService &ToolService::getInstance() {
     return instance;
 }
 
-void ToolService::addTool(ToolUnit *tool) {
-    ToolContext::addTool(tool);
-    connect(tool, SIGNAL(updateView()), this, SLOT(updateToolDock()));
-    addToolToBar(tool);
+void ToolService::addCategory(ToolCategory *category) {
+    Context::addState(category->toString(), category);
+    connect(category, SIGNAL(triggered(QString)), this, SLOT(setCategory(QString)));
+    connect(category, SIGNAL(updateView()), this, SLOT(updateToolDock()));
+    addToolToBar(category);
 }
 
-void ToolService::setTool(const QString &name) {
-    ToolContext::setTool(name);
+void ToolService::setCategory(const QString &name) {
+    Context::setState(name);
     updateToolDock();
 }
 
-void ToolService::setToolBar(IToolBar *toolBar) {
-    bar = toolBar;
-    for (auto tool: tools)
-        addToolToBar(tool);
+ToolCategory *ToolService::getCategory() {
+    return getState();
+}
+
+void ToolService::setToolBar(IToolBar *newToolBar) {
+    toolBar = newToolBar;
+    for (auto category: states)
+        addToolToBar(category);
     qDebug(toolService()) << "ToolBar linked to ToolService";
 }
 
 void ToolService::addToolToBar(ToolUnit *tool) {
-    if (bar)
-        bar->addAction(tool->getAction());
+    if (toolBar)
+        toolBar->addAction(tool->getAction());
 }
 
-void ToolService::setToolDock(IToolDock *toolDock) {
-    dock = toolDock;
+void ToolService::setToolDock(IToolDock *newToolDock) {
+    toolDock = newToolDock;
     qDebug(toolService()) << "ToolDock linked to ToolService";
     updateToolDock();
 }
 
 void ToolService::updateToolDock() {
-    if (dock) {
-        dock->show();
-        dock->setWidget(getCurrentTool()->getWidget());
+    if (toolDock) {
+        toolDock->show();
+        toolDock->setWidget(getCategory()->getWidget());
     }
 }
