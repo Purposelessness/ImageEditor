@@ -4,20 +4,20 @@
 #define IMAGEEDITOR_TOOLSERVICE_H
 
 
-#include "../../Core/StateMachine/context.h"
-#include "ToolCategory/toolcategory.h"
+#include "Generics/toolcontext.h"
+#include "ToolCategory/itoolcategory.h"
 #include "../../MainWidgets/ToolBar/itoolbar.h"
 #include "../../MainWidgets/ToolDock/itooldock.h"
 
-class ToolService : Context<ToolCategory>, QObject {
+class ToolService : ToolContext<IToolCategory, ToolUnit> {
 Q_OBJECT
 
 public:
     static ToolService &getInstance();
 
-    void addCategory(ToolCategory *category);
-    ToolCategory *getCategory();
-    
+    void addCategory(IToolCategory *category);
+    IToolCategory *getCategory();
+
     void setToolBar(IToolBar *toolBar);
     void setToolDock(IToolDock *toolDock);
 
