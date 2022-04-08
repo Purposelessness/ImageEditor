@@ -1,11 +1,12 @@
 #ifndef IMAGEEDITOR_TOOLUNIT_H
 #define IMAGEEDITOR_TOOLUNIT_H
 
+
 #include <QObject>
 #include <QAction>
 #include <QWidget>
 
-#include "Tool/itoolmodel.h"
+#include "../Tool/itoolmodel.h"
 
 class ToolUnit : public QObject {
 Q_OBJECT
@@ -15,13 +16,9 @@ public:
 
 signals:
     void triggered(const QString &name);
-    void updateView();
 
 public:
     virtual QAction *getAction() = 0;
-    virtual IToolModel *getModel() = 0;
-    virtual QWidget *getWidget() = 0;
-    virtual QWidget *getAlternativeWidget();
 
     [[nodiscard]] QString toString() const;
 
@@ -38,5 +35,6 @@ inline uint qHash(const ToolUnit &key, uint seed)
 {
     return qHash(key.toString(), seed);
 }
+
 
 #endif //IMAGEEDITOR_TOOLUNIT_H

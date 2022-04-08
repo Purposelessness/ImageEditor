@@ -1,19 +1,25 @@
 #ifndef IMAGEEDITOR_TOOLCATEGORYMODEL_H
 #define IMAGEEDITOR_TOOLCATEGORYMODEL_H
 
-#include "../toolcontext.h"
+
+#include "itoolcategorymodel.h"
+#include "../Generics/toolcontext.h"
 #include "../Tool/tool.h"
 
-class ToolCategoryModel : public ToolContext {
+template<typename T, typename F>
+class ToolCategoryModel : protected ToolContext<T, F>, public IToolCategoryModel {};
+
+template<typename T>
+class ToolCategoryModel<T, Tool> : protected ToolContext<T, ToolUnit>, public IToolCategoryModel {
 Q_OBJECT
 
 public:
-    virtual void createTools() = 0;
-    virtual void addTool(Tool *tool);
-    void setTool(const QString &name) override;
+    void createTools() override = 0;
 
-signals:
-    void toolAdded(QAction *action);
+    void addTool(Tool *tool);
+    void setTool(const QString &name);
+
+    T *getTool() override;
 };
 
 

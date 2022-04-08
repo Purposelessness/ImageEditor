@@ -1,21 +1,25 @@
 #ifndef IMAGEEDITOR_TOOLCATEGORY_H
 #define IMAGEEDITOR_TOOLCATEGORY_H
 
-#include "../toolunit.h"
-#include "../toolunitview.h"
+
+#include "../Generics/toolunit.h"
 #include "toolcategoryview.h"
-#include "toolcategorymodel.h"
+#include "itoolcategorymodel.h"
 
 class ToolCategory : public ToolUnit {
 Q_OBJECT
 
 public:
-    explicit ToolCategory(QString name, ToolCategoryView *view, ToolCategoryModel *model);
+    explicit ToolCategory(QString name, ToolCategoryView *view, IToolCategoryModel *model);
 
-    QAction *getAction() final;
-    QWidget *getWidget() override;
-    IToolModel *getModel() final;
-    QWidget *getAlternativeWidget() override;
+    QAction *getAction() override;
+    QWidget *getWidget();
+    virtual QWidget *getAlternativeWidget() = 0;
+
+    Tool *getTool();
+
+signals:
+    void updated();
 
 protected slots:
     virtual void onToolAdded(QAction *action);
@@ -23,7 +27,7 @@ protected slots:
 
 private:
     ToolCategoryView *view;
-    ToolCategoryModel *model;
+    IToolCategoryModel *model;
 };
 
 

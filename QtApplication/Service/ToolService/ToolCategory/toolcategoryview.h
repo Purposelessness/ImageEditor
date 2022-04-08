@@ -1,7 +1,7 @@
 #ifndef IMAGEEDITOR_TOOLCATEGORYVIEW_H
 #define IMAGEEDITOR_TOOLCATEGORYVIEW_H
 
-#include "../toolunitview.h"
+#include "../Generics/toolunitview.h"
 #include <QHBoxLayout>
 #include <QGroupBox>
 
@@ -15,8 +15,8 @@ public:
 private:
     void createWidget(const QString& name);
 
-    QHBoxLayout *toolLayout;
-    QGroupBox *toolBox;
+    QHBoxLayout *toolLayout = nullptr;
+    QGroupBox *toolBox = nullptr;
 };
 
 

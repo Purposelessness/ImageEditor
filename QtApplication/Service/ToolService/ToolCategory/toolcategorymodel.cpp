@@ -1,11 +1,18 @@
 #include "toolcategorymodel.h"
 #include "../../../logger.h"
 
-void ToolCategoryModel::addTool(Tool *tool) {
-    ToolContext::addTool(tool);
-    emit toolAdded(tool->getAction());
+template<typename T>
+void ToolCategoryModel<T, Tool>::addTool(Tool *newTool) {
+    ToolContext<T, ToolUnit>::addToolUnit(newTool);
+    emit toolAdded(newTool->getAction());
 }
 
-void ToolCategoryModel::setTool(const QString &name) {
-    ToolContext::setTool(name);
+template<typename T>
+void ToolCategoryModel<T, Tool>::setTool(const QString &name) {
+    ToolContext<T, ToolUnit>::setToolUnit(name);
+}
+
+template<typename T>
+T *ToolCategoryModel<T, Tool>::getTool() {
+    return Context<T>::getState();
 }
