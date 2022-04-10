@@ -13,23 +13,34 @@ void FigureCategoryModel::createTools() {
     setTool(ellipse->toString());
 }
 
-void FigureCategoryModel::addTool(Tool *tool) {
-    auto figure = dynamic_cast<Figure *>(tool);
-    connect(figure, SIGNAL(selected(Figure*)), this, SLOT(onFigureSelected(Figure*)));
-    connect(figure, SIGNAL(deselected()), this, SLOT(onFigureDeselected()));
-    ToolCategoryModel::addTool(tool);
+void FigureCategoryModel::addTool(Figure *figure) {
+    QObject::connect(figure, SIGNAL(selected(Figure*)), object, SLOT(onFigureSelected(Figure*)));
+    QObject::connect(figure, SIGNAL(deselected()), object, SLOT(onFigureDeselected()));
+    ToolCategoryModel::addTool(figure);
+}
+
+void FigureCategoryModel::updateFigureParameters(FigureType figureType, FigureData *figureData) {
+    switch (figureType) {
+        case line:
+            lineData = *figureData;
+            break;
+        case shape:
+            shapeData = *figureData;
+            break;
+        case none:
+            break;
+    }
 }
 
 void FigureCategoryModel::updateFigureParameters(Figure *figure, FigureData *figureData) {
     if (!figure)
         return;
+    updateFigureParameters(figure->getType(), figureData);
     switch (figure->getType()) {
         case line:
-            lineData = *figureData;
             figure->setData(&lineData);
             break;
         case shape:
-            shapeData = *figureData;
             figure->setData(&shapeData);
             break;
         case none:
@@ -37,10 +48,10 @@ void FigureCategoryModel::updateFigureParameters(Figure *figure, FigureData *fig
     }
 }
 
-void FigureCategoryModel::onFigureSelected(Figure *figure) {
+void FigureCategoryModelObject::onFigureSelected(Figure *figure) {
     emit figureSelected(figure);
 }
 
-void FigureCategoryModel::onFigureDeselected() {
+void FigureCategoryModelObject::onFigureDeselected() {
     emit figureDeselected();
 }

@@ -1,20 +1,16 @@
 #include "figurecategory.h"
 
-FigureCategory::FigureCategory(const QString &name, ToolCategoryView *newView, ToolCategoryModel *newModel) :
-        ToolCategory(name, newView, newModel), lineParametersInterface(new LineParametersInterface(tr("LineCategory"), this)),
+FigureCategory::FigureCategory(const QString &name, FigureCategoryView *newView, FigureCategoryModel *newModel) :
+        ToolCategory(name, newView, newModel),
+        model (newModel), view(newView),
+        lineParametersInterface(new LineParametersInterface(tr("LineCategory"), this)),
         shapeParametersInterface(new ShapeParametersInterface(tr("FigureCategory"), this)) {
     connect(lineParametersInterface, SIGNAL(update(FigureData*)), this, SLOT(onLineParametersChanged(FigureData*)));
     connect(shapeParametersInterface, SIGNAL(update(FigureData*)), this, SLOT(onShapeParametersChanged(FigureData*)));
-    model = static_cast<FigureCategoryModel *>(newModel);
-    connect(model, SIGNAL(figureSelected(Figure*)), this, SLOT(onFigureSelected(Figure*)));
-    connect(model, SIGNAL(figureDeselected()), this, SLOT(onFigureDeselected()));
-    view = static_cast<FigureCategoryView *>(newView);
+    connect(model->object, SIGNAL(figureSelected(Figure*)), this, SLOT(onFigureSelected(Figure*)));
+    connect(model->object, SIGNAL(figureDeselected()), this, SLOT(onFigureDeselected()));
     lineParametersInterface->resetParameters();
     shapeParametersInterface->resetParameters();
-}
-
-QWidget *FigureCategory::getAlternativeWidget() {
-    return shapeParametersInterface->getWidget();
 }
 
 void FigureCategory::onLineParametersChanged(FigureData *figureData) {
@@ -37,12 +33,12 @@ void FigureCategory::showParametersInterface(FigureType figureType) {
             view->resetWidget();
             break;
     }
-    emit updateView();
+    emit updated();
 }
 
 void FigureCategory::onActionTriggered() {
     view->resetWidget();
-    emit updateView();
+    emit updated();
     ToolCategory::onActionTriggered();
 }
 

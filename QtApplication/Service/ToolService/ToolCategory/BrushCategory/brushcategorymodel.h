@@ -2,8 +2,9 @@
 #define IMAGEEDITOR_BRUSHCATEGORYMODEL_H
 
 #include "../toolcategorymodel.h"
+#include "../../Tool/Figure/figure.h"
 
-class BrushCategoryModel : public ToolCategoryModel {
+class BrushCategoryModel : public ToolCategoryModel<Figure> {
 public:
     BrushCategoryModel() = default;
     void createTools() override;

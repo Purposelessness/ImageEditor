@@ -14,7 +14,6 @@ public:
 
     QAction *getAction() override;
     QWidget *getWidget();
-    virtual QWidget *getAlternativeWidget() = 0;
 
     Tool *getTool();
 

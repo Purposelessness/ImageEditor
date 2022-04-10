@@ -6,27 +6,28 @@
 #include "../toolcategorymodel.h"
 #include "../../Tool/Figure/figure.h"
 
-class Shape;
-
-class FigureCategoryModel : public ToolCategoryModel {
+class FigureCategoryModelObject : public QObject {
 Q_OBJECT
-
-public:
-    FigureCategoryModel() = default;
-
-    void createTools() override;
-    void updateFigureParameters(Figure *figure, FigureData *figureData);
 
 signals:
     void figureSelected(Figure *figure);
     void figureDeselected();
 
-protected:
-    void addTool(Tool *tool) override;
-
-private slots:
+public slots:
     void onFigureSelected(Figure *figure);
     void onFigureDeselected();
+};
+
+class FigureCategoryModel : public ToolCategoryModel<Figure> {
+public:
+    void createTools() override;
+    void updateFigureParameters(FigureType figureType, FigureData *figureData);
+    void updateFigureParameters(Figure *figure, FigureData *figureData);
+
+    FigureCategoryModelObject *object = new FigureCategoryModelObject();
+
+protected:
+    void addTool(Figure *figure) override;
 
 private:
     FigureData lineData {};

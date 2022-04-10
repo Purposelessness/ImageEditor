@@ -12,10 +12,8 @@ Q_OBJECT
 
 public:
     explicit FigureCategory(const QString &name = tr("FigureCategory"),
-                            ToolCategoryView *newView = new FigureCategoryView(tr("FigureCategory")),
-                            ToolCategoryModel *newModel = new FigureCategoryModel());
-
-    QWidget *getAlternativeWidget() override;
+                            FigureCategoryView *newView = new FigureCategoryView(tr("FigureCategory")),
+                            FigureCategoryModel *newModel = new FigureCategoryModel());
 
 protected slots:
     void onActionTriggered() override;

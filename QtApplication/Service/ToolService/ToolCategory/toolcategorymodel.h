@@ -6,21 +6,20 @@
 #include "../Generics/toolcontext.h"
 #include "../Tool/tool.h"
 
-template<typename T, typename F>
-class ToolCategoryModel : protected ToolContext<T, F>, public IToolCategoryModel {};
-
 template<typename T>
-class ToolCategoryModel<T, Tool> : protected ToolContext<T, ToolUnit>, public IToolCategoryModel {
-Q_OBJECT
-
+class ToolCategoryModel : protected ToolContext<T>, public IToolCategoryModel {
 public:
+    ToolCategoryModel();
+
     void createTools() override = 0;
 
-    void addTool(Tool *tool);
+    virtual void addTool(T *tool);
     void setTool(const QString &name);
 
     T *getTool() override;
 };
+
+#include "toolcategorymodel.inl"
 
 
 #endif //IMAGEEDITOR_TOOLCATEGORYMODEL_H
