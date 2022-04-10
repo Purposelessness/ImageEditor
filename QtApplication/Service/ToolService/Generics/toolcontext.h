@@ -11,6 +11,8 @@
 template<typename T>
 class ToolContext : protected Context<T>, IToolContext {
 public:
+    ToolContext();
+
     void addToolUnit(T *toolUnit);
     void setToolUnit(const QString &name) override;
 

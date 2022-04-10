@@ -19,6 +19,11 @@ void ToolService::addCategory(ToolCategory *category) {
     addToolToBar(category);
 }
 
+void ToolService::setToolUnit(const QString &name) {
+    ToolContext::setToolUnit(name);
+    updateToolDock();
+}
+
 void ToolService::setCategory(const QString &name) {
     Context::setState(name);
     updateToolDock();

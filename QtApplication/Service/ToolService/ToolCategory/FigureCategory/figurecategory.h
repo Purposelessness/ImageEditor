@@ -12,7 +12,7 @@ Q_OBJECT
 
 public:
     explicit FigureCategory(const QString &name = tr("FigureCategory"),
-                            FigureCategoryView *newView = new FigureCategoryView(tr("FigureCategory")),
+                            FigureCategoryView *newView = new FigureCategoryView(tr("Figure Category")),
                             FigureCategoryModel *newModel = new FigureCategoryModel());
 
 protected slots:

@@ -28,6 +28,9 @@ public slots:
 private slots:
     void updateToolDock();
 
+protected:
+    void setToolUnit(const QString &name) override;
+
 private:
     ToolService();
     ToolService(const ToolService &root) = delete;

@@ -1,5 +1,3 @@
-#include "../../../logger.h"
-
 template<typename T>
 ToolCategoryModel<T>::ToolCategoryModel() {
     static_assert(std::is_base_of<Tool, T>::value, "Class must derive from Tool");
