@@ -2,5 +2,4 @@
 
 #include <utility>
 
-Rect::Rect(QString name, ToolUnitView *view, ShapeModel *model) : Shape(std::move(name), view, model) {
-}
+Rect::Rect(QString name, ToolUnitView *view, ShapeModel *model) : Shape(std::move(name), view, model) {}

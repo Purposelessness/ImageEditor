@@ -3,7 +3,7 @@
 
 #include "../shape.h"
 #include "ellipsemodel.h"
-#include "../../../toolunitview.h"
+#include "../../../Generics/toolunitview.h"
 
 class Ellipse : public Shape {
 public:

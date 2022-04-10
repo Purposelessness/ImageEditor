@@ -5,16 +5,17 @@
 
 #include <QColor>
 
-struct FigureData {
-    QColor fillColor {QColor(Qt::green)};
-    QColor lineColor {QColor(Qt::black)};
-    int thickness {10};
-};
-
 enum FigureType {
     line,
     shape,
     none
+};
+
+struct FigureData {
+    QColor fillColor {QColor(Qt::green)};
+    QColor lineColor {QColor(Qt::black)};
+    int thickness {10};
+    FigureType type {none};
 };
 
 class QGraphicsItem;

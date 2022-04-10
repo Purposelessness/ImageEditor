@@ -1,7 +1,7 @@
 #ifndef IMAGEEDITOR_SHAPEPARAMETERSINTERFACE_H
 #define IMAGEEDITOR_SHAPEPARAMETERSINTERFACE_H
 
-#include "../../../toolunitview.h"
+#include "../../../Generics/toolunitview.h"
 #include "parametersinterface.h"
 
 #include <QSlider>

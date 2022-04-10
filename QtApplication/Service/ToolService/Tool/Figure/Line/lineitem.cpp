@@ -1,8 +1,6 @@
 #include "lineitem.h"
 
-LineItem::LineItem(LineModel *newModel) : QGraphicsLineItem() {
-    model = newModel;
-}
+LineItem::LineItem(LineModel *newModel) : QGraphicsLineItem(), model(newModel) {}
 
 QVariant LineItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value) {
     if (change == QGraphicsItem::ItemSelectedChange) {

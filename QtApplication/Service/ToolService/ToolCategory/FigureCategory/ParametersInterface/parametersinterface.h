@@ -1,7 +1,7 @@
 #ifndef IMAGEEDITOR_PARAMETERSINTERFACE_H
 #define IMAGEEDITOR_PARAMETERSINTERFACE_H
 
-#include "../../../toolunitview.h"
+#include "../../../Generics/toolunitview.h"
 #include "../../../Tool/Figure/shape.h"
 
 class ParametersInterface : public QObject {

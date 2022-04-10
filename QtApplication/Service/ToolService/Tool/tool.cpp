@@ -2,20 +2,24 @@
 
 #include <utility>
 
-Tool::Tool(QString name, ToolUnitView *view, IToolModel *model) : ToolUnit(std::move(name)), view(view), model(model) {
+Tool::Tool(QString name, ToolUnitView *newView, IToolModel *newModel) : ToolUnit(std::move(name)), view(newView), model(newModel) {
     connect(view->getAction(), SIGNAL(triggered(bool)), this, SLOT(onActionTriggered()));
+}
+
+void Tool::mousePressed(const QPoint &mousePos, IGraphicsView *graphicsView) {
+    model->mousePressed(mousePos, graphicsView);
+}
+
+void Tool::mouseMoved(const QPoint &mousePos, IGraphicsView *graphicsView) {
+    model->mouseMoved(mousePos, graphicsView);
+}
+
+void Tool::mouseReleased(const QPoint &mousePos, IGraphicsView *graphicsView) {
+    model->mouseReleased(mousePos, graphicsView);
 }
 
 QAction *Tool::getAction() {
     return view->getAction();
-}
-
-QWidget *Tool::getWidget() {
-    return view->getWidget();
-}
-
-IToolModel *Tool::getModel() {
-    return model;
 }
 
 void Tool::onActionTriggered() {
