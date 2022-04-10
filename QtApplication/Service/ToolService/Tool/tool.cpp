@@ -6,16 +6,17 @@ Tool::Tool(QString name, ToolUnitView *newView, IToolModel *newModel) : ToolUnit
     connect(view->getAction(), SIGNAL(triggered(bool)), this, SLOT(onActionTriggered()));
 }
 
-void Tool::mousePressed(const QPoint &mousePos, IGraphicsView *graphicsView) {
-    model->mousePressed(mousePos, graphicsView);
+void Tool::onMousePressed(const QPoint &mousePos, IGraphicsView *graphicsView) {
+
+    model->onMousePressed(mousePos, graphicsView);
 }
 
-void Tool::mouseMoved(const QPoint &mousePos, IGraphicsView *graphicsView) {
-    model->mouseMoved(mousePos, graphicsView);
+void Tool::onMouseMoved(const QPoint &mousePos) {
+    model->onMouseMoved(mousePos);
 }
 
-void Tool::mouseReleased(const QPoint &mousePos, IGraphicsView *graphicsView) {
-    model->mouseReleased(mousePos, graphicsView);
+void Tool::onMouseReleased(const QPoint &mousePos) {
+    model->onMouseReleased(mousePos);
 }
 
 QAction *Tool::getAction() {

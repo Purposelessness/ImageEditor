@@ -7,10 +7,12 @@ class IGraphicsView;
 class QPoint;
 
 class IToolModel : public QObject {
+Q_OBJECT
+
 public:
-    virtual void mousePressed(const QPoint &mousePos, IGraphicsView *view = nullptr) = 0;
-    virtual void mouseMoved(const QPoint &mousePos, IGraphicsView *view = nullptr) = 0;
-    virtual void mouseReleased(const QPoint &mousePos, IGraphicsView *view = nullptr) = 0;
+    virtual void onMousePressed(const QPoint &mousePos, IGraphicsView *view) = 0;
+    virtual void onMouseMoved(const QPoint &mousePos) = 0;
+    virtual void onMouseReleased(const QPoint &mousePos) = 0;
 };
 
 

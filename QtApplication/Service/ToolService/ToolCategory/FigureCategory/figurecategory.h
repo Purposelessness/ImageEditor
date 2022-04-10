@@ -1,11 +1,20 @@
 #ifndef IMAGEEDITOR_FIGURECATEGORY_H
 #define IMAGEEDITOR_FIGURECATEGORY_H
 
+
 #include "../toolcategory.h"
 #include "figurecategoryview.h"
 #include "figurecategorymodel.h"
 #include "ParametersInterface/shapeparametersinterface.h"
 #include "ParametersInterface/lineparametersinterface.h"
+
+struct Data {
+    QColor fillColor = QColor(0, 168, 243);
+    QColor lineColor = Qt::black;
+    int thickness = 10;
+    bool fillEnabled = true;
+    bool lineEnabled = true;
+};
 
 class FigureCategory : public ToolCategory {
 Q_OBJECT
@@ -19,12 +28,13 @@ protected slots:
     void onActionTriggered() override;
 
 private slots:
-    void onFigureSelected(Figure *figure);
+    void onFigureSelected();
     void onFigureDeselected();
-    void onLineParametersChanged(FigureData *figureData);
-    void onShapeParametersChanged(FigureData *figureData);
+    void onParametersUpdated();
 
 private:
+    void updateCurrentData(Data *data);
+    void updateDataInChildren();
     void showParametersInterface(FigureType figureType);
 
     ShapeParametersInterface *shapeParametersInterface;
@@ -32,7 +42,8 @@ private:
     FigureCategoryModel *model;
     FigureCategoryView *view;
 
-    Figure *selectedFigure = nullptr;
+    Data currentData {};
+    Data mainData {};
 };
 
 

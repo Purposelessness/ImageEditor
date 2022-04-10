@@ -15,8 +15,8 @@ public:
 
 public slots:
     void onMousePressed(const QPoint& mousePos);
-    void onMouseMoved(const QPoint& mousePos);
-    void onMouseReleased(const QPoint& mousePos);
+    static void onMouseMoved(const QPoint& mousePos);
+    static void onMouseReleased(const QPoint& mousePos);
 
 private:
     IGraphicsView *view;

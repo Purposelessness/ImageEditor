@@ -11,7 +11,7 @@ QPen ShapeModel::pen = QPen();
 QBrush ShapeModel::brush = QBrush();
 int ShapeModel::thickness = 10;
 
-void ShapeModel::mousePressed(const QPoint &mousePos, IGraphicsView *view) {
+void ShapeModel::onMousePressed(const QPoint &mousePos, IGraphicsView *view) {
     if (isDrawing)
         return;
     x = mousePos.x();
@@ -24,14 +24,14 @@ void ShapeModel::mousePressed(const QPoint &mousePos, IGraphicsView *view) {
     isDrawing = true;
 }
 
-void ShapeModel::mouseMoved(const QPoint &mousePos, IGraphicsView *view) {
+void ShapeModel::onMouseMoved(const QPoint &mousePos) {
     if (!isDrawing || !item)
         return;
     auto rect = QRectF(x, y, mousePos.x() - x, mousePos.y() - y);
     resizeItem(rect);
 }
 
-void ShapeModel::mouseReleased(const QPoint &mousePos, IGraphicsView *view) {
+void ShapeModel::onMouseReleased(const QPoint &mousePos) {
     isDrawing = false;
     qreal left, top, width, height;
     if (x <= mousePos.x()) {

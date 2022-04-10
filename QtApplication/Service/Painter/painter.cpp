@@ -6,13 +6,13 @@
 Painter::Painter(IGraphicsView *graphicsView) : view(graphicsView) {}
 
 void Painter::onMousePressed(const QPoint& mousePos) {
-    ToolService::getInstance().getTool()->mousePressed(mousePos, view);
+    ToolService::getInstance().getTool()->onMousePressed(mousePos, view);
 }
 
 void Painter::onMouseMoved(const QPoint& mousePos) {
-    ToolService::getInstance().getTool()->mouseMoved(mousePos, view);
+    ToolService::getInstance().getTool()->onMouseMoved(mousePos);
 }
 
 void Painter::onMouseReleased(const QPoint& mousePos) {
-    ToolService::getInstance().getTool()->mouseReleased(mousePos, view);
+    ToolService::getInstance().getTool()->onMouseReleased(mousePos);
 }

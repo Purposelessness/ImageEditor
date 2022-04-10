@@ -1,6 +1,7 @@
 #ifndef IMAGEEDITOR_FIGURE_H
 #define IMAGEEDITOR_FIGURE_H
 
+
 #include "../tool.h"
 
 #include <QColor>
@@ -26,10 +27,17 @@ Q_OBJECT
 public:
     explicit Figure(QString name, ToolUnitView *view, IToolModel *model);
 
-    virtual void setData(FigureData *figureData) = 0;
+    virtual void setData(FigureData *figureData) {
+        qDebug() << "setting data";
+    }
     virtual FigureType getType() = 0;
+    FigureData *getData();
+
+protected:
+    void onMousePressed(const QPoint &mousePos, IGraphicsView *graphicsView) override;
 
 signals:
+    void update(Figure *figure);
     void selected(Figure *figure);
     void deselected();
 };

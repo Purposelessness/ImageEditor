@@ -3,7 +3,7 @@
 #include "../../../../../MainWidgets/ImageViewer/igraphicsview.h"
 #include "../../../../UndoService/Command/additemcommand.h"
 
-void LineModel::mousePressed(const QPoint &mousePos, IGraphicsView *view) {
+void LineModel::onMousePressed(const QPoint &mousePos, IGraphicsView *view) {
     if (isDrawing)
         return;
     x = mousePos.x();
@@ -15,13 +15,13 @@ void LineModel::mousePressed(const QPoint &mousePos, IGraphicsView *view) {
     isDrawing = true;
 }
 
-void LineModel::mouseMoved(const QPoint &mousePos, IGraphicsView *view) {
+void LineModel::onMouseMoved(const QPoint &mousePos) {
     if (!isDrawing || !item)
         return;
     item->setLine(x, y, mousePos.x(), mousePos.y());
 }
 
-void LineModel::mouseReleased(const QPoint &mousePos, IGraphicsView *view) {
+void LineModel::onMouseReleased(const QPoint &mousePos) {
     isDrawing = false;
     if (x == mousePos.x() && y == mousePos.y() || !item) {
         delete item;

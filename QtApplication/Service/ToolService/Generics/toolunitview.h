@@ -1,6 +1,7 @@
 #ifndef IMAGEEDITOR_TOOLUNITVIEW_H
 #define IMAGEEDITOR_TOOLUNITVIEW_H
 
+
 #include <QAction>
 #include <QWidget>
 #include <QVBoxLayout>

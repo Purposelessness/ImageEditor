@@ -11,9 +11,9 @@ public:
     explicit Tool(QString name, ToolUnitView *newView, IToolModel *newModel);
 
     QAction *getAction() final;
-    void mousePressed(const QPoint &mousePos, IGraphicsView *graphicsView = nullptr);
-    void mouseMoved(const QPoint &mousePos, IGraphicsView *graphicsView = nullptr);
-    void mouseReleased(const QPoint &mousePos, IGraphicsView *graphicsView = nullptr);
+    virtual void onMousePressed(const QPoint &mousePos, IGraphicsView *graphicsView);
+    virtual void onMouseMoved(const QPoint &mousePos);
+    virtual void onMouseReleased(const QPoint &mousePos);
 
 private slots:
     void onActionTriggered();

@@ -1,4 +1,5 @@
 #include "shapeparametersinterface.h"
+#include "../figurecategory.h"
 
 #include <QLabel>
 #include <QAction>
@@ -32,19 +33,17 @@ ShapeParametersInterface::ShapeParametersInterface(const QString &name, QObject 
     thicknessSlider->setOrientation(Qt::Horizontal);
     connect(thicknessSlider, SIGNAL(valueChanged(int)), this, SLOT(onThicknessChanged(int)));
     addWidget(thicknessSlider);
-
-    updateView();
 }
 
-void ShapeParametersInterface::updateView() {
+void ShapeParametersInterface::update() {
     updateFillButton();
     updateLineButton();
     updateThicknessSlider();
 }
 
 void ShapeParametersInterface::updateFillButton() {
-    if (data.fillEnabled) {
-        fillColorPicker->setStyleSheet(QString("background-color: %1").arg(data.fillColor.name()));
+    if (data->fillEnabled) {
+        fillColorPicker->setStyleSheet(QString("background-color: %1").arg(data->fillColor.name()));
         fillMaterialPicker->setText(solidText);
     } else {
         fillColorPicker->setStyleSheet(QString("background-color: %1").arg(QColor(Qt::lightGray).name()));
@@ -53,8 +52,8 @@ void ShapeParametersInterface::updateFillButton() {
 }
 
 void ShapeParametersInterface::updateLineButton() {
-    if (data.lineEnabled) {
-        lineColorPicker->setStyleSheet(QString("background-color: %1").arg(data.lineColor.name()));
+    if (data->lineEnabled) {
+        lineColorPicker->setStyleSheet(QString("background-color: %1").arg(data->lineColor.name()));
         lineMaterialPicker->setText(solidText);
     } else {
         lineColorPicker->setStyleSheet(QString("background-color: %1").arg(QColor(Qt::lightGray).name()));
@@ -63,23 +62,23 @@ void ShapeParametersInterface::updateLineButton() {
 }
 
 void ShapeParametersInterface::updateThicknessSlider() {
-    thicknessSlider->setValue(data.thickness);
+    thicknessSlider->setValue(data->thickness);
 }
 
 void ShapeParametersInterface::pickFillColor() {
-    setFillColor(QColorDialog::getColor(data.fillColor, nullptr, tr("Fill color")));
+    setFillColor(QColorDialog::getColor(data->fillColor, nullptr, tr("Fill color")));
 }
 
 void ShapeParametersInterface::pickLineColor() {
-    setLineColor(QColorDialog::getColor(data.lineColor, nullptr, tr("Line color")));
+    setLineColor(QColorDialog::getColor(data->lineColor, nullptr, tr("Line color")));
 }
 
 void ShapeParametersInterface::setFillColor(const QColor& color) {
     if (color.isValid()) {
-        data.fillEnabled = true;
-        data.fillColor = color;
+        data->fillEnabled = true;
+        data->fillColor = color;
     } else {
-        data.fillEnabled = false;
+        data->fillEnabled = false;
     }
     updateFillButton();
     dataUpdated();
@@ -87,42 +86,42 @@ void ShapeParametersInterface::setFillColor(const QColor& color) {
 
 void ShapeParametersInterface::setLineColor(const QColor& color) {
     if (color.isValid()) {
-        data.lineEnabled = true;
-        data.lineColor = color;
+        data->lineEnabled = true;
+        data->lineColor = color;
     } else {
-        data.lineEnabled = false;
+        data->lineEnabled = false;
     }
     updateLineButton();
     dataUpdated();
 }
 
 void ShapeParametersInterface::onNoneFillAction() {
-    data.fillEnabled = false;
+    data->fillEnabled = false;
     updateFillButton();
     dataUpdated();
 }
 
 void ShapeParametersInterface::onSolidFillAction() {
-    data.fillEnabled = true;
+    data->fillEnabled = true;
     updateFillButton();
     dataUpdated();
 }
 
 void ShapeParametersInterface::onNoneLineAction() {
-    data.lineEnabled = false;
+    data->lineEnabled = false;
     updateLineButton();
     dataUpdated();
 }
 
 void ShapeParametersInterface::onSolidLineAction() {
-    data.lineEnabled = true;
+    data->lineEnabled = true;
     updateLineButton();
     dataUpdated();
 }
 
 void ShapeParametersInterface::onThicknessChanged(int value) {
     thicknessSlider->setToolTip(QString::number(value));
-    data.thickness = value;
+    data->thickness = value;
     dataUpdated();
 }
 

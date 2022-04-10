@@ -1,4 +1,5 @@
 #include "lineparametersinterface.h"
+#include "../figurecategory.h"
 
 #include <QLabel>
 #include <QAction>
@@ -18,30 +19,28 @@ LineParametersInterface::LineParametersInterface(const QString &name, QObject *p
     thicknessSlider->setOrientation(Qt::Horizontal);
     connect(thicknessSlider, SIGNAL(valueChanged(int)), this, SLOT(onThicknessChanged(int)));
     addWidget(thicknessSlider);
-
-    updateView();
 }
 
-void LineParametersInterface::updateView() {
+void LineParametersInterface::update() {
     updateLine();
     updateThickness();
 }
 
 void LineParametersInterface::updateLine() {
-    colorPicker->setStyleSheet(QString("background-color: %1").arg(data.lineColor.name()));
+    colorPicker->setStyleSheet(QString("background-color: %1").arg(data->lineColor.name()));
 }
 
 void LineParametersInterface::updateThickness() {
-    thicknessSlider->setValue(data.thickness);
+    thicknessSlider->setValue(data->thickness);
 }
 
 void LineParametersInterface::pickColor() {
-    setColor(QColorDialog::getColor(data.lineColor, nullptr, tr("Line color")));
+    setColor(QColorDialog::getColor(data->lineColor, nullptr, tr("Line color")));
 }
 
 void LineParametersInterface::setColor(const QColor& newColor) {
     if (newColor.isValid()) {
-        data.lineColor = newColor;
+        data->lineColor = newColor;
         updateLine();
         dataUpdated();
     }
@@ -49,7 +48,7 @@ void LineParametersInterface::setColor(const QColor& newColor) {
 
 void LineParametersInterface::onThicknessChanged(int value) {
     thicknessSlider->setToolTip(QString::number(value));
-    data.thickness = value;
+    data->thickness = value;
     dataUpdated();
 }
 

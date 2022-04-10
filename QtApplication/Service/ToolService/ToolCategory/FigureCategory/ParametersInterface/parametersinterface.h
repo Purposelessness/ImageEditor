@@ -1,32 +1,27 @@
 #ifndef IMAGEEDITOR_PARAMETERSINTERFACE_H
 #define IMAGEEDITOR_PARAMETERSINTERFACE_H
 
+
 #include "../../../Generics/toolunitview.h"
 #include "../../../Tool/Figure/figure.h"
 
-struct Data {
-    QColor fillColor = QColor(0, 168, 243);
-    QColor lineColor = Qt::black;
-    int thickness = 10;
-    bool fillEnabled = true;
-    bool lineEnabled = true;
-};
+struct Data;
 
 class ParametersInterface : public QObject {
 Q_OBJECT
 
 public:
     explicit ParametersInterface(QObject *parent = nullptr, FigureType type = none);
-    virtual void updateView() = 0;
+
+    void setData(Data *data);
+    virtual void update() = 0;
 
 signals:
-    void update(FigureData *data);
+    void updated();
 
 protected:
     void dataUpdated();
-
-    static Data data;
-    static FigureData figureData;
+    Data *data = nullptr;
 
 private:
     FigureType type;

@@ -1,6 +1,7 @@
 #ifndef IMAGEEDITOR_SHAPEPARAMETERSINTERFACE_H
 #define IMAGEEDITOR_SHAPEPARAMETERSINTERFACE_H
 
+
 #include "../../../Generics/toolunitview.h"
 #include "parametersinterface.h"
 
@@ -14,7 +15,7 @@ Q_OBJECT
 public:
     explicit ShapeParametersInterface(const QString &name, QObject *parent = nullptr, QWidget *widget = new QWidget());
 
-    void updateView() override;
+    void update() override;
 
 private slots:
     void onNoneFillAction();

@@ -1,6 +1,7 @@
 #ifndef IMAGEEDITOR_SHAPEMODEL_H
 #define IMAGEEDITOR_SHAPEMODEL_H
 
+
 #include "../itoolmodel.h"
 
 #include <QAbstractGraphicsShapeItem>
@@ -9,9 +10,9 @@ class ShapeModel : public IToolModel {
 Q_OBJECT
 
 public:
-    void mousePressed(const QPoint &mousePos, IGraphicsView *view) override;
-    void mouseMoved(const QPoint &mousePos, IGraphicsView *view) override;
-    void mouseReleased(const QPoint &mousePos, IGraphicsView *view) override;
+    void onMousePressed(const QPoint &mousePos, IGraphicsView *view) override;
+    void onMouseMoved(const QPoint &mousePos) override;
+    void onMouseReleased(const QPoint &mousePos) override;
 
     void setFillColor(const QColor &color);
     void setLineColor(const QColor &color);

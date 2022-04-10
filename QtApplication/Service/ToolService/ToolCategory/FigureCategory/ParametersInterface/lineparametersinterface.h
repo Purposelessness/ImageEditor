@@ -1,6 +1,7 @@
 #ifndef IMAGEEDITOR_LINEPARAMETERSINTERFACE_H
 #define IMAGEEDITOR_LINEPARAMETERSINTERFACE_H
 
+
 #include "parametersinterface.h"
 
 #include <QSlider>
@@ -13,7 +14,7 @@ Q_OBJECT
 public:
     explicit LineParametersInterface(const QString &name, QObject *parent = nullptr, QWidget *widget = new QWidget());
 
-    void updateView() override;
+    void update() override;
 
 private slots:
     void onThicknessChanged(int value);
