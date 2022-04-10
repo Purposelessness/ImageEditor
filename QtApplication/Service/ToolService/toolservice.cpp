@@ -14,9 +14,9 @@ ToolService &ToolService::getInstance() {
     return instance;
 }
 
-void ToolService::addCategory(IToolCategory *category) {
+void ToolService::addCategory(ToolCategory *category) {
     ToolContext::addToolUnit(category);
-    connect(category, SIGNAL(updated()), this, SLOT(updateToolDock()));
+    QObject::connect(category, SIGNAL(updated()), object, SLOT(updateToolDock()));
     addToolToBar(category);
 }
 
@@ -25,7 +25,7 @@ void ToolService::setCategory(const QString &name) {
     updateToolDock();
 }
 
-IToolCategory *ToolService::getCategory() {
+ToolCategory *ToolService::getCategory() {
     return getState();
 }
 
@@ -52,4 +52,18 @@ void ToolService::updateToolDock() {
         toolDock->show();
         toolDock->setWidget(getCategory()->getWidget());
     }
+}
+
+Tool *ToolService::getTool() {
+    return getCategory()->getTool();
+}
+
+ToolServiceObject::ToolServiceObject(IToolService *newSelf) : self(newSelf) {}
+
+void ToolServiceObject::setCategory(const QString &name) {
+    self->setCategory(name);
+}
+
+void ToolServiceObject::updateToolDock() {
+    self->updateToolDock();
 }

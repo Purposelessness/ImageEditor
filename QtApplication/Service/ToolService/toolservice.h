@@ -5,27 +5,45 @@
 
 
 #include "Generics/toolcontext.h"
-#include "ToolCategory/itoolcategory.h"
+#include "ToolCategory/toolcategory.h"
 #include "../../MainWidgets/ToolBar/itoolbar.h"
 #include "../../MainWidgets/ToolDock/itooldock.h"
 
-class ToolService : ToolContext<IToolCategory, ToolUnit> {
+class IToolService;
+
+class ToolServiceObject : public QObject {
 Q_OBJECT
 
 public:
-    static ToolService &getInstance();
-
-    void addCategory(IToolCategory *category);
-    IToolCategory *getCategory();
-
-    void setToolBar(IToolBar *toolBar);
-    void setToolDock(IToolDock *toolDock);
+    explicit ToolServiceObject(IToolService *self);
 
 public slots:
     void setCategory(const QString &name);
-
-private slots:
     void updateToolDock();
+
+private:
+    IToolService *self;
+};
+
+class IToolService {
+    friend class ToolServiceObject;
+
+protected:
+    virtual void setCategory(const QString &name) = 0;
+    virtual void updateToolDock() = 0;
+};
+
+class ToolService : ToolContext<ToolCategory>, IToolService {
+public:
+    static ToolService &getInstance();
+
+    void addCategory(ToolCategory *category);
+    void setCategory(const QString &name) override;
+    ToolCategory *getCategory();
+    Tool *getTool();
+
+    void setToolBar(IToolBar *toolBar);
+    void setToolDock(IToolDock *toolDock);
 
 private:
     ToolService();
@@ -33,9 +51,12 @@ private:
     ToolService &operator=(const ToolService &) = delete;
 
     void addToolToBar(ToolUnit *tool);
+    void updateToolDock() override;
 
     IToolBar *toolBar = nullptr;
     IToolDock *toolDock = nullptr;
+
+    ToolServiceObject *object = new ToolServiceObject(this);
 };
 
 
