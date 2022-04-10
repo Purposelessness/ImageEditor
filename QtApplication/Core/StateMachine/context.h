@@ -18,5 +18,7 @@ private:
     State *currentState;
 };
 
+#include "context.inl"
+
 
 #endif //IMAGEEDITOR_CONTEXT_H
