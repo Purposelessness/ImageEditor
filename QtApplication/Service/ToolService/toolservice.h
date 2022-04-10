@@ -9,41 +9,24 @@
 #include "../../MainWidgets/ToolBar/itoolbar.h"
 #include "../../MainWidgets/ToolDock/itooldock.h"
 
-class IToolService;
-
-class ToolServiceObject : public QObject {
+class ToolService : QObject, ToolContext<ToolCategory> {
 Q_OBJECT
 
-public:
-    explicit ToolServiceObject(IToolService *self);
-
-public slots:
-    void setCategory(const QString &name);
-    void updateToolDock();
-
-private:
-    IToolService *self;
-};
-
-class IToolService {
-    friend class ToolServiceObject;
-
-protected:
-    virtual void setCategory(const QString &name) = 0;
-    virtual void updateToolDock() = 0;
-};
-
-class ToolService : ToolContext<ToolCategory>, IToolService {
 public:
     static ToolService &getInstance();
 
     void addCategory(ToolCategory *category);
-    void setCategory(const QString &name) override;
     ToolCategory *getCategory();
     Tool *getTool();
 
     void setToolBar(IToolBar *toolBar);
     void setToolDock(IToolDock *toolDock);
+
+public slots:
+    void setCategory(const QString &name);
+
+private slots:
+    void updateToolDock();
 
 private:
     ToolService();
@@ -51,12 +34,9 @@ private:
     ToolService &operator=(const ToolService &) = delete;
 
     void addToolToBar(ToolUnit *tool);
-    void updateToolDock() override;
 
     IToolBar *toolBar = nullptr;
     IToolDock *toolDock = nullptr;
-
-    ToolServiceObject *object = new ToolServiceObject(this);
 };
 
 

@@ -1,5 +1,4 @@
 #include "toolservice.h"
-#include "../../logger.h"
 #include "ToolCategory/BrushCategory/brushcategory.h"
 #include "ToolCategory/FigureCategory/figurecategory.h"
 
@@ -16,7 +15,7 @@ ToolService &ToolService::getInstance() {
 
 void ToolService::addCategory(ToolCategory *category) {
     ToolContext::addToolUnit(category);
-    QObject::connect(category, SIGNAL(updated()), object, SLOT(updateToolDock()));
+    QObject::connect(category, SIGNAL(updated()), this, SLOT(updateToolDock()));
     addToolToBar(category);
 }
 
@@ -56,14 +55,4 @@ void ToolService::updateToolDock() {
 
 Tool *ToolService::getTool() {
     return getCategory()->getTool();
-}
-
-ToolServiceObject::ToolServiceObject(IToolService *newSelf) : self(newSelf) {}
-
-void ToolServiceObject::setCategory(const QString &name) {
-    self->setCategory(name);
-}
-
-void ToolServiceObject::updateToolDock() {
-    self->updateToolDock();
 }
