@@ -13,21 +13,21 @@ Q_OBJECT
 public:
     explicit LineParametersInterface(const QString &name, QObject *parent = nullptr, QWidget *widget = new QWidget());
 
-    [[nodiscard]] QColor getColor() const;
-    [[nodiscard]] int getThicknessValue() const;
-    void resetParameters();
+    void updateView() override;
 
 private slots:
     void onThicknessChanged(int value);
     void pickColor();
 
 private:
+    void updateLine();
+    void updateThickness();
+
     void createColorPicker(const QString &name, QPushButton *colorPickerButton);
     void setColor(const QColor &newColor);
 
     QSlider *thicknessSlider;
     QPushButton *colorPicker;
-    QColor defaultColor = QColor(Qt::black);
 };
 
 

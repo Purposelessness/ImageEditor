@@ -7,10 +7,8 @@ FigureCategory::FigureCategory(const QString &name, FigureCategoryView *newView,
         shapeParametersInterface(new ShapeParametersInterface(tr("FigureCategory"), this)) {
     connect(lineParametersInterface, SIGNAL(update(FigureData*)), this, SLOT(onLineParametersChanged(FigureData*)));
     connect(shapeParametersInterface, SIGNAL(update(FigureData*)), this, SLOT(onShapeParametersChanged(FigureData*)));
-    connect(model->object, SIGNAL(figureSelected(Figure*)), this, SLOT(onFigureSelected(Figure*)));
-    connect(model->object, SIGNAL(figureDeselected()), this, SLOT(onFigureDeselected()));
-    lineParametersInterface->resetParameters();
-    shapeParametersInterface->resetParameters();
+    connect(model, SIGNAL(figureSelected(Figure*)), this, SLOT(onFigureSelected(Figure*)));
+    connect(model, SIGNAL(figureDeselected()), this, SLOT(onFigureDeselected()));
 }
 
 void FigureCategory::onLineParametersChanged(FigureData *figureData) {
@@ -24,9 +22,11 @@ void FigureCategory::onShapeParametersChanged(FigureData *figureData) {
 void FigureCategory::showParametersInterface(FigureType figureType) {
     switch (figureType) {
         case line:
+            lineParametersInterface->updateView();
             view->setWidget(lineParametersInterface->getWidget());
             break;
         case shape:
+            shapeParametersInterface->updateView();
             view->setWidget(shapeParametersInterface->getWidget());
             break;
         default:

@@ -14,10 +14,7 @@ Q_OBJECT
 public:
     explicit ShapeParametersInterface(const QString &name, QObject *parent = nullptr, QWidget *widget = new QWidget());
 
-    [[nodiscard]] QColor getFillColor() const;
-    [[nodiscard]] QColor getLineColor() const;
-    [[nodiscard]] int getThicknessValue() const;
-    void resetParameters();
+    void updateView() override;
 
 private slots:
     void onNoneFillAction();
@@ -29,6 +26,10 @@ private slots:
     void pickLineColor();
 
 private:
+    void updateFillButton();
+    void updateLineButton();
+    void updateThicknessSlider();
+
     void createColorPicker(const QString &name, QPushButton *colorPickerButton, QToolButton *materialPickerButton);
     void setFillColor(const QColor &color);
     void setLineColor(const QColor &color);
@@ -36,9 +37,8 @@ private:
     QSlider *thicknessSlider;
     QPushButton *fillColorPicker, *lineColorPicker;
     QToolButton *fillMaterialPicker, *lineMaterialPicker;
-    QColor defaultFillColor = QColor(0, 168, 243), defaultLineColor = QColor(Qt::black);
-    QColor prevFillColor = QColor();
-    QColor prevLineColor = QColor();
+
+    QString noneText = tr("None"), solidText = tr("Solid");
 };
 
 

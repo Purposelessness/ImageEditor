@@ -6,7 +6,7 @@
 #include <QColorDialog>
 
 LineParametersInterface::LineParametersInterface(const QString &name, QObject *parent, QWidget *widget)
-        : ParametersInterface(parent), ToolUnitView(name, widget),
+        : ParametersInterface(parent, line), ToolUnitView(name, widget),
           colorPicker(new QPushButton()),
           thicknessSlider(new QSlider()) {
     createColorPicker(tr("Line color"), colorPicker);
@@ -18,30 +18,39 @@ LineParametersInterface::LineParametersInterface(const QString &name, QObject *p
     thicknessSlider->setOrientation(Qt::Horizontal);
     connect(thicknessSlider, SIGNAL(valueChanged(int)), this, SLOT(onThicknessChanged(int)));
     addWidget(thicknessSlider);
+
+    updateView();
 }
 
-void LineParametersInterface::resetParameters() {
-    setColor(defaultColor);
-    thicknessSlider->setValue(10);
+void LineParametersInterface::updateView() {
+    updateLine();
+    updateThickness();
+}
+
+void LineParametersInterface::updateLine() {
+    colorPicker->setStyleSheet(QString("background-color: %1").arg(data.lineColor.name()));
+}
+
+void LineParametersInterface::updateThickness() {
+    thicknessSlider->setValue(data.thickness);
 }
 
 void LineParametersInterface::pickColor() {
-    setColor(QColorDialog::getColor(figureData.lineColor, nullptr, tr("Line color")));
+    setColor(QColorDialog::getColor(data.lineColor, nullptr, tr("Line color")));
 }
 
 void LineParametersInterface::setColor(const QColor& newColor) {
-    if (newColor == QColor())
-        return;
-    figureData.lineColor = newColor;
-    colorPicker->setStyleSheet(QString("background-color: %1").arg(newColor.name()));
-    emit update(&figureData);
+    if (newColor.isValid()) {
+        data.lineColor = newColor;
+        updateLine();
+        dataUpdated();
+    }
 }
 
 void LineParametersInterface::onThicknessChanged(int value) {
     thicknessSlider->setToolTip(QString::number(value));
-    figureData.thickness = value;
-    qDebug() << "Thickness change to" << value;
-    emit update(&figureData);
+    data.thickness = value;
+    dataUpdated();
 }
 
 void LineParametersInterface::createColorPicker(const QString &name, QPushButton *colorPickerButton) {
@@ -52,12 +61,4 @@ void LineParametersInterface::createColorPicker(const QString &name, QPushButton
     colorPickerWidget->setLayout(layout);
     layout->addWidget(colorPickerButton);
     addWidget(colorPickerWidget);
-}
-
-QColor LineParametersInterface::getColor() const {
-    return figureData.lineColor;
-}
-
-int LineParametersInterface::getThicknessValue() const {
-    return figureData.thickness;
 }
