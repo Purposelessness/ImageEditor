@@ -1,39 +1,33 @@
 #ifndef IMAGEEDITOR_LINEMODEL_H
 #define IMAGEEDITOR_LINEMODEL_H
 
-#include "../../itoolmodel.h"
+#include "../figuremodel.h"
 
 #include <QGraphicsLineItem>
 #include <QPen>
 
-class LineModel : public IToolModel {
+class LineModel : public FigureModel {
 Q_OBJECT
 
 public:
-    void onMousePressed(const QPoint &mousePos, IGraphicsView *view) override;
-    void onMouseMoved(const QPoint &mousePos) override;
-    void onMouseReleased(const QPoint &mousePos) override;
-
     void setColor(const QColor &color);
     void setThickness(const int &value);
-    QGraphicsLineItem *getGraphicsItem();
 
     void onItemSelected(QGraphicsLineItem *graphicsLineItem);
     void onItemDeselected();
 
-signals:
-    void itemSelected();
-    void itemDeselected();
+    FigureData getData() override;
+
+protected:
+    QGraphicsItem *startDrawing(QRectF rect) override;
+    void onDrawing(QRectF rect) override;
+    void finishDrawing(QRectF rect) override;
 
 private:
     QPen pen = QPen();
     int thickness = 10;
 
     QGraphicsLineItem *item = nullptr, *selectedItem = nullptr;
-
-    bool isDrawing = false;
-
-    int x = 0, y = 0;
 };
 
 

@@ -2,19 +2,26 @@
 #define IMAGEEDITOR_FIGURECATEGORYMODEL_H
 
 
-#include <QGraphicsItem>
-
 #include "../toolcategorymodel.h"
 #include "../../Tool/Figure/figure.h"
 
-struct Data;
+#include <QGraphicsItem>
+
+struct Data {
+    QColor fillColor = QColor(0, 168, 243);
+    QColor lineColor = Qt::black;
+    int thickness = 10;
+    bool fillEnabled = true;
+    bool lineEnabled = true;
+    FigureType type = none;
+};
 
 class FigureCategoryModel : public QObject, public ToolCategoryModel<Figure> {
 Q_OBJECT
 
 public:
     void setData(Data *data);
-    Figure *getFigure();
+    Data *getCurrentData();
 
 signals:
     void figureSelected();
@@ -30,9 +37,11 @@ protected:
 
 private:
     void createTools() override;
+    void updateCurrentData(FigureData currentFigureData);
 
     Data *data = nullptr;
-    FigureData figureData {};
+    Data currentData{};
+    FigureData figureData{};
 
     Figure *selectedFigure = nullptr;
 };

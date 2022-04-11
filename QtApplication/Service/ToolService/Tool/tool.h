@@ -1,6 +1,7 @@
 #ifndef IMAGEEDITOR_TOOL_H
 #define IMAGEEDITOR_TOOL_H
 
+
 #include "../Generics/toolunit.h"
 #include "../Generics/toolunitview.h"
 

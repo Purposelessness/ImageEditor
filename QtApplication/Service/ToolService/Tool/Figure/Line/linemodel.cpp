@@ -1,36 +1,33 @@
 #include "linemodel.h"
 #include "lineitem.h"
-#include "../../../../../MainWidgets/ImageViewer/igraphicsview.h"
-#include "../../../../UndoService/Command/additemcommand.h"
+#include "../figure.h"
 
-void LineModel::onMousePressed(const QPoint &mousePos, IGraphicsView *view) {
-    if (isDrawing)
-        return;
-    x = mousePos.x();
-    y = mousePos.y();
+QGraphicsItem *LineModel::startDrawing(QRectF rect) {
     item = new LineItem(this);
-    item->setLine(x, y, x, y);
+    item->setLine(rect.x(), rect.y(), rect.x(), rect.y());
     item->setPen(pen);
-    view->addItem(item);
-    isDrawing = true;
+    return item;
 }
 
-void LineModel::onMouseMoved(const QPoint &mousePos) {
-    if (!isDrawing || !item)
-        return;
-    item->setLine(x, y, mousePos.x(), mousePos.y());
+void LineModel::onDrawing(QRectF rect) {
+    item->setLine(rect.x(), rect.y(), rect.x() + rect.width(), rect.y() + rect.height());
 }
 
-void LineModel::onMouseReleased(const QPoint &mousePos) {
-    isDrawing = false;
-    if (x == mousePos.x() && y == mousePos.y() || !item) {
-        delete item;
-        item = nullptr;
-        return;
+void LineModel::finishDrawing(QRectF rect) {
+    item->setLine(rect.x(), rect.y(), rect.x() + rect.width(), rect.y() + rect.height());
+    item = nullptr;
+}
+
+FigureData LineModel::getData() {
+    FigureData data{};
+    if (!selectedItem) {
+        data.type = none;
+        return data;
     }
-    item->setLine(x, y, mousePos.x(), mousePos.y());
-    item->setFlag(QGraphicsItem::ItemIsSelectable);
-    new AddItemCommand(item);
+    data.lineColor = selectedItem->pen().color();
+    data.thickness = selectedItem->pen().width();
+    data.type = line;
+    return data;
 }
 
 void LineModel::setColor(const QColor &color) {
@@ -44,10 +41,6 @@ void LineModel::setThickness(const int &value) {
     pen.setWidth(thickness);
     if (selectedItem)
         selectedItem->setPen(pen);
-}
-
-QGraphicsLineItem *LineModel::getGraphicsItem() {
-    return item;
 }
 
 void LineModel::onItemSelected(QGraphicsLineItem *graphicsLineItem) {

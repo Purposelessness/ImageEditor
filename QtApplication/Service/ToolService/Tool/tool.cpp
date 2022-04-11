@@ -7,7 +7,6 @@ Tool::Tool(QString name, ToolUnitView *newView, IToolModel *newModel) : ToolUnit
 }
 
 void Tool::onMousePressed(const QPoint &mousePos, IGraphicsView *graphicsView) {
-
     model->onMousePressed(mousePos, graphicsView);
 }
 

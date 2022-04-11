@@ -2,10 +2,7 @@
 
 #include <utility>
 
-Shape::Shape(QString name, ToolUnitView *view, ShapeModel *model) : Figure(std::move(name), view, model), model(model) {
-    connect(model, SIGNAL(itemSelected()), this, SLOT(onItemSelected()));
-    connect(model, SIGNAL(itemDeselected()), this, SLOT(onItemDeselected()));
-}
+Shape::Shape(QString name, ToolUnitView *view, ShapeModel *model) : Figure(std::move(name), view, model), model(model) {}
 
 void Shape::setData(FigureData *figureData) {
     model->setFillColor(figureData->fillColor);
@@ -15,12 +12,4 @@ void Shape::setData(FigureData *figureData) {
 
 FigureType Shape::getType() {
     return shape;
-}
-
-void Shape::onItemSelected() {
-    emit selected(this);
-}
-
-void Shape::onItemDeselected() {
-    emit deselected();
 }

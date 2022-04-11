@@ -2,30 +2,27 @@
 #define IMAGEEDITOR_SHAPEMODEL_H
 
 
-#include "../itoolmodel.h"
+#include "figuremodel.h"
 
 #include <QAbstractGraphicsShapeItem>
 
-class ShapeModel : public IToolModel {
+class ShapeModel : public FigureModel {
 Q_OBJECT
 
 public:
-    void onMousePressed(const QPoint &mousePos, IGraphicsView *view) override;
-    void onMouseMoved(const QPoint &mousePos) override;
-    void onMouseReleased(const QPoint &mousePos) override;
-
     void setFillColor(const QColor &color);
     void setLineColor(const QColor &color);
     void setThickness(const int &value);
 
+    FigureData getData() override;
     void onItemSelected(QAbstractGraphicsShapeItem *abstractGraphicsShapeItem);
     void onItemDeselected();
 
-signals:
-    void itemSelected();
-    void itemDeselected();
-
 protected:
+    QGraphicsItem *startDrawing(QRectF rect) override;
+    void onDrawing(QRectF rect) override;
+    void finishDrawing(QRectF rect) override;
+
     virtual QAbstractGraphicsShapeItem *drawItem(const QRectF &rect) = 0;
     virtual void resizeItem(const QRectF &rect) = 0;
 

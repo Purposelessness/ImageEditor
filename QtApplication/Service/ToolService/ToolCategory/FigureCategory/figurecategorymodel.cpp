@@ -1,5 +1,4 @@
 #include "figurecategorymodel.h"
-#include "figurecategory.h"
 #include "../../Tool/Figure/Ellipse/ellipse.h"
 #include "../../Tool/Figure/Rect/rect.h"
 #include "../../Tool/Figure/Line/line.h"
@@ -8,8 +7,8 @@ void FigureCategoryModel::setData(Data *newData) {
     data = newData;
 }
 
-Figure *FigureCategoryModel::getFigure() {
-    return selectedFigure;
+Data *FigureCategoryModel::getCurrentData() {
+    return &currentData;
 }
 
 void FigureCategoryModel::createTools() {
@@ -42,8 +41,19 @@ void FigureCategoryModel::updateFigureParameters(Figure *figure) {
     figureToUpdate->setData(&figureData);
 }
 
+void FigureCategoryModel::updateCurrentData(FigureData currentFigureData) {
+    currentData.fillEnabled = currentFigureData.fillColor.isValid();
+    currentData.fillColor = data->fillEnabled ? currentFigureData.fillColor : figureData.fillColor;
+    currentData.lineEnabled = currentFigureData.lineColor.isValid();
+    currentData.lineColor = data->lineEnabled ? currentFigureData.lineColor : figureData.lineColor;
+    currentData.thickness = figureData.thickness;
+    currentData.type = currentFigureData.type;
+}
+
 void FigureCategoryModel::onFigureSelected(Figure *figure) {
+    qDebug() << "figure selected";
     selectedFigure = figure;
+    updateCurrentData(selectedFigure->getData());
     emit figureSelected();
 }
 

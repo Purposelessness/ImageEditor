@@ -1,7 +1,5 @@
 #include "shapemodel.h"
-#include "../../../../MainWidgets/ImageViewer/igraphicsview.h"
-#include "../../../../logger.h"
-#include "../../../UndoService/Command/additemcommand.h"
+#include "figure.h"
 
 #include <QPen>
 #include <QBrush>
@@ -11,51 +9,21 @@ QPen ShapeModel::pen = QPen();
 QBrush ShapeModel::brush = QBrush();
 int ShapeModel::thickness = 10;
 
-void ShapeModel::onMousePressed(const QPoint &mousePos, IGraphicsView *view) {
-    if (isDrawing)
-        return;
-    x = mousePos.x();
-    y = mousePos.y();
-    auto rect = QRectF(x, y, 0, 0);
+QGraphicsItem *ShapeModel::startDrawing(QRectF rect) {
     item = drawItem(rect);
     item->setPen(pen);
     item->setBrush(brush);
-    view->addItem(item);
-    isDrawing = true;
+    return item;
 }
 
-void ShapeModel::onMouseMoved(const QPoint &mousePos) {
-    if (!isDrawing || !item)
+void ShapeModel::onDrawing(QRectF rect) {
+    if (!item)
         return;
-    auto rect = QRectF(x, y, mousePos.x() - x, mousePos.y() - y);
     resizeItem(rect);
 }
 
-void ShapeModel::onMouseReleased(const QPoint &mousePos) {
-    isDrawing = false;
-    qreal left, top, width, height;
-    if (x <= mousePos.x()) {
-        left = x;
-        width = mousePos.x() - x;
-    } else {
-        left = mousePos.x();
-        width = x - mousePos.x();
-    }
-    if (y <= mousePos.y()) {
-        top = y;
-        height = mousePos.y() - y;
-    } else {
-        top = mousePos.y();
-        height = y - mousePos.y();
-    }
-    auto rect = QRectF(left, top, width, height);
-    if (rect.isNull() || !item) {
-        delete item;
-        item = nullptr;
-        return;
-    }
+void ShapeModel::finishDrawing(QRectF rect) {
     resizeItem(rect);
-    new AddItemCommand(item);
 }
 
 void ShapeModel::setFillColor(const QColor &color) {
@@ -94,4 +62,17 @@ void ShapeModel::onItemSelected(QAbstractGraphicsShapeItem *abstractGraphicsShap
 void ShapeModel::onItemDeselected() {
     selectedItem = nullptr;
     emit itemDeselected();
+}
+
+FigureData ShapeModel::getData() {
+    FigureData data{};
+    if (!selectedItem) {
+        data.type = none;
+        return data;
+    }
+    data.fillColor = selectedItem->brush().style() == Qt::NoBrush ? QColor() : selectedItem->brush().color();
+    data.lineColor = selectedItem->pen().color() == QColor(0, 0, 0, 0) ? QColor() : selectedItem->pen().color();
+    data.thickness = selectedItem->pen().width();
+    data.type = shape;
+    return data;
 }

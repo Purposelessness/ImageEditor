@@ -13,14 +13,14 @@ FigureCategory::FigureCategory(const QString &name, FigureCategoryView *newView,
 }
 
 void FigureCategory::updateCurrentData(Data *newData) {
-    currentData = *newData;
+    data = *newData;
     updateDataInChildren();
 }
 
 void FigureCategory::updateDataInChildren() {
-    model->setData(&currentData);
-    shapeParametersInterface->setData(&currentData);
-    lineParametersInterface->setData(&currentData);
+    model->setData(&data);
+    shapeParametersInterface->setData(&data);
+    lineParametersInterface->setData(&data);
 }
 
 void FigureCategory::onParametersUpdated() {
@@ -34,10 +34,12 @@ void FigureCategory::showParametersInterface(FigureType figureType) {
             view->setWidget(lineParametersInterface->getWidget());
             break;
         case shape:
+            qDebug() << "Showing shape parameters interface";
             shapeParametersInterface->update();
             view->setWidget(shapeParametersInterface->getWidget());
             break;
         default:
+            qDebug() << "Reset parameters interface";
             view->resetWidget();
             break;
     }
@@ -51,7 +53,10 @@ void FigureCategory::onActionTriggered() {
 }
 
 void FigureCategory::onFigureSelected() {
-    showParametersInterface(model->getFigure()->getType());
+    Data *newData = model->getCurrentData();
+    updateCurrentData(newData);
+    qDebug() << (newData->type == shape);
+    showParametersInterface(newData->type);
 }
 
 void FigureCategory::onFigureDeselected() {

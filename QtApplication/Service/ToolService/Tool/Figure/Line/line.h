@@ -16,10 +16,6 @@ public:
     void setData(FigureData *figureData) override;
     FigureType getType() override;
 
-private slots:
-    void onItemSelected();
-    void onItemDeselected();
-
 private:
     LineModel *model;
 };

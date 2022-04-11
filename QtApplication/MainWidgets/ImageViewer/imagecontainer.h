@@ -42,8 +42,9 @@ private:
             if (watched->isSelected())
                 return false;
 
-            if (event->type() == QEvent::GraphicsSceneMouseDoubleClick)
+            if (event->type() == QEvent::GraphicsSceneMouseDoubleClick) {
                 watched->setSelected(true);
+            }
             return true;
         }
         [[nodiscard]] QRectF boundingRect() const final { return QRect(); }

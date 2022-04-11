@@ -8,14 +8,6 @@
 #include "ParametersInterface/shapeparametersinterface.h"
 #include "ParametersInterface/lineparametersinterface.h"
 
-struct Data {
-    QColor fillColor = QColor(0, 168, 243);
-    QColor lineColor = Qt::black;
-    int thickness = 10;
-    bool fillEnabled = true;
-    bool lineEnabled = true;
-};
-
 class FigureCategory : public ToolCategory {
 Q_OBJECT
 
@@ -42,8 +34,7 @@ private:
     FigureCategoryModel *model;
     FigureCategoryView *view;
 
-    Data currentData {};
-    Data mainData {};
+    Data data{};
 };
 
 
