@@ -9,18 +9,13 @@ FigureCategory::FigureCategory(const QString &name, FigureCategoryView *newView,
     connect(shapeParametersInterface, SIGNAL(updated()), this, SLOT(onParametersUpdated()));
     connect(model, SIGNAL(figureSelected()), this, SLOT(onFigureSelected()));
     connect(model, SIGNAL(figureDeselected()), this, SLOT(onFigureDeselected()));
-    updateDataInChildren();
+    updateDataInChildren(model->getCurrentData());
 }
 
-void FigureCategory::updateCurrentData(Data *newData) {
-    data = *newData;
-    updateDataInChildren();
-}
-
-void FigureCategory::updateDataInChildren() {
-    model->setData(&data);
-    shapeParametersInterface->setData(&data);
-    lineParametersInterface->setData(&data);
+void FigureCategory::updateDataInChildren(Data *data) {
+    model->setData(data);
+    shapeParametersInterface->setData(data);
+    lineParametersInterface->setData(data);
 }
 
 void FigureCategory::onParametersUpdated() {
@@ -54,7 +49,7 @@ void FigureCategory::onActionTriggered() {
 
 void FigureCategory::onFigureSelected() {
     Data *newData = model->getCurrentData();
-    updateCurrentData(newData);
+    updateDataInChildren(newData);
     qDebug() << (newData->type == shape);
     showParametersInterface(newData->type);
 }

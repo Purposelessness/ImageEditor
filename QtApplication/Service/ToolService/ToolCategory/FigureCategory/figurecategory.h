@@ -25,16 +25,13 @@ private slots:
     void onParametersUpdated();
 
 private:
-    void updateCurrentData(Data *data);
-    void updateDataInChildren();
+    void updateDataInChildren(Data *data);
     void showParametersInterface(FigureType figureType);
 
     ShapeParametersInterface *shapeParametersInterface;
     LineParametersInterface *lineParametersInterface;
     FigureCategoryModel *model;
     FigureCategoryView *view;
-
-    Data data{};
 };
 
 
