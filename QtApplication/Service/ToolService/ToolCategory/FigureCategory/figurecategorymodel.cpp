@@ -2,6 +2,7 @@
 #include "../../Tool/Figure/Ellipse/ellipse.h"
 #include "../../Tool/Figure/Rect/rect.h"
 #include "../../Tool/Figure/Line/line.h"
+#include "../../Tool/Figure/Triangle/triangle.h"
 
 void FigureCategoryModel::setData(Data *newData) {
     data = newData;
@@ -16,6 +17,8 @@ void FigureCategoryModel::createTools() {
     addTool(ellipse);
     auto rect = new Rect();
     addTool(rect);
+    auto triangle = new Triangle();
+    addTool(triangle);
     auto line = new Line();
     addTool(line);
     setTool(ellipse->toString());
