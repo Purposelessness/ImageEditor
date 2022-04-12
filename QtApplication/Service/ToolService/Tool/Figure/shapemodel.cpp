@@ -9,6 +9,10 @@ QPen ShapeModel::pen = QPen();
 QBrush ShapeModel::brush = QBrush();
 int ShapeModel::thickness = 10;
 
+ShapeModel::ShapeModel() : FigureModel() {
+    pen.setJoinStyle(Qt::MiterJoin);
+}
+
 QGraphicsItem *ShapeModel::startDrawing(const Coordinates &coordinates) {
     item = drawItem(QRectF(coordinates.x_0, coordinates.y_0, 0, 0));
     item->setPen(pen);

@@ -10,6 +10,8 @@ class ShapeModel : public FigureModel {
 Q_OBJECT
 
 public:
+    ShapeModel();
+
     void setFillColor(const QColor &color);
     void setLineColor(const QColor &color);
     void setThickness(const int &value);
