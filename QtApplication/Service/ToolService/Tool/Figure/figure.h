@@ -33,6 +33,7 @@ public:
     }
     virtual FigureType getType() = 0;
     FigureData getData();
+    [[nodiscard]] bool isSelected() const;
 
     void onMousePressed(const QPoint &mousePos, IGraphicsView *graphicsView) override;
     void onMouseMoved(const QPoint &mousePos) override;
@@ -50,7 +51,7 @@ protected slots:
 private:
     FigureModel *model;
 
-    bool isSelected = false;
+    bool isSelectedFlag = false, prevItemWasSelected = false;
 };
 
 #endif //IMAGEEDITOR_FIGURE_H

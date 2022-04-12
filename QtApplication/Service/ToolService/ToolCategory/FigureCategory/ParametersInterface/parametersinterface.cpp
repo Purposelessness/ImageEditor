@@ -5,7 +5,6 @@ ParametersInterface::ParametersInterface(QObject *parent, FigureType newType) : 
 
 void ParametersInterface::setData(Data *newData) {
     data = newData;
-    qDebug() << data->fillColor;
     update();
 }
 

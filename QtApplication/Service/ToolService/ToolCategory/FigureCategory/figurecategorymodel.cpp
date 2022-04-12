@@ -53,13 +53,14 @@ void FigureCategoryModel::updateCurrentData(FigureData currentFigureData) {
 }
 
 void FigureCategoryModel::onFigureSelected(Figure *figure) {
-    qDebug() << "figure selected";
     selectedFigure = figure;
     updateCurrentData(selectedFigure->getData());
     emit figureSelected();
 }
 
 void FigureCategoryModel::onFigureDeselected() {
+    if (selectedFigure && selectedFigure->isSelected())
+        return;
     selectedFigure = nullptr;
     emit figureDeselected();
 }

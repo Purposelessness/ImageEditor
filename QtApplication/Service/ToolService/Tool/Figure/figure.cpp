@@ -9,20 +9,20 @@ Figure::Figure(QString name, ToolUnitView *view, FigureModel *model) : Tool(std:
 }
 
 void Figure::onMousePressed(const QPoint &mousePos, IGraphicsView *graphicsView) {
-    if (isSelected)
+    if (isSelectedFlag)
         return;
     emit update(this);
     Tool::onMousePressed(mousePos, graphicsView);
 }
 
 void Figure::onMouseMoved(const QPoint &mousePos) {
-    if (isSelected)
+    if (isSelectedFlag)
         return;
     Tool::onMouseMoved(mousePos);
 }
 
 void Figure::onMouseReleased(const QPoint &mousePos) {
-    if (isSelected)
+    if (isSelectedFlag)
         return;
     Tool::onMouseReleased(mousePos);
 }
@@ -32,12 +32,20 @@ FigureData Figure::getData() {
 }
 
 void Figure::onItemSelected() {
-    isSelected = true;
-    qDebug() << "item Selected";
+    prevItemWasSelected = isSelectedFlag;
+    isSelectedFlag = true;
     emit selected(this);
 }
 
 void Figure::onItemDeselected() {
-    isSelected = false;
+    if (prevItemWasSelected) {
+        prevItemWasSelected = false;
+        return;
+    }
+    isSelectedFlag = false;
     emit deselected();
+}
+
+bool Figure::isSelected() const {
+    return isSelectedFlag;
 }

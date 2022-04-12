@@ -29,12 +29,10 @@ void FigureCategory::showParametersInterface(FigureType figureType) {
             view->setWidget(lineParametersInterface->getWidget());
             break;
         case shape:
-            qDebug() << "Showing shape parameters interface";
             shapeParametersInterface->update();
             view->setWidget(shapeParametersInterface->getWidget());
             break;
         default:
-            qDebug() << "Reset parameters interface";
             view->resetWidget();
             break;
     }
@@ -50,7 +48,6 @@ void FigureCategory::onActionTriggered() {
 void FigureCategory::onFigureSelected() {
     Data *newData = model->getCurrentData();
     updateDataInChildren(newData);
-    qDebug() << (newData->type == shape);
     showParametersInterface(newData->type);
 }
 
