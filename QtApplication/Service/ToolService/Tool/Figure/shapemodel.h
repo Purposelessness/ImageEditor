@@ -19,9 +19,9 @@ public:
     void onItemDeselected();
 
 protected:
-    QGraphicsItem *startDrawing(QRectF rect) override;
-    void onDrawing(QRectF rect) override;
-    void finishDrawing(QRectF rect) override;
+    QGraphicsItem *startDrawing(const Coordinates &coordinates) override;
+    void onDrawing(const Coordinates &coordinates) override;
+    void finishDrawing(const Coordinates &coordinates) override;
 
     virtual QAbstractGraphicsShapeItem *drawItem(const QRectF &rect) = 0;
     virtual void resizeItem(const QRectF &rect) = 0;

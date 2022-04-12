@@ -19,9 +19,9 @@ public:
     FigureData getData() override;
 
 protected:
-    QGraphicsItem *startDrawing(QRectF rect) override;
-    void onDrawing(QRectF rect) override;
-    void finishDrawing(QRectF rect) override;
+    QGraphicsItem *startDrawing(const Coordinates &coordinates) override;
+    void onDrawing(const Coordinates &coordinates) override;
+    void finishDrawing(const Coordinates &coordinates) override;
 
 private:
     QPen pen = QPen();

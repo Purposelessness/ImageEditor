@@ -9,21 +9,21 @@ QPen ShapeModel::pen = QPen();
 QBrush ShapeModel::brush = QBrush();
 int ShapeModel::thickness = 10;
 
-QGraphicsItem *ShapeModel::startDrawing(QRectF rect) {
-    item = drawItem(rect);
+QGraphicsItem *ShapeModel::startDrawing(const Coordinates &coordinates) {
+    item = drawItem(QRectF(coordinates.x_0, coordinates.y_0, 0, 0));
     item->setPen(pen);
     item->setBrush(brush);
     return item;
 }
 
-void ShapeModel::onDrawing(QRectF rect) {
-    if (!item)
-        return;
-    resizeItem(rect);
+void ShapeModel::onDrawing(const Coordinates &coordinates) {
+    auto normalizedRect = normalizeRect(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y);
+    resizeItem(normalizedRect);
 }
 
-void ShapeModel::finishDrawing(QRectF rect) {
-    resizeItem(rect);
+void ShapeModel::finishDrawing(const Coordinates &coordinates) {
+    auto normalizedRect = normalizeRect(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y);
+    resizeItem(normalizedRect);
 }
 
 void ShapeModel::setFillColor(const QColor &color) {

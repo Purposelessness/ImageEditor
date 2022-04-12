@@ -2,19 +2,19 @@
 #include "lineitem.h"
 #include "../figure.h"
 
-QGraphicsItem *LineModel::startDrawing(QRectF rect) {
+QGraphicsItem *LineModel::startDrawing(const Coordinates &coordinates) {
     item = new LineItem(this);
-    item->setLine(rect.x(), rect.y(), rect.x(), rect.y());
+    item->setLine(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y);
     item->setPen(pen);
     return item;
 }
 
-void LineModel::onDrawing(QRectF rect) {
-    item->setLine(rect.x(), rect.y(), rect.x() + rect.width(), rect.y() + rect.height());
+void LineModel::onDrawing(const Coordinates &coordinates) {
+    item->setLine(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y);
 }
 
-void LineModel::finishDrawing(QRectF rect) {
-    item->setLine(rect.x(), rect.y(), rect.x() + rect.width(), rect.y() + rect.height());
+void LineModel::finishDrawing(const Coordinates &coordinates) {
+    item->setLine(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y);
     item = nullptr;
 }
 
