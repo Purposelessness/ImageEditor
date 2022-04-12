@@ -14,7 +14,7 @@ enum FigureType {
 };
 
 struct FigureData {
-    QColor fillColor {QColor(Qt::green)};
+    QColor fillColor {QColor(0, 168, 243)};
     QColor lineColor {QColor(Qt::black)};
     int thickness {10};
     FigureType type {none};

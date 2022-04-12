@@ -42,8 +42,10 @@ void FigureCategoryModel::updateFigureParameters(Figure *figure) {
 }
 
 void FigureCategoryModel::updateCurrentData(FigureData currentFigureData) {
-    currentData.fillEnabled = currentFigureData.fillColor.isValid();
-    currentData.fillColor = data->fillEnabled ? currentFigureData.fillColor : figureData.fillColor;
+    if (currentData.type == line) {
+        currentData.fillEnabled = currentFigureData.fillColor.isValid();
+        currentData.fillColor = data->fillEnabled ? currentFigureData.fillColor : figureData.fillColor;
+    }
     currentData.lineEnabled = currentFigureData.lineColor.isValid();
     currentData.lineColor = data->lineEnabled ? currentFigureData.lineColor : figureData.lineColor;
     currentData.thickness = figureData.thickness;
