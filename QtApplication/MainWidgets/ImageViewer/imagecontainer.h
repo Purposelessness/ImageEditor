@@ -45,8 +45,17 @@ private:
             if (event->type() == QEvent::GraphicsSceneMouseDoubleClick) {
                 watched->setSelected(true);
                 selectedItem = watched;
-            } else if (event->type() == QEvent::GraphicsSceneMousePress && selectedItem) {
-                selectedItem->setSelected(false);
+            } else if (event->type() == QEvent::GraphicsSceneMousePress) {
+                if (selectedItem) {
+                    selectedItem->setSelected(false);
+                    selectedItem = nullptr;
+                } else {
+                    for (auto item : scene()->selectedItems()) {
+                        if (item != this) {
+                            item->setSelected(false);
+                        }
+                    }
+                }
             }
             return true;
         }
