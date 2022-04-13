@@ -27,7 +27,7 @@ void Figure::onMouseReleased(const QPoint &mousePos) {
     Tool::onMouseReleased(mousePos);
 }
 
-FigureData Figure::getData() {
+FigureData Figure::getData() const {
     return model->getData();
 }
 

@@ -7,21 +7,11 @@
 
 #include <QGraphicsItem>
 
-struct Data {
-    QColor fillColor = QColor(0, 168, 243);
-    QColor lineColor = Qt::black;
-    int thickness = 10;
-    bool fillEnabled = true;
-    bool lineEnabled = true;
-    FigureType type = none;
-};
-
 class FigureCategoryModel : public QObject, public ToolCategoryModel<Figure> {
 Q_OBJECT
 
 public:
-    void setData(Data *data);
-    Data *getCurrentData();
+    FigureData *getData();
 
 signals:
     void figureSelected();
@@ -39,9 +29,7 @@ private:
     void createTools() override;
     void updateCurrentData(FigureData currentFigureData);
 
-    Data *data = nullptr;
-    Data currentData{};
-    FigureData figureData{};
+    FigureData data{};
 
     Figure *selectedFigure = nullptr;
 };

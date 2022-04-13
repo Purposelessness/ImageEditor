@@ -5,21 +5,21 @@ FigureCategory::FigureCategory(const QString &name, FigureCategoryView *newView,
         model (newModel), view(newView),
         lineParametersInterface(new LineParametersInterface(tr("LineCategory"), this)),
         shapeParametersInterface(new ShapeParametersInterface(tr("FigureCategory"), this)) {
-    connect(lineParametersInterface, SIGNAL(updated()), this, SLOT(onParametersUpdated()));
-    connect(shapeParametersInterface, SIGNAL(updated()), this, SLOT(onParametersUpdated()));
+    connect(lineParametersInterface, SIGNAL(updated()), model, SLOT(updateFigureParameters()));
+    connect(shapeParametersInterface, SIGNAL(updated()), model, SLOT(updateFigureParameters()));
     connect(model, SIGNAL(figureSelected()), this, SLOT(onFigureSelected()));
     connect(model, SIGNAL(figureDeselected()), this, SLOT(onFigureDeselected()));
-    updateDataInChildren(model->getCurrentData());
+    updateDataInChildren(model->getData());
 }
 
-void FigureCategory::updateDataInChildren(Data *data) {
-    model->setData(data);
-    shapeParametersInterface->setData(data);
-    lineParametersInterface->setData(data);
-}
-
-void FigureCategory::onParametersUpdated() {
-    model->updateFigureParameters();
+void FigureCategory::updateDataInChildren(FigureData *data) {
+    if (data) {
+        shapeParametersInterface->setData(data);
+        lineParametersInterface->setData(data);
+    } else {
+        shapeParametersInterface->update();
+        lineParametersInterface->update();
+    }
 }
 
 void FigureCategory::showParametersInterface(FigureType figureType) {
@@ -46,9 +46,8 @@ void FigureCategory::onActionTriggered() {
 }
 
 void FigureCategory::onFigureSelected() {
-    Data *newData = model->getCurrentData();
-    updateDataInChildren(newData);
-    showParametersInterface(newData->type);
+    updateDataInChildren(model->getData());
+    showParametersInterface(model->getData()->type);
 }
 
 void FigureCategory::onFigureDeselected() {

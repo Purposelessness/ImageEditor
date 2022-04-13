@@ -4,12 +4,8 @@
 #include "../../Tool/Figure/Line/line.h"
 #include "../../Tool/Figure/Triangle/triangle.h"
 
-void FigureCategoryModel::setData(Data *newData) {
-    data = newData;
-}
-
-Data *FigureCategoryModel::getCurrentData() {
-    return &currentData;
+FigureData *FigureCategoryModel::getData() {
+    return &data;
 }
 
 void FigureCategoryModel::createTools() {
@@ -36,23 +32,20 @@ void FigureCategoryModel::updateFigureParameters(Figure *figure) {
     if (!figureToUpdate)
         return;
 
-    FigureType type = figureToUpdate->getType();
-    figureData.fillColor = data->fillEnabled || type == line ? data->fillColor : QColor();
-    figureData.lineColor = data->lineEnabled || type == line ? data->lineColor : QColor();
-    figureData.thickness = data->thickness;
-    figureData.type = type;
-    figureToUpdate->setData(&figureData);
+    figureToUpdate->setData(data);
 }
 
 void FigureCategoryModel::updateCurrentData(FigureData currentFigureData) {
-    if (currentData.type == line) {
-        currentData.fillEnabled = currentFigureData.fillColor.isValid();
-        currentData.fillColor = data->fillEnabled ? currentFigureData.fillColor : figureData.fillColor;
+    if (currentFigureData.type == shape) {
+        data.fillEnabled = currentFigureData.fillEnabled;
+        if (currentFigureData.fillEnabled)
+            data.fillColor = currentFigureData.fillColor;
     }
-    currentData.lineEnabled = currentFigureData.lineColor.isValid();
-    currentData.lineColor = data->lineEnabled ? currentFigureData.lineColor : figureData.lineColor;
-    currentData.thickness = figureData.thickness;
-    currentData.type = currentFigureData.type;
+    data.lineEnabled = currentFigureData.lineEnabled && currentFigureData.type != line;
+    if (currentFigureData.lineEnabled || currentFigureData.type == line)
+        data.lineColor = currentFigureData.lineColor;
+    data.thickness = currentFigureData.thickness;
+    data.type = currentFigureData.type;
 }
 
 void FigureCategoryModel::onFigureSelected(Figure *figure) {

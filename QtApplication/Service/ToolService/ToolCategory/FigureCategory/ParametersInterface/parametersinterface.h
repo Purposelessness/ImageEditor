@@ -5,15 +5,13 @@
 #include "../../../Generics/toolunitview.h"
 #include "../../../Tool/Figure/figure.h"
 
-struct Data;
-
 class ParametersInterface : public QObject {
 Q_OBJECT
 
 public:
     explicit ParametersInterface(QObject *parent = nullptr, FigureType type = none);
 
-    void setData(Data *data);
+    void setData(FigureData *data);
     virtual void update() = 0;
 
 signals:
@@ -21,7 +19,7 @@ signals:
 
 protected:
     void dataUpdated();
-    Data *data = nullptr;
+    FigureData *data = nullptr;
 
 private:
     FigureType type;

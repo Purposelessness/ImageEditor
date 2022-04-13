@@ -18,7 +18,7 @@ void LineModel::finishDrawing(const Coordinates &coordinates) {
     item = nullptr;
 }
 
-FigureData LineModel::getData() {
+FigureData LineModel::getData() const {
     FigureData data{};
     if (!selectedItem) {
         data.type = none;

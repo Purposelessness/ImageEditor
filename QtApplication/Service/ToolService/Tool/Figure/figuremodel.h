@@ -29,7 +29,7 @@ public:
     void onMouseMoved(const QPoint &mousePos) final;
     void onMouseReleased(const QPoint &mousePos) final;
 
-    virtual FigureData getData() = 0;
+    virtual FigureData getData() const = 0;
 
 signals:
     void itemSelected();

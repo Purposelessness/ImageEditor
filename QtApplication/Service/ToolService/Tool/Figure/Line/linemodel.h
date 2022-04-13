@@ -16,7 +16,7 @@ public:
     void onItemSelected(QGraphicsLineItem *graphicsLineItem);
     void onItemDeselected();
 
-    FigureData getData() override;
+    [[nodiscard]] FigureData getData() const override;
 
 protected:
     QGraphicsItem *startDrawing(const Coordinates &coordinates) override;

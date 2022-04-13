@@ -12,11 +12,11 @@ Q_OBJECT
 public:
     ShapeModel();
 
-    void setFillColor(const QColor &color);
-    void setLineColor(const QColor &color);
+    void setFillColor(const QColor &color = QColor());
+    void setLineColor(const QColor &color = QColor());
     void setThickness(const int &value);
 
-    FigureData getData() override;
+    [[nodiscard]] FigureData getData() const override;
     void onItemSelected(QAbstractGraphicsShapeItem *abstractGraphicsShapeItem);
     void onItemDeselected();
 

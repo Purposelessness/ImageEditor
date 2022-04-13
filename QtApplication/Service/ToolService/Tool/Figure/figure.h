@@ -17,6 +17,8 @@ struct FigureData {
     QColor fillColor {QColor(0, 168, 243)};
     QColor lineColor {QColor(Qt::black)};
     int thickness {10};
+    bool fillEnabled {true};
+    bool lineEnabled {true};
     FigureType type {none};
 };
 
@@ -28,11 +30,9 @@ Q_OBJECT
 public:
     explicit Figure(QString name, ToolUnitView *view, FigureModel *model);
 
-    virtual void setData(FigureData *figureData) {
-        qDebug() << "setting data";
-    }
+    virtual void setData(const FigureData &figureData) = 0;
     virtual FigureType getType() = 0;
-    FigureData getData();
+    [[nodiscard]] FigureData getData() const;
     [[nodiscard]] bool isSelected() const;
 
     void onMousePressed(const QPoint &mousePos, IGraphicsView *graphicsView) override;

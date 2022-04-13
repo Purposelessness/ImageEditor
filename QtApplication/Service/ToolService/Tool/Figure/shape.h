@@ -12,7 +12,7 @@ Q_OBJECT
 public:
     explicit Shape(QString name, ToolUnitView *view, ShapeModel *model);
 
-    void setData(FigureData *figureData) override;
+    void setData(const FigureData &figureData) override;
     FigureType getType() override;
 
 private:

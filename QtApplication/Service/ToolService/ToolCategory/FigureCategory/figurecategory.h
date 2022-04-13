@@ -22,10 +22,9 @@ protected slots:
 private slots:
     void onFigureSelected();
     void onFigureDeselected();
-    void onParametersUpdated();
 
 private:
-    void updateDataInChildren(Data *data);
+    void updateDataInChildren(FigureData *data = nullptr);
     void showParametersInterface(FigureType figureType);
 
     ShapeParametersInterface *shapeParametersInterface;

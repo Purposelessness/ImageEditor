@@ -13,7 +13,7 @@ Q_OBJECT
 public:
     explicit Line(QString name = tr("Line"), ToolUnitView *view = new ToolUnitView(tr("Line")), LineModel *model = new LineModel());
 
-    void setData(FigureData *figureData) override;
+    void setData(const FigureData &figureData) override;
     FigureType getType() override;
 
 private:

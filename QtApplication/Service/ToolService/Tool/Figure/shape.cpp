@@ -4,10 +4,18 @@
 
 Shape::Shape(QString name, ToolUnitView *view, ShapeModel *model) : Figure(std::move(name), view, model), model(model) {}
 
-void Shape::setData(FigureData *figureData) {
-    model->setFillColor(figureData->fillColor);
-    model->setLineColor(figureData->lineColor);
-    model->setThickness(figureData->thickness);
+void Shape::setData(const FigureData &figureData) {
+    if (figureData.fillEnabled) {
+        model->setFillColor(figureData.fillColor);
+    } else {
+        model->setFillColor();
+    }
+    if (figureData.lineEnabled) {
+        model->setLineColor(figureData.lineColor);
+    } else {
+        model->setLineColor();
+    }
+    model->setThickness(figureData.thickness);
 }
 
 FigureType Shape::getType() {

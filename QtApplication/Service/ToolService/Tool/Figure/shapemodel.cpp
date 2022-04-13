@@ -68,14 +68,18 @@ void ShapeModel::onItemDeselected() {
     emit itemDeselected();
 }
 
-FigureData ShapeModel::getData() {
+FigureData ShapeModel::getData() const {
     FigureData data{};
     if (!selectedItem) {
         data.type = none;
         return data;
     }
-    data.fillColor = selectedItem->brush().style() == Qt::NoBrush ? QColor() : selectedItem->brush().color();
-    data.lineColor = selectedItem->pen().color() == QColor(0, 0, 0, 0) ? QColor() : selectedItem->pen().color();
+    data.fillEnabled = selectedItem->brush().style() != Qt::NoBrush;
+    if (data.fillEnabled)
+        data.fillColor = selectedItem->brush().color();
+    data.lineEnabled = selectedItem->pen().color() != QColor(0, 0, 0, 0);
+    if (data.lineEnabled)
+        data.lineColor = selectedItem->pen().color();
     data.thickness = selectedItem->pen().width();
     data.type = shape;
     return data;
