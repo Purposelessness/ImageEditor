@@ -48,7 +48,7 @@ void TriangleItem::setRect(const QRectF &newRect) {
     geometry.append(rect.bottomLeft());
     geometry.append(QPointF(rect.center().x(), rect.top()));
     geometry.append( rect.bottomRight());
-    update();
+    update(boundingRect());
 }
 
 QVariant TriangleItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value) {
