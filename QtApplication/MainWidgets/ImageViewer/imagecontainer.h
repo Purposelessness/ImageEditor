@@ -44,25 +44,11 @@ private:
 
             if (event->type() == QEvent::GraphicsSceneMouseDoubleClick) {
                 watched->setSelected(true);
-                selectedItem = watched;
-            } else if (event->type() == QEvent::GraphicsSceneMousePress) {
-                if (selectedItem) {
-                    selectedItem->setSelected(false);
-                    selectedItem = nullptr;
-                } else {
-                    for (auto item : scene()->selectedItems()) {
-                        if (item != this) {
-                            item->setSelected(false);
-                        }
-                    }
-                }
             }
             return true;
         }
         [[nodiscard]] QRectF boundingRect() const final { return QRect(); }
         [[maybe_unused]] void paint(QPainter *qPainter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override {}
-
-        QGraphicsItem *selectedItem = nullptr;
     } eventFilter;
 
     QGraphicsScene *scene;
@@ -72,7 +58,7 @@ private:
     QGraphicsItem *selectedItem = nullptr;
 
     float scaleValue = 1;
-    bool itemSelected = false;
+    bool itemIsSelected = false;
 };
 
 
