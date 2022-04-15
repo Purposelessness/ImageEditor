@@ -1,7 +1,7 @@
-#include "brushcategorymodel.h"
+#include "othertoolsmodel.h"
 #include "../../Tool/Figure/Ellipse/ellipse.h"
 
-void BrushCategoryModel::createTools() {
+void OtherToolsModel::createTools() {
     auto ellipse = new Ellipse();
     addTool(ellipse);
     setTool(ellipse->toString());

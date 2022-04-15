@@ -1,11 +1,11 @@
 #include "toolservice.h"
-#include "ToolCategory/BrushCategory/brushcategory.h"
+#include "ToolCategory/OtherTools/othertools.h"
 #include "ToolCategory/FigureCategory/figurecategory.h"
 
 ToolService::ToolService() {
-    addCategory(new BrushCategory());
+    addCategory(new OtherTools());
     addCategory(new FigureCategory());
-    setCategory("BrushCategory");
+    setCategory("OtherTools");
 }
 
 ToolService &ToolService::getInstance() {
