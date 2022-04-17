@@ -1,6 +1,7 @@
 #include "ellipseitem.h"
+#include "../ishapemodel.h"
 
-EllipseItem::EllipseItem(EllipseModel *newModel) : QGraphicsEllipseItem(), model(newModel) {}
+EllipseItem::EllipseItem(IShapeModel *newModel) : QGraphicsEllipseItem(), model(newModel) {}
 
 QVariant EllipseItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value) {
     if (change == QGraphicsItem::ItemSelectedChange) {

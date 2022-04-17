@@ -3,17 +3,17 @@
 
 #include <QGraphicsEllipseItem>
 
-#include "ellipsemodel.h"
+class IShapeModel;
 
 class EllipseItem : public QGraphicsEllipseItem {
 public:
-    explicit EllipseItem(EllipseModel *model);
+    explicit EllipseItem(IShapeModel *model);
 
 protected:
     QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value) override;
 
 private:
-    EllipseModel *model;
+    IShapeModel *model;
 };
 
 

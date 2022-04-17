@@ -3,11 +3,11 @@
 
 
 #include "../shape.h"
-#include "rectmodel.h"
+#include "rectitem.h"
 
-class Rect : public Shape {
+class Rect : public Shape<RectItem> {
 public:
-    explicit Rect(const QString &name = QWidget::tr("Rect"), ShapeModel *model = new RectModel());
+    Rect();
 };
 
 

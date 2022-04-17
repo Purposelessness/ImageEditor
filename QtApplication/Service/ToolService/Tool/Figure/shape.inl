@@ -1,8 +1,10 @@
 #include "shape.h"
 
-Shape::Shape(const QString &name, ShapeModel *model) : Figure(name, model), model(model) {}
+template<typename T>
+Shape<T>::Shape(const QString &name, ShapeModel<T> *model) : Figure(name, model), model(model) {}
 
-void Shape::setData(const FigureData &figureData) {
+template<typename T>
+void Shape<T>::setData(const FigureData &figureData) {
     if (figureData.fillEnabled) {
         model->setFillColor(figureData.fillColor);
     } else {
@@ -16,6 +18,7 @@ void Shape::setData(const FigureData &figureData) {
     model->setThickness(figureData.thickness);
 }
 
-FigureType Shape::getType() {
+template<typename T>
+FigureType Shape<T>::getType() {
     return shape;
 }

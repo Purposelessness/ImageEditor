@@ -3,12 +3,11 @@
 
 
 #include "../shape.h"
-#include "ellipsemodel.h"
-#include "../../../Generics/toolunitview.h"
+#include "ellipseitem.h"
 
-class Ellipse : public Shape {
+class Ellipse : public Shape<EllipseItem> {
 public:
-    explicit Ellipse(const QString &name = QWidget::tr("Ellipse"), ShapeModel *model = new EllipseModel());
+    Ellipse();
 };
 
 

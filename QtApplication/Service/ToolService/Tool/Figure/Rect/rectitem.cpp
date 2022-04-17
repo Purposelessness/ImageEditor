@@ -1,6 +1,7 @@
 #include "rectitem.h"
+#include "../ishapemodel.h"
 
-RectItem::RectItem(RectModel *newModel) : QGraphicsRectItem(), model(newModel) {}
+RectItem::RectItem(IShapeModel *newModel) : QGraphicsRectItem(), model(newModel) {}
 
 QVariant RectItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value) {
     if (change == QGraphicsItem::ItemSelectedChange) {

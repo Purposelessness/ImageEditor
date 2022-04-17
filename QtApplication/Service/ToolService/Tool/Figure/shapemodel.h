@@ -3,12 +3,12 @@
 
 
 #include "figuremodel.h"
+#include "ishapemodel.h"
 
 #include <QAbstractGraphicsShapeItem>
 
-class ShapeModel : public FigureModel {
-Q_OBJECT
-
+template<typename T>
+class ShapeModel : public FigureModel, public IShapeModel {
 public:
     ShapeModel();
 
@@ -17,28 +17,24 @@ public:
     void setThickness(const int &value);
 
     [[nodiscard]] FigureData getData() const override;
-    void onItemSelected(QAbstractGraphicsShapeItem *abstractGraphicsShapeItem);
-    void onItemDeselected();
+    void onItemSelected(QAbstractGraphicsShapeItem *abstractGraphicsShapeItem) override;
+    void onItemDeselected() override;
 
 protected:
     QGraphicsItem *startDrawing(const Coordinates &coordinates) override;
     void onDrawing(const Coordinates &coordinates) override;
     void finishDrawing(const Coordinates &coordinates) override;
 
-    virtual QAbstractGraphicsShapeItem *drawItem(const QRectF &rect) = 0;
-    virtual void resizeItem(const QRectF &rect) = 0;
-
 private:
     static QBrush brush;
     static QPen pen;
     static int thickness;
 
-    QAbstractGraphicsShapeItem *item = nullptr, *selectedItem = nullptr;
-
-    bool isDrawing = false;
-
-    int x = 0, y = 0;
+    T *item = nullptr;
+    QAbstractGraphicsShapeItem *selectedItem = nullptr;
 };
+
+#include "shapemodel.inl"
 
 
 #endif //IMAGEEDITOR_SHAPEMODEL_H

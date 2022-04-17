@@ -6,18 +6,19 @@
 
 class ToolUnitView;
 
+template<typename T>
 class Shape : public Figure {
-Q_OBJECT
-
 public:
-    explicit Shape(const QString &name, ShapeModel *model);
+    explicit Shape(const QString &name, ShapeModel<T> *model = new ShapeModel<T>());
 
     void setData(const FigureData &figureData) override;
     FigureType getType() override;
 
 private:
-    ShapeModel *model;
+    ShapeModel<T> *model;
 };
+
+#include "shape.inl"
 
 
 #endif //IMAGEEDITOR_SHAPE_H

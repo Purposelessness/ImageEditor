@@ -3,11 +3,11 @@
 
 
 #include "../shape.h"
-#include "trianglemodel.h"
+#include "triangleitem.h"
 
-class Triangle : public Shape {
+class Triangle : public Shape<TriangleItem> {
 public:
-    explicit Triangle(const QString &name = QWidget::tr("Triangle"), TriangleModel *model = new TriangleModel());
+    Triangle();
 };
 
 

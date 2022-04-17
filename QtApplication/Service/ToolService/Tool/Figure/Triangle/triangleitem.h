@@ -5,11 +5,11 @@
 #include <QAbstractGraphicsShapeItem>
 #include <QPen>
 
-class TriangleModel;
+class IShapeModel;
 
 class TriangleItem : public QAbstractGraphicsShapeItem {
 public:
-    explicit TriangleItem(TriangleModel *model);
+    explicit TriangleItem(IShapeModel *model);
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     [[nodiscard]] QRectF boundingRect() const override;
@@ -31,7 +31,7 @@ private:
     QPen whiteSolidPen;
     QPen blackDashPen;
 
-    TriangleModel *model;
+    IShapeModel *model;
 };
 
 

@@ -5,33 +5,43 @@
 #include <QBrush>
 #include <QGraphicsScene>
 
-QPen ShapeModel::pen{};
-QBrush ShapeModel::brush{};
-int ShapeModel::thickness = 10;
+template<typename T>
+QPen ShapeModel<T>::pen{};
 
-ShapeModel::ShapeModel() : FigureModel() {
+template<typename T>
+QBrush ShapeModel<T>::brush{};
+
+template<typename T>
+int ShapeModel<T>::thickness = 10;
+
+template<typename T>
+ShapeModel<T>::ShapeModel() : FigureModel() {
+    static_assert(std::is_base_of<QAbstractGraphicsShapeItem, T>::value, "Class must derive from QAbstractGraphicsShapeItem");
     pen.setJoinStyle(Qt::MiterJoin);
 }
 
-QGraphicsItem *ShapeModel::startDrawing(const Coordinates &coordinates) {
-    item = drawItem(QRectF(coordinates.x_0, coordinates.y_0, 0, 0));
+template<typename T>
+QGraphicsItem *ShapeModel<T>::startDrawing(const Coordinates &coordinates) {
+    item = new T(this);
+    item->setRect(QRectF(coordinates.x_0, coordinates.y_0, 0, 0));
     item->setPen(pen);
     item->setBrush(brush);
     return item;
 }
 
-void ShapeModel::onDrawing(const Coordinates &coordinates) {
-    auto normalizedRect = normalizeRect(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y);
-    resizeItem(normalizedRect);
+template<typename T>
+void ShapeModel<T>::onDrawing(const Coordinates &coordinates) {
+    item->setRect(normalizeRect(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y));
 }
 
-void ShapeModel::finishDrawing(const Coordinates &coordinates) {
-    auto normalizedRect = normalizeRect(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y);
-    resizeItem(normalizedRect);
+template<typename T>
+void ShapeModel<T>::finishDrawing(const Coordinates &coordinates) {
+    item->setRect(normalizeRect(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y));
     FigureModel::finishDrawing(coordinates);
 }
 
-void ShapeModel::setFillColor(const QColor &color) {
+template<typename T>
+void ShapeModel<T>::setFillColor(const QColor &color) {
     if (color.isValid()) {
         brush.setStyle(Qt::SolidPattern);
         brush.setColor(color);
@@ -42,7 +52,8 @@ void ShapeModel::setFillColor(const QColor &color) {
         selectedItem->setBrush(brush);
 }
 
-void ShapeModel::setLineColor(const QColor &color) {
+template<typename T>
+void ShapeModel<T>::setLineColor(const QColor &color) {
     if (color.isValid()) {
         pen.setColor(color);
     } else {
@@ -52,24 +63,28 @@ void ShapeModel::setLineColor(const QColor &color) {
         selectedItem->setPen(pen);
 }
 
-void ShapeModel::setThickness(const int &value) {
+template<typename T>
+void ShapeModel<T>::setThickness(const int &value) {
     thickness = value;
     pen.setWidth(thickness);
     if (selectedItem)
         selectedItem->setPen(pen);
 }
 
-void ShapeModel::onItemSelected(QAbstractGraphicsShapeItem *abstractGraphicsShapeItem) {
+template<typename T>
+void ShapeModel<T>::onItemSelected(QAbstractGraphicsShapeItem *abstractGraphicsShapeItem) {
     selectedItem = abstractGraphicsShapeItem;
     emit itemSelected();
 }
 
-void ShapeModel::onItemDeselected() {
+template<typename T>
+void ShapeModel<T>::onItemDeselected() {
     selectedItem = nullptr;
     emit itemDeselected();
 }
 
-FigureData ShapeModel::getData() const {
+template<typename T>
+FigureData ShapeModel<T>::getData() const {
     FigureData data{};
     if (!selectedItem) {
         data.type = none;

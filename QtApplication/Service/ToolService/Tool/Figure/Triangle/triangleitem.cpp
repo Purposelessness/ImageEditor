@@ -1,10 +1,10 @@
 #include "triangleitem.h"
-#include "trianglemodel.h"
+#include "../ishapemodel.h"
 
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
-TriangleItem::TriangleItem(TriangleModel *model) : QAbstractGraphicsShapeItem(), model(model) {
+TriangleItem::TriangleItem(IShapeModel *model) : QAbstractGraphicsShapeItem(), model(model) {
     whiteSolidPen.setStyle(Qt::SolidLine);
     whiteSolidPen.setColor(Qt::white);
     whiteSolidPen.setWidth(0);

@@ -3,17 +3,17 @@
 
 #include <QGraphicsRectItem>
 
-#include "rectmodel.h"
+class IShapeModel;
 
 class RectItem : public QGraphicsRectItem {
 public:
-    explicit RectItem(RectModel *model);
+    explicit RectItem(IShapeModel *model);
 
 protected:
     QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value) override;
 
 private:
-    RectModel *model;
+    IShapeModel *model;
 };
 
 
