@@ -55,7 +55,7 @@ void TriangleItem::setRect(const QRectF &newRect) {
 }
 
 QPainterPath TriangleItem::shape() const {
-    auto path = calculateFullPath(rect, pen().widthF());
+    auto path = calculateOuterBorder(rect, pen().widthF());
     return path;
 }
 
@@ -70,26 +70,24 @@ QVariant TriangleItem::itemChange(QGraphicsItem::GraphicsItemChange change, cons
     return QGraphicsItem::itemChange(change, value);
 }
 
-QPainterPath TriangleItem::calculateFullPath(const QRectF &rect, qreal penWidth) {
+QPainterPath TriangleItem::calculateOuterBorder(const QRectF &rect, qreal penWidth) {
     qreal x_0, y_0, x, y;
     rect.getCoords(&x_0, &y, &x, &y_0);
 
     auto path = QPainterPath();
+    qreal d = penWidth / 2;
 
-    qreal tanAlpha = 2 * rect.height() / rect.width();
+    qreal a = (x - x_0) / 2;
+    qreal x_mid = x_0 + a;
+    qreal c = QLineF(x_0, y_0,  x_mid, y).length();
+    qreal cotHalfAlpha = sqrt((c + a)/(c - a));
+    qreal xShift = d * cotHalfAlpha;
+    qreal yShift = d * c / a;
 
-    qreal halfAngleAlfa = qAtan(tanAlpha) / 2;
-    qreal halfPenWidth = penWidth / 2;
-    qreal xShift = halfPenWidth / qTan(halfAngleAlfa);
-    qreal yShift = halfPenWidth;
-
-    qreal halfAngleBeta = M_PI_2 - halfAngleAlfa;
-    qreal c = yShift / qSin(halfAngleBeta);
-
-    path.moveTo(x_0 - xShift, y_0 + yShift);
-    path.lineTo(rect.center().x(), y - c);
-    path.lineTo(x + xShift, y_0 + yShift);
-    path.lineTo(x_0 - xShift, y_0 + yShift);
+    path.moveTo(x_0 - xShift, y_0 + d);
+    path.lineTo(x_mid, y - yShift);
+    path.lineTo(x + xShift, y_0 + d);
+    path.lineTo(x_0 - xShift, y_0 + d);
 
     return path;
 }

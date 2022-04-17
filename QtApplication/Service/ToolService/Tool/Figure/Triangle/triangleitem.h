@@ -21,7 +21,7 @@ protected:
     QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value) override;
 
 private:
-    static QPainterPath calculateFullPath(const QRectF &rect, qreal penWidth);
+    static QPainterPath calculateOuterBorder(const QRectF &rect, qreal penWidth);
 
     qreal x_0, y_0, x, y;
     QRectF rect{};
