@@ -1,6 +1,7 @@
 #ifndef IMAGEEDITOR_OTHERTOOLSVIEW_H
 #define IMAGEEDITOR_OTHERTOOLSVIEW_H
 
+
 #include "../toolcategoryview.h"
 
 class OtherToolsView : public ToolCategoryView {

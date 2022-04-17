@@ -1,0 +1,10 @@
+#ifndef IMAGEEDITOR_COLORINVERTER_H
+#define IMAGEEDITOR_COLORINVERTER_H
+
+
+class ColorInverter {
+
+};
+
+
+#endif //IMAGEEDITOR_COLORINVERTER_H
