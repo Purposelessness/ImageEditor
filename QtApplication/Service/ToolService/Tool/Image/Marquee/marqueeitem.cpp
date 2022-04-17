@@ -2,6 +2,7 @@
 
 #include <QPainter>
 #include <QPen>
+#include <QStyleOptionGraphicsItem>
 
 QPen MarqueeItem::whiteSolidPen{};
 QPen MarqueeItem::blackDashPen{};
@@ -14,6 +15,8 @@ MarqueeItem::MarqueeItem() {
     blackDashPen.setStyle(Qt::DashLine);
     blackDashPen.setColor(Qt::black);
     blackDashPen.setWidth(0);
+
+    setFlag(QGraphicsItem::ItemIsSelectable);
 }
 
 void MarqueeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
@@ -32,4 +35,12 @@ QRectF MarqueeItem::boundingRect() const {
 void MarqueeItem::setRect(const QRectF &newRect) {
     rect = newRect;
     update(boundingRect());
+}
+
+QVariant MarqueeItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value) {
+    if (change == QGraphicsItem::ItemSelectedChange) {
+        if (value == false)
+            delete this;
+    }
+    return QGraphicsItem::itemChange(change, value);
 }

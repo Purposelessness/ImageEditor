@@ -23,5 +23,7 @@ void MarqueeModel<T>::onDrawing(const Coordinates &coordinates) {
 template<typename T>
 void MarqueeModel<T>::finishDrawing(const Coordinates &coordinates) {
     auto normalizedRect = normalizeRect(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y);
+    marqueeItem->setSelected(true);
     marqueeItem->setRect(normalizedRect);
+    marqueeItem = nullptr;
 }
