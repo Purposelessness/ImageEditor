@@ -3,8 +3,9 @@
 
 #include <utility>
 
-ToolCategory::ToolCategory(QString name, ToolCategoryView *view, IToolCategoryModel *model) : ToolUnit(std::move(name)),
-                                                                                              view(view), model(model) {
+ToolCategory::ToolCategory(const QString &name, IToolCategoryModel *model) : ToolUnit(name),
+                                                                             view(new ToolCategoryView(name)),
+                                                                             model(model) {
     connect(model->object, SIGNAL(toolAdded(QAction*)), this, SLOT(onToolAdded(QAction*)));
     connect(view->getAction(), SIGNAL(triggered(bool)), this, SLOT(onActionTriggered()));
     model->createTools();

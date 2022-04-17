@@ -3,7 +3,6 @@
 
 
 #include "../toolcategory.h"
-#include "figurecategoryview.h"
 #include "figurecategorymodel.h"
 #include "ParametersInterface/shapeparametersinterface.h"
 #include "ParametersInterface/lineparametersinterface.h"
@@ -13,7 +12,6 @@ Q_OBJECT
 
 public:
     explicit FigureCategory(const QString &name = tr("FigureCategory"),
-                            FigureCategoryView *newView = new FigureCategoryView(tr("Figure Category")),
                             FigureCategoryModel *newModel = new FigureCategoryModel());
 
 protected slots:
@@ -30,7 +28,6 @@ private:
     ShapeParametersInterface *shapeParametersInterface;
     LineParametersInterface *lineParametersInterface;
     FigureCategoryModel *model;
-    FigureCategoryView *view;
 };
 
 

@@ -1,11 +1,11 @@
 #include "toolservice.h"
-#include "ToolCategory/OtherTools/othertools.h"
+#include "ToolCategory/ImageTools/imagetools.h"
 #include "ToolCategory/FigureCategory/figurecategory.h"
 
 ToolService::ToolService() {
-    addCategory(new OtherTools());
+    addCategory(new ImageTools());
     addCategory(new FigureCategory());
-    setCategory("OtherTools");
+    setCategory("ImageTools");
 }
 
 ToolService &ToolService::getInstance() {

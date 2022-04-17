@@ -10,7 +10,7 @@ class ToolCategory : public ToolUnit {
 Q_OBJECT
 
 public:
-    explicit ToolCategory(QString name, ToolCategoryView *view, IToolCategoryModel *model);
+    explicit ToolCategory(const QString &name, IToolCategoryModel *model);
 
     QAction *getAction() override;
     QWidget *getWidget();
@@ -24,8 +24,10 @@ protected slots:
     virtual void onToolAdded(QAction *action);
     virtual void onActionTriggered();
 
-private:
+protected:
     ToolCategoryView *view;
+
+private:
     IToolCategoryModel *model;
 };
 

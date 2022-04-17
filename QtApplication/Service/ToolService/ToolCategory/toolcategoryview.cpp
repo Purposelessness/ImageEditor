@@ -4,12 +4,15 @@
 #include <QLabel>
 #include <QToolButton>
 
-ToolCategoryView::ToolCategoryView(const QString& name) : ToolUnitView(name) {
-    createWidget(name);
+ToolCategoryView::ToolCategoryView(const QString &name) : ToolUnitView(name), toolLayout(new QHBoxLayout()),
+                                                          toolBox(new QGroupBox(name)) {
+    createWidget();
 }
 
-ToolCategoryView::ToolCategoryView(const QString& name, const QIcon& icon) : ToolUnitView(name, icon) {
-    createWidget(name);
+ToolCategoryView::ToolCategoryView(const QString &name, const QIcon &icon) : ToolUnitView(name, icon),
+                                                                             toolLayout(new QHBoxLayout()),
+                                                                             toolBox(new QGroupBox(name)) {
+    createWidget();
 }
 
 void ToolCategoryView::addToolAction(QAction *action) {
@@ -18,10 +21,8 @@ void ToolCategoryView::addToolAction(QAction *action) {
     toolLayout->addWidget(button);
 }
 
-void ToolCategoryView::createWidget(const QString& name) {
-    toolLayout = new QHBoxLayout();
+void ToolCategoryView::createWidget() {
     toolLayout->setAlignment(Qt::AlignLeft);
-    toolBox = new QGroupBox(name);
     toolBox->setLayout(toolLayout);
     addWidget(toolBox);
 }

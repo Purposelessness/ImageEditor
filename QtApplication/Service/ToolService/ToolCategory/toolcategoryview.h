@@ -13,10 +13,10 @@ public:
     void addToolAction(QAction *action);
 
 private:
-    void createWidget(const QString& name);
+    void createWidget();
 
-    QHBoxLayout *toolLayout = nullptr;
-    QGroupBox *toolBox = nullptr;
+    QHBoxLayout *toolLayout;
+    QGroupBox *toolBox;
 };
 
 

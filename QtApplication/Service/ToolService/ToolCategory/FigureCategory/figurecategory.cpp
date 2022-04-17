@@ -1,8 +1,8 @@
 #include "figurecategory.h"
 
-FigureCategory::FigureCategory(const QString &name, FigureCategoryView *newView, FigureCategoryModel *newModel) :
-        ToolCategory(name, newView, newModel),
-        model (newModel), view(newView),
+FigureCategory::FigureCategory(const QString &name, FigureCategoryModel *newModel) :
+        ToolCategory(name, newModel),
+        model (newModel),
         lineParametersInterface(new LineParametersInterface(tr("LineCategory"), this)),
         shapeParametersInterface(new ShapeParametersInterface(tr("FigureCategory"), this)) {
     connect(lineParametersInterface, SIGNAL(updated()), model, SLOT(updateFigureParameters()));
