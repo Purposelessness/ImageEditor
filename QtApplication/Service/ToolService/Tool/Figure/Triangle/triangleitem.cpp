@@ -4,7 +4,15 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
-TriangleItem::TriangleItem(TriangleModel *model) : QAbstractGraphicsShapeItem(), model(model) {}
+TriangleItem::TriangleItem(TriangleModel *model) : QAbstractGraphicsShapeItem(), model(model) {
+    whitePen.setStyle(Qt::SolidLine);
+    whitePen.setColor(Qt::white);
+    whitePen.setWidth(0);
+
+    blackDotPen.setStyle(Qt::DashLine);
+    blackDotPen.setColor(Qt::black);
+    blackDotPen.setWidth(0);
+}
 
 void TriangleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     painter->setPen(pen());
@@ -12,16 +20,11 @@ void TriangleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     painter->drawPath(geometry);
 
     if (option->state & (QStyle::State_Selected)) {
-        QPen dotPen = QPen(Qt::SolidLine);
-        dotPen.setColor(Qt::white);
-        dotPen.setWidth(1);
-        painter->setPen(dotPen);
         painter->setBrush(Qt::NoBrush);
+        painter->setPen(whitePen);
         painter->drawRect(rect);
 
-        dotPen.setStyle(Qt::DashLine);
-        dotPen.setColor(Qt::black);
-        painter->setPen(dotPen);
+        painter->setPen(blackDotPen);
         painter->drawRect(rect);
     }
 }

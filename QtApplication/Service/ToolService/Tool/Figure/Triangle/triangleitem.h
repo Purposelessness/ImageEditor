@@ -4,6 +4,7 @@
 
 #include <QAbstractGraphicsShapeItem>
 #include <QRubberBand>
+#include <QPen>
 
 class TriangleModel;
 
@@ -26,6 +27,9 @@ private:
     qreal x_0, y_0, x, y;
     QRectF rect{};
     QPainterPath geometry{};
+
+    QPen whitePen;
+    QPen blackDotPen;
 
     TriangleModel *model;
 };
