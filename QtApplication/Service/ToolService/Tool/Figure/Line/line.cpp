@@ -1,6 +1,6 @@
 #include "line.h"
 
-Line::Line(QString name, ToolUnitView *view, LineModel *model) : Figure(std::move(name), view, model), model(model) {}
+Line::Line(const QString &name, LineModel *model) : Figure(name, model), model(model) {}
 
 void Line::setData(const FigureData &figureData) {
     model->setColor(figureData.lineColor);

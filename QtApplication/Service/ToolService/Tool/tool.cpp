@@ -1,8 +1,6 @@
 #include "tool.h"
 
-#include <utility>
-
-Tool::Tool(QString name, ToolUnitView *newView, IToolModel *newModel) : ToolUnit(std::move(name)), view(newView), model(newModel) {
+Tool::Tool(const QString &name, IToolModel *newModel) : ToolUnit(name), view(new ToolUnitView(name)), model(newModel) {
     connect(view->getAction(), SIGNAL(triggered(bool)), this, SLOT(onActionTriggered()));
 }
 

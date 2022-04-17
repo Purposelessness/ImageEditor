@@ -1,8 +1,6 @@
 #include "shape.h"
 
-#include <utility>
-
-Shape::Shape(QString name, ToolUnitView *view, ShapeModel *model) : Figure(std::move(name), view, model), model(model) {}
+Shape::Shape(const QString &name, ShapeModel *model) : Figure(name, model), model(model) {}
 
 void Shape::setData(const FigureData &figureData) {
     if (figureData.fillEnabled) {

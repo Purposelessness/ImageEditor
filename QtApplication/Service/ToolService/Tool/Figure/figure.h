@@ -28,7 +28,7 @@ class Figure : public Tool {
 Q_OBJECT
 
 public:
-    explicit Figure(QString name, ToolUnitView *view, FigureModel *model);
+    explicit Figure(const QString &name, FigureModel *model);
 
     virtual void setData(const FigureData &figureData) = 0;
     virtual FigureType getType() = 0;

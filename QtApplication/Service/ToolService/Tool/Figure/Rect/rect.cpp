@@ -1,5 +1,3 @@
 #include "rect.h"
 
-#include <utility>
-
-Rect::Rect(QString name, ToolUnitView *view, ShapeModel *model) : Shape(std::move(name), view, model) {}
+Rect::Rect(const QString &name, ShapeModel *model) : Shape(name, model) {}

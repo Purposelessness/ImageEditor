@@ -1,9 +1,6 @@
 #include "figure.h"
 
-#include <utility>
-
-Figure::Figure(QString name, ToolUnitView *view, FigureModel *model) : Tool(std::move(name), view, model),
-                                                                       model(model) {
+Figure::Figure(const QString &name, FigureModel *model) : Tool(name, model), model(model) {
     connect(model, SIGNAL(itemSelected()), this, SLOT(onItemSelected()));
     connect(model, SIGNAL(itemDeselected()), this, SLOT(onItemDeselected()));
 }

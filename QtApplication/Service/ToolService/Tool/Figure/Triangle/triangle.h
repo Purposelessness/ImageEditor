@@ -7,9 +7,7 @@
 
 class Triangle : public Shape {
 public:
-    explicit Triangle(QString name = QWidget::tr("Triangle"),
-                      ToolUnitView *view = new ToolUnitView(QWidget::tr("Triangle")),
-                      TriangleModel *model = new TriangleModel());
+    explicit Triangle(const QString &name = QWidget::tr("Triangle"), TriangleModel *model = new TriangleModel());
 };
 
 

@@ -10,7 +10,7 @@ class Shape : public Figure {
 Q_OBJECT
 
 public:
-    explicit Shape(QString name, ToolUnitView *view, ShapeModel *model);
+    explicit Shape(const QString &name, ShapeModel *model);
 
     void setData(const FigureData &figureData) override;
     FigureType getType() override;

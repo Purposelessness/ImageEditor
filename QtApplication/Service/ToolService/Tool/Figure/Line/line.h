@@ -1,6 +1,7 @@
 #ifndef IMAGEEDITOR_LINE_H
 #define IMAGEEDITOR_LINE_H
 
+
 #include "../figure.h"
 #include "../../tool.h"
 #include "linemodel.h"
@@ -11,7 +12,7 @@ class Line : public Figure {
 Q_OBJECT
 
 public:
-    explicit Line(QString name = tr("Line"), ToolUnitView *view = new ToolUnitView(tr("Line")), LineModel *model = new LineModel());
+    explicit Line(const QString &name = tr("Line"), LineModel *model = new LineModel());
 
     void setData(const FigureData &figureData) override;
     FigureType getType() override;
