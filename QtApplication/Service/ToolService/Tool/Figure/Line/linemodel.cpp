@@ -16,6 +16,7 @@ void LineModel::onDrawing(const Coordinates &coordinates) {
 void LineModel::finishDrawing(const Coordinates &coordinates) {
     item->setLine(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y);
     item = nullptr;
+    FigureModel::finishDrawing(coordinates);
 }
 
 FigureData LineModel::getData() const {

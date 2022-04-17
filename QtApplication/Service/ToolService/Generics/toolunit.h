@@ -6,7 +6,7 @@
 #include <QAction>
 #include <QWidget>
 
-#include "../Tool/itoolmodel.h"
+#include "../Tool/toolmodel.h"
 
 class ToolUnit : public QObject {
 Q_OBJECT

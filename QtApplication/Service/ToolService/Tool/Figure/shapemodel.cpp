@@ -5,8 +5,8 @@
 #include <QBrush>
 #include <QGraphicsScene>
 
-QPen ShapeModel::pen = QPen();
-QBrush ShapeModel::brush = QBrush();
+QPen ShapeModel::pen{};
+QBrush ShapeModel::brush{};
 int ShapeModel::thickness = 10;
 
 ShapeModel::ShapeModel() : FigureModel() {
@@ -28,6 +28,7 @@ void ShapeModel::onDrawing(const Coordinates &coordinates) {
 void ShapeModel::finishDrawing(const Coordinates &coordinates) {
     auto normalizedRect = normalizeRect(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y);
     resizeItem(normalizedRect);
+    FigureModel::finishDrawing(coordinates);
 }
 
 void ShapeModel::setFillColor(const QColor &color) {
