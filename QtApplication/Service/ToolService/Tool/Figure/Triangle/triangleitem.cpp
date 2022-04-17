@@ -5,13 +5,13 @@
 #include <QStyleOptionGraphicsItem>
 
 TriangleItem::TriangleItem(TriangleModel *model) : QAbstractGraphicsShapeItem(), model(model) {
-    whitePen.setStyle(Qt::SolidLine);
-    whitePen.setColor(Qt::white);
-    whitePen.setWidth(0);
+    whiteSolidPen.setStyle(Qt::SolidLine);
+    whiteSolidPen.setColor(Qt::white);
+    whiteSolidPen.setWidth(0);
 
-    blackDotPen.setStyle(Qt::DashLine);
-    blackDotPen.setColor(Qt::black);
-    blackDotPen.setWidth(0);
+    blackDashPen.setStyle(Qt::DashLine);
+    blackDashPen.setColor(Qt::black);
+    blackDashPen.setWidth(0);
 }
 
 void TriangleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
@@ -20,13 +20,17 @@ void TriangleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     painter->drawPath(geometry);
 
     if (option->state & (QStyle::State_Selected)) {
-        painter->setBrush(Qt::NoBrush);
-        painter->setPen(whitePen);
-        painter->drawRect(rect);
-
-        painter->setPen(blackDotPen);
-        painter->drawRect(rect);
+        drawMarquee(painter);
     }
+}
+
+void TriangleItem::drawMarquee(QPainter *painter) {
+    painter->setBrush(Qt::NoBrush);
+    painter->setPen(whiteSolidPen);
+    painter->drawRect(rect);
+
+    painter->setPen(blackDashPen);
+    painter->drawRect(rect);
 }
 
 QRectF TriangleItem::boundingRect() const {

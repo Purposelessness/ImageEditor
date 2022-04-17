@@ -3,7 +3,6 @@
 
 
 #include <QAbstractGraphicsShapeItem>
-#include <QRubberBand>
 #include <QPen>
 
 class TriangleModel;
@@ -23,13 +22,14 @@ protected:
 
 private:
     static QPainterPath calculateOuterBorder(const QRectF &rect, qreal penWidth);
+    void drawMarquee(QPainter *painter);
 
     qreal x_0, y_0, x, y;
     QRectF rect{};
     QPainterPath geometry{};
 
-    QPen whitePen;
-    QPen blackDotPen;
+    QPen whiteSolidPen;
+    QPen blackDashPen;
 
     TriangleModel *model;
 };
