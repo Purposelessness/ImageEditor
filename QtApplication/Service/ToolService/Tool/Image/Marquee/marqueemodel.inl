@@ -3,7 +3,7 @@
 #include "marqueeitem.h"
 
 template<typename T>
-MarqueeModel<T>::MarqueeModel() {
+MarqueeModel<T>::MarqueeModel() : object(new MarqueeModelObject()) {
     static_assert(std::is_base_of<MarqueeItem, T>::value, "Class must derive from MarqueeItem");
 }
 
@@ -25,5 +25,12 @@ void MarqueeModel<T>::finishDrawing(const Coordinates &coordinates) {
     auto normalizedRect = normalizeRect(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y);
     marqueeItem->setSelected(true);
     marqueeItem->setRect(normalizedRect);
+    QPainterPath path = marqueeItem->shape();
+    emit object->marqueePainted(path);
     marqueeItem = nullptr;
+}
+
+template<typename T>
+MarqueeModelObject *MarqueeModel<T>::getObject() {
+    return object;
 }

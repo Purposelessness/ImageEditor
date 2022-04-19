@@ -15,9 +15,6 @@ ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(n
     setBackgroundRole(QPalette::Mid);
     setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
 
-    connect(this, SIGNAL(mousePressed(const QPoint&)), &painter, SLOT(onMousePressed(const QPoint&)));
-    connect(this, SIGNAL(mouseMoved(const QPoint&)), &painter, SLOT(onMouseMoved(const QPoint&)));
-    connect(this, SIGNAL(mouseReleased(const QPoint&)), &painter, SLOT(onMouseReleased(const QPoint&)));
     connect(scene, SIGNAL(selectionChanged()), this, SLOT(onSelectionChanged()));
 
     setScene(scene);
@@ -54,7 +51,7 @@ void ImageContainer::resizeEvent(QResizeEvent *event) {
 
 void ImageContainer::mousePressEvent(QMouseEvent *event) {
     if (!itemIsSelected) {
-        emit mousePressed(event->pos());
+        painter.onMousePressed(event->pos());
     } else {
         if (selectedItem && selectedItem != itemAt(event->pos())) {
             selectedItem->setSelected(false);
@@ -65,14 +62,14 @@ void ImageContainer::mousePressEvent(QMouseEvent *event) {
 
 void ImageContainer::mouseMoveEvent(QMouseEvent *event) {
     if (!itemIsSelected)
-        emit mouseMoved(event->pos());
+        Painter::onMouseMoved(event->pos());
     QGraphicsView::mouseMoveEvent(event);
     scene->update();
 }
 
 void ImageContainer::mouseReleaseEvent(QMouseEvent *event) {
     if (!itemIsSelected)
-        emit mouseReleased(event->pos());
+        Painter::onMouseReleased(event->pos());
     QGraphicsView::mouseReleaseEvent(event);
 }
 

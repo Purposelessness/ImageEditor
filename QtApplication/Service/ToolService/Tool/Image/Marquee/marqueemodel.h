@@ -3,11 +3,14 @@
 
 
 #include "../../toolmodel.h"
+#include "marqueeobject.h"
 
 template<typename T>
 class MarqueeModel : public ToolModel {
 public:
     MarqueeModel();
+
+    MarqueeModelObject *getObject();
 
 protected:
     QGraphicsItem *startDrawing(const Coordinates &coordinates) override;
@@ -15,6 +18,7 @@ protected:
     void finishDrawing(const Coordinates &coordinates) override;
 
 private:
+    MarqueeModelObject *object;
     T *marqueeItem = nullptr;
 };
 

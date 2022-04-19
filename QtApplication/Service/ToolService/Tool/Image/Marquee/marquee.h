@@ -3,12 +3,20 @@
 
 
 #include "../../tool.h"
+#include "marqueeobject.h"
 #include "marqueemodel.h"
 
 template<typename T>
-class Marquee : public Tool {
+class Marquee : public Tool, public IMarquee {
 public:
-    explicit Marquee(const QString &name);
+    explicit Marquee(const QString &name, MarqueeModel<T> *model = new MarqueeModel<T>());
+
+protected:
+    void marqueePaintedEvent(const QPainterPath &path) override = 0;
+
+private:
+    MarqueeObject *object;
+    MarqueeModel<T> *model;
 };
 
 #include "marquee.inl"
