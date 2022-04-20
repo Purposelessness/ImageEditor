@@ -6,12 +6,10 @@
 #include "../Marquee/ellipsemarqueeitem.h"
 
 class EllipseColorInverter : public Marquee<EllipseMarqueeItem> {
-Q_OBJECT
-
 public:
     EllipseColorInverter();
 
-signals:
+private:
     void invertColors(const QPainterPath &path);
 
 protected:

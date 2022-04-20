@@ -1,9 +1,10 @@
 #ifndef IMAGEEDITOR_TOOLDOCK_H
 #define IMAGEEDITOR_TOOLDOCK_H
 
-#include <QDockWidget>
 
 #include "itooldock.h"
+
+#include <QDockWidget>
 
 class ToolDock : public QDockWidget, IToolDock {
 public:

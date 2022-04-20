@@ -1,6 +1,7 @@
 #ifndef IMAGEEDITOR_TOOLBAR_H
 #define IMAGEEDITOR_TOOLBAR_H
 
+
 #include "itoolbar.h"
 
 #include <QToolBar>
@@ -10,9 +11,6 @@ public:
     explicit ToolBar(QWidget *parent = nullptr);
 
     void addAction(QAction *action) override;
-
-private:
-    void bindToToolService();
 };
 
 

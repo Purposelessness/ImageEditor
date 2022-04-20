@@ -6,8 +6,9 @@
 
 #include "Generics/toolcontext.h"
 #include "ToolCategory/toolcategory.h"
-#include "../../MainWidgets/ToolBar/itoolbar.h"
-#include "../../MainWidgets/ToolDock/itooldock.h"
+
+class IToolBar;
+class IToolDock;
 
 class ToolService : QObject, ToolContext<ToolCategory> {
 Q_OBJECT
@@ -19,15 +20,12 @@ public:
     ToolCategory *getCategory();
     Tool *getTool();
 
-    void setToolBar(IToolBar *toolBar);
-    void setToolDock(IToolDock *toolDock);
-    void setGraphicsView(IGraphicsView *graphicsView);
-
 public slots:
     void setCategory(const QString &name);
 
 private slots:
     void updateToolDock();
+    void updateToolBar(ToolUnit *unit = nullptr);
 
 protected:
     void setToolUnit(const QString &name) override;
@@ -36,12 +34,6 @@ private:
     ToolService();
     ToolService(const ToolService &root) = delete;
     ToolService &operator=(const ToolService &) = delete;
-
-    void addToolToBar(ToolUnit *tool);
-
-    IToolBar *toolBar = nullptr;
-    IToolDock *toolDock = nullptr;
-    IGraphicsView *graphicsView;
 };
 
 

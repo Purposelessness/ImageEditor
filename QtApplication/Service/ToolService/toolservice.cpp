@@ -1,8 +1,15 @@
 #include "toolservice.h"
+#include "../../Data/data.h"
+#include "../../MainWidgets/ToolDock/itooldock.h"
+#include "../../MainWidgets/ToolBar/itoolbar.h"
 #include "ToolCategory/ImageTools/imagetools.h"
 #include "ToolCategory/FigureCategory/figurecategory.h"
 
 ToolService::ToolService() {
+    auto widgetData = &WidgetData::getInstance();
+    connect(widgetData, SIGNAL(toolDockUpdated()), this, SLOT(updateToolDock()));
+    connect(widgetData, SIGNAL(toolBarUpdated()), this, SLOT(updateToolBar()));
+
     addCategory(new ImageTools());
     addCategory(new FigureCategory());
     setCategory("ImageTools");
@@ -16,7 +23,7 @@ ToolService &ToolService::getInstance() {
 void ToolService::addCategory(ToolCategory *category) {
     ToolContext::addToolUnit(category);
     QObject::connect(category, SIGNAL(updated()), this, SLOT(updateToolDock()));
-    addToolToBar(category);
+    updateToolBar(category);
 }
 
 void ToolService::setToolUnit(const QString &name) {
@@ -33,35 +40,28 @@ ToolCategory *ToolService::getCategory() {
     return getState();
 }
 
-void ToolService::setToolBar(IToolBar *newToolBar) {
-    toolBar = newToolBar;
-    for (auto category: states)
-        addToolToBar(category);
-    qDebug(toolService()) << "ToolBar linked to ToolService";
-}
+void ToolService::updateToolBar(ToolUnit *unit) {
+    auto toolBar = WidgetData::getInstance().getToolBar();
+    if (!toolBar)
+        return;
 
-void ToolService::addToolToBar(ToolUnit *tool) {
-    if (toolBar)
-        toolBar->addAction(tool->getAction());
-}
-
-void ToolService::setToolDock(IToolDock *newToolDock) {
-    toolDock = newToolDock;
-    qDebug(toolService()) << "ToolDock linked to ToolService";
-    updateToolDock();
+    if (unit) {
+        toolBar->addAction(unit->getAction());
+        return;
+    }
+    for (auto category: states) {
+        toolBar->addAction(category->getAction());
+    }
 }
 
 void ToolService::updateToolDock() {
-    if (toolDock) {
-        toolDock->show();
-        toolDock->setWidget(getCategory()->getWidget());
-    }
+    auto toolDock = WidgetData::getInstance().getToolDock();
+    if (!toolDock)
+        return;
+    toolDock->show();
+    toolDock->setWidget(getCategory()->getWidget());
 }
 
 Tool *ToolService::getTool() {
     return getCategory()->getTool();
-}
-
-void ToolService::setGraphicsView(IGraphicsView *newGraphicsView) {
-    graphicsView = newGraphicsView;
 }

@@ -1,7 +1,7 @@
 #include "imagecontainer.h"
 #include "../../logger.h"
 #include "../../Service/UndoService/undoservice.h"
-#include "../../Service/ToolService/toolservice.h"
+#include "../../Data/data.h"
 #include "../../Service/ToolService/ToolCategory/FigureCategory/figurecategory.h"
 
 #include <QColorSpace>
@@ -20,7 +20,7 @@ ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(n
     setScene(scene);
     scene->addItem(&eventFilter);
 
-    ToolService::getInstance().setGraphicsView(this);
+    WidgetData::getInstance().setGraphicsView(this);
 }
 
 void ImageContainer::setImage(const QImage& newImage) {

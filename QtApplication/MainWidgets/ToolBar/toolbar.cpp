@@ -1,12 +1,12 @@
 #include "toolbar.h"
-#include "../../Service/ToolService/toolservice.h"
+#include "../../Data/data.h"
 
 #include <QSizePolicy>
 
 ToolBar::ToolBar(QWidget *parent) : QToolBar(parent) {
     setMinimumWidth(50);
     setMinimumHeight(50);
-    bindToToolService();
+    WidgetData::getInstance().setTooBar(this);
 }
 
 void ToolBar::addAction(QAction *action) {
@@ -17,8 +17,4 @@ void ToolBar::addAction(QAction *action) {
     addWidget(leftExpander);
     QToolBar::addAction(action);
     addWidget(rightExpander);
-}
-
-void ToolBar::bindToToolService() {
-    ToolService::getInstance().setToolBar(this);
 }

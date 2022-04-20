@@ -3,5 +3,4 @@
 EllipseColorInverter::EllipseColorInverter() : Marquee<EllipseMarqueeItem>(tr("EllipseColorInverter")) {}
 
 void EllipseColorInverter::marqueePaintedEvent(const QPainterPath &path) {
-    emit invertColors(path);
 }
