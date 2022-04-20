@@ -21,6 +21,7 @@ public:
 
     void setToolBar(IToolBar *toolBar);
     void setToolDock(IToolDock *toolDock);
+    void setGraphicsView(IGraphicsView *graphicsView);
 
 public slots:
     void setCategory(const QString &name);
@@ -40,6 +41,7 @@ private:
 
     IToolBar *toolBar = nullptr;
     IToolDock *toolDock = nullptr;
+    IGraphicsView *graphicsView;
 };
 
 

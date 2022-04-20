@@ -19,6 +19,8 @@ ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(n
 
     setScene(scene);
     scene->addItem(&eventFilter);
+
+    ToolService::getInstance().setGraphicsView(this);
 }
 
 void ImageContainer::setImage(const QImage& newImage) {
@@ -110,4 +112,8 @@ void ImageContainer::onSelectionChanged() {
             selectedItem = list.value(0);
         selectedItem->setSelected(false);
     }
+}
+
+QGraphicsPixmapItem *ImageContainer::getPixmapItem() {
+    return pixmapItem;
 }

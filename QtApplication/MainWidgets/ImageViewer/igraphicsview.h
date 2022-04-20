@@ -3,11 +3,13 @@
 
 class QGraphicsScene;
 class QGraphicsItem;
+class QGraphicsPixmapItem;
 
 class IGraphicsView {
 public:
     virtual void addItem(QGraphicsItem *item) = 0;
     virtual QGraphicsScene *getScene() = 0;
+    virtual QGraphicsPixmapItem *getPixmapItem() = 0;
 };
 
 #endif //IMAGEEDITOR_IGRAPHICSVIEW_H

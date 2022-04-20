@@ -6,9 +6,16 @@
 #include "imagetoolsmodel.h"
 #include "../../Tool/Figure/figure.h"
 
+class QGraphicsPixmapItem;
+
 class ImageTools : public ToolCategory {
 public:
     explicit ImageTools(const QString &name = "ImageTools", ImageToolsModel *model = new ImageToolsModel());
+
+    void setPixmapItem(QGraphicsPixmapItem *pixmapItem);
+
+private:
+    ImageToolsModel *model;
 };
 
 

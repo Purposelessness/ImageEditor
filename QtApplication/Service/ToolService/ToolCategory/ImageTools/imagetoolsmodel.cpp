@@ -19,3 +19,7 @@ ImageToolsModelObject::ImageToolsModelObject(IImageToolsModel *base, QObject *pa
 void ImageToolsModelObject::invertColors(const QPainterPath &path) {
     base->invertColors(path);
 }
+
+void ImageToolsModel::setPixmapItem(QGraphicsPixmapItem *newPixmapItem) {
+    pixmapItem = newPixmapItem;
+}

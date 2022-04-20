@@ -61,3 +61,7 @@ void ToolService::updateToolDock() {
 Tool *ToolService::getTool() {
     return getCategory()->getTool();
 }
+
+void ToolService::setGraphicsView(IGraphicsView *newGraphicsView) {
+    graphicsView = newGraphicsView;
+}

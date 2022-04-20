@@ -17,6 +17,7 @@ public:
     void scale(float newScaleValue);
     void addItem(QGraphicsItem *item) override;
     QGraphicsScene *getScene() override;
+    QGraphicsPixmapItem *getPixmapItem() override;
 
 signals:
     void mousePressed(const QPoint &mousePos);
