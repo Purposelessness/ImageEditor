@@ -26,13 +26,13 @@ ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(n
 
 void ImageContainer::setImage(const QImage &newImage) {
     scaleValue = 1;
-    qDebug(ui()) << "Setting image with size" << newImage.size();
+    qDebug(ui()) << "Setting destImage with size" << newImage.size();
     pixmap = QPixmap::fromImage(newImage);
 /*  Color space validity
     auto pixmap = new QPixmap(QPixmap::fromImage(newImage));
-    image = pixmap->toImage();
-    if (image.colorSpace().isValid())
-    image.convertToColorSpace(QColorSpace::SRgb); */
+    destImage = pixmap->toImage();
+    if (destImage.colorSpace().isValid())
+    destImage.convertToColorSpace(QColorSpace::SRgb); */
     pixmapItem = new QGraphicsPixmapItem;
     pixmapItem->setPixmap(pixmap);
     pixmapItem->setTransformationMode(Qt::SmoothTransformation);

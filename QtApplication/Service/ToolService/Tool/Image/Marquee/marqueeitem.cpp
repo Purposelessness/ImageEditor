@@ -17,7 +17,6 @@ MarqueeItem::MarqueeItem() {
     blackDashPen.setWidth(0);
 
     setFlag(QGraphicsItem::ItemIsSelectable);
-    setData(0, QVariant(true));
 }
 
 void MarqueeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
