@@ -33,15 +33,16 @@ QImage ColorInverterWorker::invertColorsSync(const QRectF &rect, const QImage &r
 }
 
 QImage ColorInverterWorker::start(const QRectF &rect, const QImage &srcImage) {
-    QImage image = srcImage;
+    QImage image(srcImage.size(), QImage::Format_RGB32);
+//    auto image = srcImage.convertToFormat(QImage::Format_RGB32);
     int dy = image.height() / threadCount;
     int y = 0;
     QVector<TaskInput> inputs;
     for (; y < image.height() - dy; y += dy) {
-        inputs << TaskInput{image, 0, image.width(), y, y + dy, &image};
+        inputs << TaskInput{srcImage, 0, image.width(), y, y + dy, &image};
     }
     QFuture<void> future = QtConcurrent::map(inputs, invertColors);
-    invertColors(TaskInput{image, 0, image.width(), y, image.height(), &image});
+    invertColors(TaskInput{srcImage, 0, image.width(), y, image.height(), &image});
     future.waitForFinished();
 
     return image;
@@ -52,7 +53,7 @@ void ColorInverterWorker::invertColors(const TaskInput &input) {
         uchar *line = input.destImage->scanLine(y);
         for (int x = input.xFrom; x < input.xTo; ++x) {
             QRgb pixel = input.srcImage.pixel(x, y);
-            QRgb *newPixel = reinterpret_cast<QRgb *>(line + x);
+            QRgb *newPixel = reinterpret_cast<QRgb *>(line) + x;
             int red = 255 - qRed(pixel);
             int green = 255 - qGreen(pixel);
             int blue = 255 - qBlue(pixel);
