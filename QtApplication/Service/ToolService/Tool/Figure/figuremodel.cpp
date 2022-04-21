@@ -3,7 +3,7 @@
 #include "../../../UndoService/Command/additemcommand.h"
 
 void FigureModel::finishDrawing(const Coordinates &coordinates) {
-    item->setFlag(QGraphicsItem::ItemIsSelectable);
+    item->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
     new AddItemCommand(item);
     item->setSelected(true);
 }

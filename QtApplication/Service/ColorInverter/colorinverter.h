@@ -2,6 +2,8 @@
 #define IMAGEEDITOR_COLORINVERTER_H
 
 
+#include <cstddef>
+
 struct PixelData {
     int x, y;
     int red, green, blue;
@@ -9,7 +11,7 @@ struct PixelData {
 
 class ColorInverter {
 public:
-    static void invert(PixelData data[], int size);
+    static void invert(PixelData data[], size_t size);
 
 private:
     static int invertColor(int value);

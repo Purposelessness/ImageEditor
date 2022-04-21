@@ -8,7 +8,8 @@
 #include <QMouseEvent>
 #include <QGraphicsItem>
 
-ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(new QGraphicsScene), painter(Painter(this)) {
+ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(new QGraphicsScene),
+                                                  painter(Painter(this)) {
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setViewportMargins(-2, -2, -2, -2);
@@ -23,7 +24,7 @@ ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(n
     WidgetData::getInstance().setGraphicsView(this);
 }
 
-void ImageContainer::setImage(const QImage& newImage) {
+void ImageContainer::setImage(const QImage &newImage) {
     scaleValue = 1;
     qDebug(ui()) << "Setting image with size" << newImage.size();
     pixmap = QPixmap::fromImage(newImage);
@@ -54,10 +55,8 @@ void ImageContainer::resizeEvent(QResizeEvent *event) {
 void ImageContainer::mousePressEvent(QMouseEvent *event) {
     if (!itemIsSelected) {
         painter.onMousePressed(event->pos());
-    } else {
-        if (selectedItem && selectedItem != itemAt(event->pos())) {
-            selectedItem->setSelected(false);
-        }
+    } else if (selectedItem != nullptr && selectedItem != itemAt(event->pos())) {
+        selectedItem->setSelected(false);
     }
     QGraphicsView::mousePressEvent(event);
 }
@@ -90,7 +89,6 @@ void ImageContainer::onDrawingFinished(QGraphicsItem *item) {
 
 void ImageContainer::addItem(QGraphicsItem *item) {
     scene->addItem(item);
-    item->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
     item->installSceneEventFilter(&eventFilter);
     onDrawingFinished(item);
 }
@@ -111,6 +109,7 @@ void ImageContainer::onSelectionChanged() {
         if (!selectedItem)
             selectedItem = list.value(0);
         selectedItem->setSelected(false);
+        selectedItem = nullptr;
     }
 }
 

@@ -14,8 +14,6 @@ public:
 protected:
     virtual void drawItem(QPainter *painter, const QRectF &rect) = 0;
 
-    QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value) override;
-
     QRectF rect{};
 
 private:

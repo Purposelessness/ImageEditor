@@ -1,6 +1,6 @@
 #include "colorinverter.h"
 
-void ColorInverter::invert(PixelData data[], int size) {
+void ColorInverter::invert(PixelData data[], size_t size) {
     for (int i = 0; i < size; ++i) {
         data[i].red = invertColor(data[i].red);
         data[i].green = invertColor(data[i].green);

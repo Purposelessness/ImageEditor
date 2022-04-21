@@ -17,10 +17,13 @@ MarqueeItem::MarqueeItem() {
     blackDashPen.setWidth(0);
 
     setFlag(QGraphicsItem::ItemIsSelectable);
+    setData(0, QVariant(true));
 }
 
 void MarqueeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-    painter->setBrush(Qt::NoBrush);
+    auto color = QColor(255, 0, 100, 10);
+    auto brush = QBrush(color);
+    painter->setBrush(brush);
     painter->setPen(whiteSolidPen);
     drawItem(painter, rect);
 
@@ -35,12 +38,4 @@ QRectF MarqueeItem::boundingRect() const {
 void MarqueeItem::setRect(const QRectF &newRect) {
     rect = newRect;
     update(boundingRect());
-}
-
-QVariant MarqueeItem::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value) {
-    if (change == QGraphicsItem::ItemSelectedChange) {
-        if (value == false)
-            delete this;
-    }
-    return QGraphicsItem::itemChange(change, value);
 }

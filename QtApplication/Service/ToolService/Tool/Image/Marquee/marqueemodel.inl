@@ -26,7 +26,7 @@ void MarqueeModel<T>::finishDrawing(const Coordinates &coordinates) {
     marqueeItem->setSelected(true);
     marqueeItem->setRect(normalizedRect);
     QPainterPath path = marqueeItem->shape();
-    emit object->marqueePainted(path);
+    emit object->marqueePainted(marqueeItem->mapToParent(path));
     marqueeItem = nullptr;
 }
 
