@@ -6,6 +6,7 @@
 #include <QThread>
 
 static const int threadCount = QThread::idealThreadCount();
+static const QRgb mask = 0xFFFFFFFF;
 
 void ColorInverterWorker::test(QRectF &rect, const QImage &image) {
     Benchmark::start(10, start, rect, image);
@@ -34,30 +35,31 @@ QImage ColorInverterWorker::invertColorsSync(const QRectF &rect, const QImage &r
 
 QImage ColorInverterWorker::start(const QRectF &rect, const QImage &srcImage) {
     QImage image(srcImage.size(), QImage::Format_RGB32);
-//    auto image = srcImage.convertToFormat(QImage::Format_RGB32);
+    int xFrom = static_cast<int>(rect.left()), xTo = static_cast<int>(rect.right());
+    int yFrom = static_cast<int>(rect.top()), yTo = static_cast<int>(rect.bottom());
+    int height = image.height();
+    int width = image.width();
     int dy = image.height() / threadCount;
     int y = 0;
     QVector<TaskInput> inputs;
-    for (; y < image.height() - dy; y += dy) {
-        inputs << TaskInput{srcImage, 0, image.width(), y, y + dy, &image};
+    for (; y < height - dy; y += dy) {
+        inputs << TaskInput{srcImage, width, height, xFrom, xTo, yFrom, yTo, &image};
     }
     QFuture<void> future = QtConcurrent::map(inputs, invertColors);
-    invertColors(TaskInput{srcImage, 0, image.width(), y, image.height(), &image});
+    invertColors(TaskInput{srcImage, width, height, xFrom, xTo, yFrom, yTo, &image});
     future.waitForFinished();
 
     return image;
 }
 
 void ColorInverterWorker::invertColors(const TaskInput &input) {
-    for (int y = input.yFrom; y < input.yTo; ++y) {
-        uchar *line = input.destImage->scanLine(y);
-        for (int x = input.xFrom; x < input.xTo; ++x) {
+    for (int y = 0; y < input.height; ++y) {
+        QRgb *line = reinterpret_cast<QRgb *>(input.destImage->scanLine(y));
+        for (int x = 0; x < input.width; ++x) {
             QRgb pixel = input.srcImage.pixel(x, y);
-            QRgb *newPixel = reinterpret_cast<QRgb *>(line) + x;
-            int red = 255 - qRed(pixel);
-            int green = 255 - qGreen(pixel);
-            int blue = 255 - qBlue(pixel);
-            *newPixel = qRgb(red, green, blue);
+            if (input.xFrom <= x && x < input.xTo && input.yFrom <= y && y < input.yTo)
+                pixel = mask - pixel;
+            line[x] = pixel;
         }
     }
 }

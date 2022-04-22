@@ -9,10 +9,9 @@
 
 struct TaskInput {
     const QImage &srcImage;
-    int xFrom;
-    int xTo;
-    int yFrom;
-    int yTo;
+    int width, height;
+    int xFrom, xTo;
+    int yFrom, yTo;
     QImage *destImage;
 };
 
