@@ -3,10 +3,10 @@
 
 
 struct FigurePoints {
-    FigurePoints(int xSize, int ySize) : xSize(xSize), ySize(ySize) {
-        this->data = new bool*[ySize]{};
-        for (int i = 0; i < ySize; ++i) {
-            this->data[i] = new bool[xSize]{};
+    FigurePoints(int x, int y, int width, int height) : x(x), y(y), width(width), height(height) {
+        this->data = new bool*[height]{};
+        for (int i = 0; i < height; ++i) {
+            this->data[i] = new bool[width]{};
         }
     }
 
@@ -14,9 +14,13 @@ struct FigurePoints {
         delete[] data;
     }
 
+    [[nodiscard]] bool contains(int x_0, int y_0) const {
+        return this->x <= x_0 && x_0 < this->x + width && this->y <= y_0 && y_0 < this->y + height;
+    }
+
     int x = 0, y = 0;
     bool **data = nullptr;
-    const int xSize, ySize;
+    const int width, height;
 };
 
 class FigureCalculator {

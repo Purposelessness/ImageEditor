@@ -3,15 +3,14 @@
 
 
 #include "../ColorInverter/colorinverter.h"
+#include "../FigureCalculator/figurecalculator.h"
 
 #include <QRectF>
 #include <QImage>
 
 struct TaskInput {
     const QImage &srcImage;
-    int width, height;
-    int **data;
-    int xSize, ySize;
+    FigurePoints points;
 //    int xFrom, xTo;
 //    int yFrom, yTo;
     QImage *destImage;
@@ -19,10 +18,13 @@ struct TaskInput {
 
 class ColorInverterWorker {
 public:
-    static QImage start(const QRectF &rect, const QImage &image);
-    static void invertColors(const TaskInput &input);
-    static void test(QRectF &rect, const QImage &image);
+    static QImage start(const FigurePoints &points, const QImage &image);
+    static void test(const FigurePoints &points, const QImage &image);
     static QImage invertColorsSync(const QRectF &rect, const QImage &image);
+
+private:
+    static void invertColors(const TaskInput &input);
+    static void invertColorsInRect(const );
 };
 
 

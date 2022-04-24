@@ -8,25 +8,23 @@
 static const int threadCount = QThread::idealThreadCount();
 static const QRgb mask = 0xFFFFFFFF;
 
-void ColorInverterWorker::test(QRectF &rect, const QImage &image) {
-    Benchmark::start(10, start, rect, image);
+void ColorInverterWorker::test(const FigurePoints &points, const QImage &image) {
+    Benchmark::start(10, start, points, image);
 }
 
-QImage ColorInverterWorker::start(const QRectF &rect, const QImage &srcImage) {
+QImage ColorInverterWorker::start(const FigurePoints &points, const QImage &srcImage) {
     QImage image(srcImage.size(), QImage::Format_RGB32);
 
-    int xFrom = static_cast<int>(rect.left()), xTo = static_cast<int>(rect.right());
-    int yFrom = static_cast<int>(rect.top()), yTo = static_cast<int>(rect.bottom());
-    int height = image.height();
-    int width = image.width();
-    int dy = image.height() / threadCount;
+    const int width = image.width();
+    const int height = image.height();
+    const int dy = image.height() / threadCount;
     int y = 0;
 
     QVector<TaskInput> inputs;
     for (; y < height - dy; y += dy) {
-        inputs << TaskInput{srcImage, width, height, xFrom, xTo, yFrom, yTo, &image};
+        inputs << TaskInput{srcImage, points, &image};
     }
-    inputs << TaskInput{srcImage, width, height, xFrom, xTo, yFrom, yTo, &image};
+    inputs << TaskInput{srcImage, points, &image};
     QFuture<void> future = QtConcurrent::map(inputs, invertColors);
     future.waitForFinished();
 
@@ -34,12 +32,25 @@ QImage ColorInverterWorker::start(const QRectF &rect, const QImage &srcImage) {
 }
 
 void ColorInverterWorker::invertColors(const TaskInput &input) {
-    for (int y = 0; y < input.height; ++y) {
+    const int width = input.srcImage.width();
+    const int height = input.srcImage.height();
+    int x_1 = input.points.x;
+    int x_2 = x_1 + input.points.width;
+    int y_1 = input.points.y;
+    int y_2 = y_1 + input.points.height;
+
+    bool figureDrawn = false;
+
+    for (int y = 0; y < height; ++y) {
         QRgb *line = reinterpret_cast<QRgb *>(input.destImage->scanLine(y));
-        for (int x = 0; x < input.width; ++x) {
+        for (int x = 0; x < width; ++x) {
             QRgb pixel = input.srcImage.pixel(x, y);
-            if (input.xFrom <= x && x < input.xTo && input.yFrom <= y && y < input.yTo)
-                pixel = mask - pixel;
+            if (input.points.contains(x, y)) {
+                int xRect = x - input.points.x;
+                int yRect = y - input.points.y;
+                if (input.points.data[yRect][xRect])
+                    pixel = mask - pixel;
+            }
             line[x] = pixel;
         }
     }

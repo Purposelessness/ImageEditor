@@ -12,7 +12,10 @@ FigurePoints FigureCalculator::calculateEllipse(int xLeft, int yTop, int xRight,
     int a = x_2;
     int b = y_2;
 
-    FigurePoints points = FigurePoints(xRight - xLeft, yBottom - yTop);
+    const int width = xRight - xLeft;
+    const int height = yBottom - yTop;
+
+    FigurePoints points = FigurePoints(xLeft, yTop, width, height);
 
     for (int x = x_1, xi = 0; x < x_2; ++x, ++xi) {
         for (int y = y_1, yi = 0; y < y_2; ++y, ++yi) {
