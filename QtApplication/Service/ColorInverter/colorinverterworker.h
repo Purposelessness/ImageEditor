@@ -11,20 +11,17 @@
 struct TaskInput {
     const QImage &srcImage;
     FigurePoints points;
-//    int xFrom, xTo;
-//    int yFrom, yTo;
     QImage *destImage;
 };
 
 class ColorInverterWorker {
 public:
-    static QImage start(const FigurePoints &points, const QImage &image);
+    static QImage start(const FigurePoints& points, const QImage& image);
     static void test(const FigurePoints &points, const QImage &image);
     static QImage invertColorsSync(const QRectF &rect, const QImage &image);
 
 private:
     static void invertColors(const TaskInput &input);
-    static void invertColorsInRect(const );
 };
 
 

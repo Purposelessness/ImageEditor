@@ -12,7 +12,7 @@ void ColorInverterWorker::test(const FigurePoints &points, const QImage &image) 
     Benchmark::start(10, start, points, image);
 }
 
-QImage ColorInverterWorker::start(const FigurePoints &points, const QImage &srcImage) {
+QImage ColorInverterWorker::start(const FigurePoints& points, const QImage& srcImage) {
     QImage image(srcImage.size(), QImage::Format_RGB32);
 
     const int width = image.width();
@@ -35,11 +35,7 @@ void ColorInverterWorker::invertColors(const TaskInput &input) {
     const int width = input.srcImage.width();
     const int height = input.srcImage.height();
     int x_1 = input.points.x;
-    int x_2 = x_1 + input.points.width;
     int y_1 = input.points.y;
-    int y_2 = y_1 + input.points.height;
-
-    bool figureDrawn = false;
 
     for (int y = 0; y < height; ++y) {
         QRgb *line = reinterpret_cast<QRgb *>(input.destImage->scanLine(y));

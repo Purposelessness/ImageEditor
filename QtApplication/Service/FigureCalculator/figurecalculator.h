@@ -2,9 +2,18 @@
 #define IMAGEEDITOR_FIGURECALCULATOR_H
 
 
+#include <algorithm>
+
 struct FigurePoints {
     FigurePoints(int x, int y, int width, int height) : x(x), y(y), width(width), height(height) {
-        this->data = new bool*[height]{};
+        this->data = new bool *[height]{};
+        for (int i = 0; i < height; ++i) {
+            this->data[i] = new bool[width]{};
+        }
+    }
+
+    FigurePoints(FigurePoints const &points) : x(points.x), y(points.y), width(points.width), height(points.height) {
+        this->data = new bool *[height]{};
         for (int i = 0; i < height; ++i) {
             this->data[i] = new bool[width]{};
         }
