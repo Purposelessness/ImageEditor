@@ -1,6 +1,9 @@
 #include "figurecalculator.h"
 
-#include "cmath"
+#include <cmath>
+#include <QDebug>
+
+const double epsilon = 0.000001;
 
 FigurePoints FigureCalculator::calculateEllipse(int xLeft, int yTop, int xRight, int yBottom) {
     const int x_0 = (xLeft + xRight) / 2;
@@ -19,15 +22,18 @@ FigurePoints FigureCalculator::calculateEllipse(int xLeft, int yTop, int xRight,
 
     for (int x = x_1, xi = 0; x < x_2; ++x, ++xi) {
         for (int y = y_1, yi = 0; y < y_2; ++y, ++yi) {
-            if (ellipseCheck(x, y, x_0, y_0, a, b)) {
-                points.data[xi][yi] = true;
+            if (ellipseCheck(x, y, a, b)) {
+                points.data[yi][xi] = true;
             }
         }
     }
 
+    points.data[0][0] = true;
+
     return points;
 }
 
-bool FigureCalculator::ellipseCheck(double x, double y, double x_0, double y_0, double a, double b) {
-    return (pow((x - x_0) / a, 2) + pow((y - y_0) / b, 2)) == 1;
+bool FigureCalculator::ellipseCheck(double x, double y, double a, double b) {
+    double result = pow(x / a, 2) + pow(y / b, 2);
+    return  (result - 1) < epsilon;
 }

@@ -16,6 +16,9 @@ struct FigurePoints {
         this->data = new bool *[height]{};
         for (int i = 0; i < height; ++i) {
             this->data[i] = new bool[width]{};
+            for (int k = 0; k < width; ++k) {
+                this->data[i][k] = points.data[i][k];
+            }
         }
     }
 
@@ -29,7 +32,7 @@ struct FigurePoints {
 
     int x = 0, y = 0;
     bool **data = nullptr;
-    const int width, height;
+    const int width = 0, height = 0;
 };
 
 class FigureCalculator {
@@ -37,7 +40,7 @@ public:
     static FigurePoints calculateEllipse(int xLeft, int yTop, int xRight, int yBottom);
 
 private:
-    static bool ellipseCheck(double x, double y, double x_0, double y_0, double a, double b);
+    static bool ellipseCheck(double x, double y, double a, double b);
 };
 
 

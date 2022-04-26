@@ -9,15 +9,30 @@
 #include <QImage>
 
 struct TaskInput {
-    const QImage &srcImage;
+    TaskInput(const TaskInput &other) : srcImage(other.srcImage), points(other.points), destImage(other.destImage) {}
+
+    TaskInput(const QImage &image, const FigurePoints &points, QImage *destImage)
+            : srcImage(image), points(points), destImage(destImage) {}
+
+    TaskInput &operator=(const TaskInput &other) noexcept {
+        return *new(this) TaskInput(other.srcImage, other.points, other.destImage);
+    }
+
+    TaskInput &operator=(TaskInput &&other) noexcept {
+        return *new(this) TaskInput(other.srcImage, other.points, other.destImage);
+    }
+
+    const QImage &srcImage = QImage();
     FigurePoints points;
-    QImage *destImage;
+    QImage *destImage = nullptr;
 };
 
 class ColorInverterWorker {
 public:
-    static QImage start(const FigurePoints& points, const QImage& image);
+    static QImage start(const FigurePoints &points, const QImage &image);
+
     static void test(const FigurePoints &points, const QImage &image);
+
     static QImage invertColorsSync(const QRectF &rect, const QImage &image);
 
 private:

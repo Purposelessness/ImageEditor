@@ -12,8 +12,8 @@ void EllipseColorInverter::marqueePaintedEvent(const QPainterPath &path) {
     qDebug() << "inverting colors";
     auto image = pixmapItem->pixmap().toImage();
     auto rect = path.boundingRect();
-//    ColorInverterWorker::test(rect, image);
     FigurePoints points = FigureCalculator::calculateEllipse(rect.left(), rect.top(), rect.right(), rect.bottom());
-    auto newImage = ColorInverterWorker::start(points, image);
-    pixmapItem->setPixmap(QPixmap::fromImage(newImage));
+    ColorInverterWorker::test(points, image);
+//    auto newImage = ColorInverterWorker::start(points, image);
+//    pixmapItem->setPixmap(QPixmap::fromImage(newImage));
 }
