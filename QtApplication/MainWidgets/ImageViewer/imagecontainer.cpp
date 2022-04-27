@@ -116,3 +116,7 @@ void ImageContainer::onSelectionChanged() {
 QGraphicsPixmapItem *ImageContainer::getPixmapItem() {
     return pixmapItem;
 }
+
+QPixmap ImageContainer::grab(const QRect &rect) {
+    return QGraphicsView::grab(rect);
+}

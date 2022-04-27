@@ -1,19 +1,22 @@
 #include "ellipsecolorinverter.h"
 #include "../../../../../Data/data.h"
+#include "../../../../../MainWidgets/ImageViewer/imagecontainer.h"
 #include "../../../../ColorInverter/colorinverterworker.h"
 
 EllipseColorInverter::EllipseColorInverter() : Marquee<EllipseMarqueeItem>(tr("EllipseColorInverter")) {}
 
 void EllipseColorInverter::marqueePaintedEvent(const QPainterPath &path) {
-    auto pixmapItem = Data::getPixmapItem();
-    if (!pixmapItem)
+    auto graphicsView = WidgetData::getInstance().getGraphicsView();
+    if (!graphicsView)
         return;
 
     qDebug() << "inverting colors";
-    auto image = pixmapItem->pixmap().toImage();
-    auto rect = path.boundingRect();
-    FigurePoints points = FigureCalculator::calculateEllipse(rect.left(), rect.top(), rect.right(), rect.bottom());
-    ColorInverterWorker::test(points, image);
-//    auto newImage = ColorInverterWorker::start(points, image);
-//    pixmapItem->setPixmap(QPixmap::fromImage(newImage));
+    auto rectF = path.boundingRect();
+    QRect rect = rectF.toRect();
+    FigurePoints points = FigureCalculator::calculateEllipse(0, 0, rectF.width(), rectF.height());
+    auto image = graphicsView->grab(rect).toImage();
+    auto newImage = ColorInverterWorker::start(points, image);
+    auto mainPixmapItem = graphicsView->getPixmapItem();
+    auto newPixmapItem = new QGraphicsPixmapItem(QPixmap::fromImage(newImage));
+    graphicsView->addItem(newPixmapItem);
 }

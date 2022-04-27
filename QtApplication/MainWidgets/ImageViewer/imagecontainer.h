@@ -18,6 +18,7 @@ public:
     void addItem(QGraphicsItem *item) override;
     QGraphicsScene *getScene() override;
     QGraphicsPixmapItem *getPixmapItem() override;
+    QPixmap grab(const QRect &rect) override;
 
 signals:
     void mousePressed(const QPoint &mousePos);
