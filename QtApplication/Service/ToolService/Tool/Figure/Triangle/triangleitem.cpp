@@ -4,15 +4,7 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
-TriangleItem::TriangleItem(IShapeModel *model) : QAbstractGraphicsShapeItem(), model(model) {
-    whiteSolidPen.setStyle(Qt::SolidLine);
-    whiteSolidPen.setColor(Qt::white);
-    whiteSolidPen.setWidth(0);
-
-    blackDashPen.setStyle(Qt::DashLine);
-    blackDashPen.setColor(Qt::black);
-    blackDashPen.setWidth(0);
-}
+TriangleItem::TriangleItem(IShapeModel *model) : MarqueeItem(), model(model) {}
 
 void TriangleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     painter->setPen(pen());
@@ -20,17 +12,8 @@ void TriangleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     painter->drawPath(geometry);
 
     if (option->state & (QStyle::State_Selected)) {
-        drawMarquee(painter);
+        MarqueeItem::paint(painter, option, widget);
     }
-}
-
-void TriangleItem::drawMarquee(QPainter *painter) {
-    painter->setBrush(Qt::NoBrush);
-    painter->setPen(whiteSolidPen);
-    painter->drawRect(rect);
-
-    painter->setPen(blackDashPen);
-    painter->drawRect(rect);
 }
 
 QRectF TriangleItem::boundingRect() const {
@@ -97,4 +80,8 @@ QPainterPath TriangleItem::calculateOuterBorder(const QRectF &rect, qreal penWid
     path.lineTo(x_0 - xShift, y_0 + d);
 
     return path;
+}
+
+QPainterPath TriangleItem::marqueeShape() const {
+    return geometry;
 }

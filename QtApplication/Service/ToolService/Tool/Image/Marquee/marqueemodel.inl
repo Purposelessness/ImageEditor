@@ -1,6 +1,6 @@
 #include <QRectF>
 #include "marqueemodel.h"
-#include "marqueeitem.h"
+#include "../../../MarqueeItem/marqueeitem.h"
 
 template<typename T>
 MarqueeModel<T>::MarqueeModel() : object(new MarqueeModelObject()) {
@@ -25,7 +25,9 @@ void MarqueeModel<T>::finishDrawing(const Coordinates &coordinates) {
     auto normalizedRect = normalizeRect(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y);
     marqueeItem->setSelected(true);
     marqueeItem->setRect(normalizedRect);
-    emit object->marqueePainted(marqueeItem->boundingRect());
+    QRectF rect = marqueeItem->boundingRect();
+    delete marqueeItem;
+    emit object->marqueePainted(rect);
     marqueeItem = nullptr;
 }
 

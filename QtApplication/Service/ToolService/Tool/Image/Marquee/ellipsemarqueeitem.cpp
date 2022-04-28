@@ -2,6 +2,8 @@
 
 #include <QPainter>
 
-void EllipseMarqueeItem::drawItem(QPainter *painter, const QRectF &rect) {
-    painter->drawEllipse(rect);
+QPainterPath EllipseMarqueeItem::marqueeShape() const {
+    auto path = QPainterPath();
+    path.addEllipse(rect);
+    return path;
 }

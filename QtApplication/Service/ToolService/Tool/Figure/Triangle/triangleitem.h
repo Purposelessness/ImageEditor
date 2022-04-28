@@ -2,12 +2,14 @@
 #define IMAGEEDITOR_TRIANGLEITEM_H
 
 
+#include "../../../MarqueeItem/marqueeitem.h"
+
 #include <QAbstractGraphicsShapeItem>
 #include <QPen>
 
 class IShapeModel;
 
-class TriangleItem : public QAbstractGraphicsShapeItem {
+class TriangleItem : public MarqueeItem {
 public:
     explicit TriangleItem(IShapeModel *model);
 
@@ -15,21 +17,17 @@ public:
     [[nodiscard]] QRectF boundingRect() const override;
     [[nodiscard]] QPainterPath shape() const override;
 
-    void setRect(const QRectF &rect);
+    void setRect(const QRectF &rect) override;
 
 protected:
+    [[nodiscard]] QPainterPath marqueeShape() const override;
     QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value) override;
 
 private:
     static QPainterPath calculateOuterBorder(const QRectF &rect, qreal penWidth);
-    void drawMarquee(QPainter *painter);
 
-    qreal x_0, y_0, x, y;
-    QRectF rect{};
+    qreal x_0 = 0, y_0 = 0, x = 0, y = 0;
     QPainterPath geometry{};
-
-    QPen whiteSolidPen;
-    QPen blackDashPen;
 
     IShapeModel *model;
 };

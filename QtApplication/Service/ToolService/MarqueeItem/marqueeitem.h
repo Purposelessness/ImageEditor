@@ -9,10 +9,11 @@ public:
     explicit MarqueeItem();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
     [[nodiscard]] QRectF boundingRect() const override;
-    void setRect(const QRectF &rect);
+    virtual void setRect(const QRectF &rect);
+
 
 protected:
-    virtual void drawItem(QPainter *painter, const QRectF &rect) = 0;
+    [[nodiscard]] virtual QPainterPath marqueeShape() const = 0;
 
     QRectF rect{};
 

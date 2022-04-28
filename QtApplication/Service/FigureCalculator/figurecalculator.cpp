@@ -1,9 +1,8 @@
 #include "figurecalculator.h"
 
 #include <cmath>
-#include <QDebug>
 
-const double epsilon = 0.000001;
+const double epsilon = 0.0000001;
 
 FigurePoints FigureCalculator::calculateEllipse(int xLeft, int yTop, int xRight, int yBottom) {
     const int x_0 = (xLeft + xRight) / 2;

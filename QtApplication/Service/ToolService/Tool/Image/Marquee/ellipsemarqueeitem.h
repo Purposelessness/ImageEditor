@@ -2,11 +2,11 @@
 #define IMAGEEDITOR_ELLIPSEMARQUEEITEM_H
 
 
-#include "marqueeitem.h"
+#include "../../../MarqueeItem/marqueeitem.h"
 
 class EllipseMarqueeItem : public MarqueeItem {
 protected:
-    void drawItem(QPainter *painter, const QRectF &rect) override;
+    [[nodiscard]] QPainterPath marqueeShape() const override;
 };
 
 

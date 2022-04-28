@@ -15,19 +15,15 @@ MarqueeItem::MarqueeItem() {
     blackDashPen.setStyle(Qt::DashLine);
     blackDashPen.setColor(Qt::black);
     blackDashPen.setWidth(0);
-
-    setFlag(QGraphicsItem::ItemIsSelectable);
 }
 
 void MarqueeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-    auto color = QColor(255, 0, 100, 10);
-    auto brush = QBrush(color);
-    painter->setBrush(brush);
+    painter->setBrush(Qt::NoBrush);
     painter->setPen(whiteSolidPen);
-    drawItem(painter, rect);
+    painter->drawPath(marqueeShape());
 
     painter->setPen(blackDashPen);
-    drawItem(painter, rect);
+    painter->drawPath(marqueeShape());
 }
 
 QRectF MarqueeItem::boundingRect() const {
