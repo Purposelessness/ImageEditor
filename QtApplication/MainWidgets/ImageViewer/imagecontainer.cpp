@@ -83,8 +83,8 @@ void ImageContainer::onDrawingFinished(QGraphicsItem *item) {
         qCritical(ui()) << "Cannot transform graphics item to pixmap item";
         return;
     }
-    item->setParentItem(pixmapItem);
     item->setTransform(transform);
+    item->setParentItem(pixmapItem);
 }
 
 void ImageContainer::addItem(QGraphicsItem *item) {

@@ -5,18 +5,21 @@
 
 EllipseColorInverter::EllipseColorInverter() : Marquee<EllipseMarqueeItem>(tr("EllipseColorInverter")) {}
 
-void EllipseColorInverter::marqueePaintedEvent(const QPainterPath &path) {
+void EllipseColorInverter::marqueePaintedEvent(const QRectF &rectF) {
     auto graphicsView = WidgetData::getInstance().getGraphicsView();
     if (!graphicsView)
         return;
 
-    qDebug() << "inverting colors";
-    auto rectF = path.boundingRect();
+    auto newPixmapItem = new QGraphicsPixmapItem();
+    graphicsView->addItem(newPixmapItem);
+
     QRect rect = rectF.toRect();
-    FigurePoints points = FigureCalculator::calculateEllipse(0, 0, rectF.width(), rectF.height());
+    FigurePoints points = FigureCalculator::calculateEllipse(0, 0, rect.width(), rect.height());
     auto image = graphicsView->grab(rect).toImage();
     auto newImage = ColorInverterWorker::start(points, image);
-    auto mainPixmapItem = graphicsView->getPixmapItem();
-    auto newPixmapItem = new QGraphicsPixmapItem(QPixmap::fromImage(newImage));
-    graphicsView->addItem(newPixmapItem);
+    newPixmapItem->setPixmap(QPixmap::fromImage(newImage));
+
+    auto itemPos = rect.topLeft();
+    auto parentPos = newPixmapItem->mapToParent(itemPos);
+    newPixmapItem->setPos(parentPos);
 }

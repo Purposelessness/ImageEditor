@@ -9,11 +9,8 @@ class EllipseColorInverter : public Marquee<EllipseMarqueeItem> {
 public:
     EllipseColorInverter();
 
-private:
-    void invertColors(const QPainterPath &path);
-
 protected:
-    void marqueePaintedEvent(const QPainterPath &path) override;
+    void marqueePaintedEvent(const QRectF &rect) override;
 };
 
 
