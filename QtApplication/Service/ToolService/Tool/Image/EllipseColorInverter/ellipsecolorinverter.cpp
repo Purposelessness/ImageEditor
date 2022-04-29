@@ -12,7 +12,6 @@ void EllipseColorInverter::marqueePaintedEvent(const QPainterPath &path) {
     if (!graphicsView)
         return;
 
-
     QRect rect = path.boundingRect().toRect();
     FigurePoints points = FigureCalculator::calculateEllipse(0, 0, rect.width(), rect.height());
     auto image = graphicsView->grab(rect).toImage();

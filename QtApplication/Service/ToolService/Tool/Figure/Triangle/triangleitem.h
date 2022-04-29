@@ -17,7 +17,7 @@ public:
     [[nodiscard]] QRectF boundingRect() const override;
     [[nodiscard]] QPainterPath shape() const override;
 
-    void setRect(const QRectF &rect) override;
+    void setRect(const QRectF &mappedRect) override;
 
 protected:
     [[nodiscard]] QPainterPath marqueeShape() const override;

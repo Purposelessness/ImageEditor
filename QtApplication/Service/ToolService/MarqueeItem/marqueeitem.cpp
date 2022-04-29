@@ -34,3 +34,7 @@ void MarqueeItem::setRect(const QRectF &newRect) {
     rect = newRect;
     update(boundingRect());
 }
+
+QPainterPath MarqueeItem::marqueeShape() const {
+    return shape();
+}

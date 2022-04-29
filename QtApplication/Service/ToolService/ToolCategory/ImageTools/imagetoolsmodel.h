@@ -3,7 +3,6 @@
 
 
 #include "../toolcategorymodel.h"
-#include "../../Tool/Figure/figure.h"
 
 class ImageToolsModel : public ToolCategoryModel<Tool> {
 public:

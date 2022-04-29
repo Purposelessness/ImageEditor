@@ -11,9 +11,8 @@ public:
     [[nodiscard]] QRectF boundingRect() const override;
     virtual void setRect(const QRectF &rect);
 
-
 protected:
-    [[nodiscard]] virtual QPainterPath marqueeShape() const = 0;
+    [[nodiscard]] virtual QPainterPath marqueeShape() const;
 
 private:
     static QPen whiteSolidPen;

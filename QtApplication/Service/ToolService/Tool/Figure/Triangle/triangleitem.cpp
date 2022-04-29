@@ -30,13 +30,8 @@ QRectF TriangleItem::boundingRect() const {
 }
 
 void TriangleItem::setRect(const QRectF &newRect) {
-    newRect.getCoords(&x_0, &y, &x, &y_0);
+    MarqueeItem::setRect(newRect);
     auto rect = MarqueeItem::boundingRect();
-
-    rect.setLeft(x_0);
-    rect.setBottom(y_0);
-    rect.setRight(x);
-    rect.setTop(y);
 
     geometry.clear();
     geometry.moveTo(rect.bottomLeft());
