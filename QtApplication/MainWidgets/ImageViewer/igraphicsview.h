@@ -7,8 +7,7 @@ class QGraphicsItem;
 class QGraphicsPixmapItem;
 class QPixmap;
 class QRect;
-class QPointF;
-class QPoint;
+class QRectF;
 
 class IGraphicsView {
 public:
@@ -16,6 +15,7 @@ public:
     virtual QGraphicsScene *getScene() = 0;
     virtual QGraphicsPixmapItem *getPixmapItem() = 0;
     virtual QPixmap grab(const QRect &rect) = 0;
+    virtual void fitInView(const QRectF &rect) = 0;
 };
 
 

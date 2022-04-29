@@ -54,7 +54,7 @@ void ImageContainer::resizeEvent(QResizeEvent *event) {
 
 void ImageContainer::mousePressEvent(QMouseEvent *event) {
     if (!itemIsSelected) {
-        painter.onMousePressed(event->pos());
+        painter.onMousePressed(mapToScene(event->pos()).toPoint());
     } else if (selectedItem != nullptr && selectedItem != itemAt(event->pos())) {
         selectedItem->setSelected(false);
     }
@@ -63,18 +63,18 @@ void ImageContainer::mousePressEvent(QMouseEvent *event) {
 
 void ImageContainer::mouseMoveEvent(QMouseEvent *event) {
     if (!itemIsSelected)
-        Painter::onMouseMoved(event->pos());
+        Painter::onMouseMoved(mapToScene(event->pos()).toPoint());
     QGraphicsView::mouseMoveEvent(event);
     scene->update();
 }
 
 void ImageContainer::mouseReleaseEvent(QMouseEvent *event) {
     if (!itemIsSelected)
-        Painter::onMouseReleased(event->pos());
+        Painter::onMouseReleased(mapToScene(event->pos()).toPoint());
     QGraphicsView::mouseReleaseEvent(event);
 }
 
-void ImageContainer::onDrawingFinished(QGraphicsItem *item) {
+void ImageContainer::mapItemToPixmap(QGraphicsItem *item) {
     bool ok = true;
     auto transform = item->itemTransform(pixmapItem, &ok);
     if (!ok) {
@@ -90,7 +90,7 @@ void ImageContainer::onDrawingFinished(QGraphicsItem *item) {
 void ImageContainer::addItem(QGraphicsItem *item) {
     scene->addItem(item);
     item->installSceneEventFilter(&eventFilter);
-    onDrawingFinished(item);
+    mapItemToPixmap(item);
 }
 
 QGraphicsScene *ImageContainer::getScene() {
@@ -119,4 +119,8 @@ QGraphicsPixmapItem *ImageContainer::getPixmapItem() {
 
 QPixmap ImageContainer::grab(const QRect &rect) {
     return QGraphicsView::grab(rect);
+}
+
+void ImageContainer::fitInView(const QRectF &rect) {
+    QGraphicsView::fitInView(rect);
 }

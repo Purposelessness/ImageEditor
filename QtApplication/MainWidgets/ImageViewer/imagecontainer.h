@@ -19,6 +19,7 @@ public:
     QGraphicsScene *getScene() override;
     QGraphicsPixmapItem *getPixmapItem() override;
     QPixmap grab(const QRect &rect) override;
+    void fitInView(const QRectF &rect) override;
 
 signals:
     void mousePressed(const QPoint &mousePos);
@@ -26,7 +27,7 @@ signals:
     void mouseReleased(const QPoint &mousePos);
 
 public slots:
-    void onDrawingFinished(QGraphicsItem *item);
+    void mapItemToPixmap(QGraphicsItem *item);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
