@@ -9,7 +9,7 @@ class MarqueeModelObject;
 
 class IMarquee {
 public:
-    virtual void marqueePaintedEvent(const QRectF &rect) = 0;
+    virtual void marqueePaintedEvent(const QPainterPath &path) = 0;
 };
 
 class MarqueeObject : public QObject {
@@ -19,7 +19,7 @@ public:
 explicit MarqueeObject(IMarquee *base, MarqueeModelObject *model, QObject *parent = nullptr);
 
 private slots:
-    void onMarqueePainted(const QRectF &rect);
+    void onMarqueePainted(const QPainterPath &path);
 
 private:
     IMarquee *base;
@@ -30,7 +30,7 @@ class MarqueeModelObject : public QObject {
 Q_OBJECT
 
 signals:
-    void marqueePainted(const QRectF &rect);
+    void marqueePainted(const QPainterPath &path);
 };
 
 

@@ -27,8 +27,6 @@ FigurePoints FigureCalculator::calculateEllipse(int xLeft, int yTop, int xRight,
         }
     }
 
-    points.data[0][0] = true;
-
     return points;
 }
 

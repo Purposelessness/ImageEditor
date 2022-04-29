@@ -17,6 +17,7 @@ void TriangleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 }
 
 QRectF TriangleItem::boundingRect() const {
+    auto rect = MarqueeItem::boundingRect();
     auto correctRect = rect;
     qreal penWidth = pen().widthF() * 1.5;
     qreal top, right, bottom, left;
@@ -30,6 +31,7 @@ QRectF TriangleItem::boundingRect() const {
 
 void TriangleItem::setRect(const QRectF &newRect) {
     newRect.getCoords(&x_0, &y, &x, &y_0);
+    auto rect = MarqueeItem::boundingRect();
 
     rect.setLeft(x_0);
     rect.setBottom(y_0);
@@ -45,7 +47,7 @@ void TriangleItem::setRect(const QRectF &newRect) {
 }
 
 QPainterPath TriangleItem::shape() const {
-    auto path = calculateOuterBorder(rect, pen().widthF());
+    auto path = calculateOuterBorder(MarqueeItem::boundingRect(), pen().widthF());
     return path;
 }
 

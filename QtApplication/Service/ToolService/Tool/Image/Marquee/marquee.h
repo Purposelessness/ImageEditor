@@ -12,7 +12,7 @@ public:
     explicit Marquee(const QString &name, MarqueeModel<T> *model = new MarqueeModel<T>());
 
 protected:
-    void marqueePaintedEvent(const QRectF &rect) override = 0;
+    void marqueePaintedEvent(const QPainterPath &path) override = 0;
 
 private:
     MarqueeObject *object;

@@ -2,9 +2,9 @@
 
 MarqueeObject::MarqueeObject(IMarquee *base, MarqueeModelObject *model, QObject *parent) : QObject(parent), base(base),
                                                                                            model(model) {
-    connect(model, SIGNAL(marqueePainted(QRectF)), this, SLOT(onMarqueePainted(QRectF)));
+    connect(model, SIGNAL(marqueePainted(QPainterPath)), this, SLOT(onMarqueePainted(QPainterPath)));
 }
 
-void MarqueeObject::onMarqueePainted(const QRectF &rect) {
-    base->marqueePaintedEvent(rect);
+void MarqueeObject::onMarqueePainted(const QPainterPath &path) {
+    base->marqueePaintedEvent(path);
 }

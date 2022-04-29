@@ -25,9 +25,9 @@ void MarqueeModel<T>::finishDrawing(const Coordinates &coordinates) {
     auto normalizedRect = normalizeRect(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y);
     marqueeItem->setSelected(true);
     marqueeItem->setRect(normalizedRect);
-    QRectF rect = marqueeItem->boundingRect();
+    QPainterPath path = marqueeItem->shape();
     delete marqueeItem;
-    emit object->marqueePainted(rect);
+    emit object->marqueePainted(path);
     marqueeItem = nullptr;
 }
 

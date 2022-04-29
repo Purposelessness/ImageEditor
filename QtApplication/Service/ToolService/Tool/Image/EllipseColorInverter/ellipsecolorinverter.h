@@ -10,7 +10,7 @@ public:
     EllipseColorInverter();
 
 protected:
-    void marqueePaintedEvent(const QRectF &rect) override;
+    void marqueePaintedEvent(const QPainterPath &path) override;
 };
 
 

@@ -3,7 +3,11 @@
 #include <QPainter>
 
 QPainterPath EllipseMarqueeItem::marqueeShape() const {
-    auto path = QPainterPath();
-    path.addEllipse(rect);
+    return shape();
+}
+
+QPainterPath EllipseMarqueeItem::shape() const {
+    QPainterPath path = QPainterPath();
+    path.addEllipse(boundingRect());
     return path;
 }

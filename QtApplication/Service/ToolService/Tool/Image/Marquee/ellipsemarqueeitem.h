@@ -5,6 +5,9 @@
 #include "../../../MarqueeItem/marqueeitem.h"
 
 class EllipseMarqueeItem : public MarqueeItem {
+public:
+    [[nodiscard]] QPainterPath shape() const override;
+
 protected:
     [[nodiscard]] QPainterPath marqueeShape() const override;
 };

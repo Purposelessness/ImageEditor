@@ -15,11 +15,11 @@ public:
 protected:
     [[nodiscard]] virtual QPainterPath marqueeShape() const = 0;
 
-    QRectF rect{};
-
 private:
     static QPen whiteSolidPen;
     static QPen blackDashPen;
+
+    QRectF rect{};
 };
 
 
