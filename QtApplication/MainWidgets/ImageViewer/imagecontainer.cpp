@@ -37,19 +37,20 @@ void ImageContainer::setImage(const QImage &newImage) {
     pixmapItem->setPixmap(pixmap);
     pixmapItem->setTransformationMode(Qt::SmoothTransformation);
     resize(pixmap.size());
+    resizeEvent();
     scene->addItem(pixmapItem);
 }
 
 void ImageContainer::scale(float newScaleValue) {
     scaleValue = newScaleValue;
     resize(scaleValue * pixmap.size());
+    resizeEvent();
 }
 
-void ImageContainer::resizeEvent(QResizeEvent *event) {
+void ImageContainer::resizeEvent() {
     if (pixmapItem)
         pixmapItem->setScale(scaleValue);
     setSceneRect(contentsRect());
-    QGraphicsView::resizeEvent(event);
 }
 
 void ImageContainer::mousePressEvent(QMouseEvent *event) {
@@ -121,6 +122,14 @@ QPixmap ImageContainer::grab(const QRect &rect) {
     return QGraphicsView::grab(rect);
 }
 
-void ImageContainer::fitInView(const QRectF &rect) {
+void ImageContainer::fitInView(const QRect &rect) {
+    resize(rect.size());
+    setSceneRect(rect);
     QGraphicsView::fitInView(rect);
+}
+
+void ImageContainer::fitInView(const QGraphicsItem *item) {
+    resize(item->boundingRect().size().toSize());
+    setSceneRect(item->boundingRect());
+    QGraphicsView::fitInView(item);
 }

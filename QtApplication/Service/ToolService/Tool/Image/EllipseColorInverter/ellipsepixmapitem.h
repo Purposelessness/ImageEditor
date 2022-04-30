@@ -6,6 +6,7 @@
 
 class EllipsePixmapItem : public PixmapItem {
 public:
+    EllipsePixmapItem() = default;
     explicit EllipsePixmapItem(const QPixmap &pixmap);
 
 protected:

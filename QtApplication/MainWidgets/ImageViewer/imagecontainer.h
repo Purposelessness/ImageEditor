@@ -19,7 +19,8 @@ public:
     QGraphicsScene *getScene() override;
     QGraphicsPixmapItem *getPixmapItem() override;
     QPixmap grab(const QRect &rect) override;
-    void fitInView(const QRectF &rect) override;
+    void fitInView(const QRect &rect) override;
+    void fitInView(const QGraphicsItem *item) override;
 
 signals:
     void mousePressed(const QPoint &mousePos);
@@ -30,7 +31,6 @@ public slots:
     void mapItemToPixmap(QGraphicsItem *item);
 
 protected:
-    void resizeEvent(QResizeEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
@@ -39,6 +39,7 @@ private slots:
     void onSelectionChanged();
 
 private:
+    void resizeEvent();
     class : public QGraphicsObject {
     private:
         bool sceneEventFilter(QGraphicsItem *watched, QEvent *event) override {

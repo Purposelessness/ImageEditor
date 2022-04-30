@@ -15,7 +15,8 @@ public:
     virtual QGraphicsScene *getScene() = 0;
     virtual QGraphicsPixmapItem *getPixmapItem() = 0;
     virtual QPixmap grab(const QRect &rect) = 0;
-    virtual void fitInView(const QRectF &rect) = 0;
+    virtual void fitInView(const QRect &rect) = 0;
+    virtual void fitInView(const QGraphicsItem *item) = 0;
 };
 
 

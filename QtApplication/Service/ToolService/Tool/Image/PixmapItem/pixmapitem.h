@@ -6,7 +6,9 @@
 
 class PixmapItem : public QGraphicsPixmapItem {
 public:
+    PixmapItem() = default;
     explicit PixmapItem(const QPixmap &pixmap);
+
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
 
 protected:
