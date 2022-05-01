@@ -7,7 +7,7 @@ class QGraphicsItem;
 class QGraphicsPixmapItem;
 class QPixmap;
 class QRect;
-class QRectF;
+class QPoint;
 
 class IGraphicsView {
 public:

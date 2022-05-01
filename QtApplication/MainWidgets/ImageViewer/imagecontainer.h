@@ -20,7 +20,7 @@ public:
     QGraphicsPixmapItem *getPixmapItem() override;
     QPixmap grab(const QRect &rect) override;
     void focusOn(const QGraphicsItem *item) override;
-    QGraphicsItem * getFocusItem() override;
+    QGraphicsItem *getFocusItem() override;
 
 signals:
     void mousePressed(const QPoint &mousePos);
@@ -40,6 +40,7 @@ private slots:
     void onSelectionChanged();
 
 private:
+    void resize();
     class : public QGraphicsObject {
     private:
         bool sceneEventFilter(QGraphicsItem *watched, QEvent *event) override {

@@ -33,12 +33,13 @@ void EllipseColorInverter::marqueePaintedEvent(const QPainterPath &path) {
     dialog->resize(label->size());
     dialog->show();
 
-    qDebug() << points.width << points.height;
-    qDebug() << image.size();
     auto newImage = ColorInverterWorker::start(points, image);
 
     pixmapItem->setPixmap(QPixmap::fromImage(newImage));
     pixmapItem->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
+
+    qDebug() << rect;
+    qDebug() << pixmapItem->pos() << pixmapItem->mapToScene(pixmapItem->pos()) << pixmapItem->boundingRect();
 
     new AddItemCommand(pixmapItem);
 

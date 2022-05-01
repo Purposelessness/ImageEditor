@@ -13,7 +13,7 @@ ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(n
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setViewportMargins(-2, -2, -2, -2);
-    setBackgroundRole(QPalette::Mid);
+//    setBackgroundRole(QPalette::Mid);
     setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
 
     connect(scene, SIGNAL(selectionChanged()), this, SLOT(onSelectionChanged()));
@@ -25,37 +25,40 @@ ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(n
 }
 
 void ImageContainer::setImage(const QImage &newImage) {
-    scaleValue = 1;
     qDebug(ui()) << "Setting destImage with size" << newImage.size();
     pixmap = QPixmap::fromImage(newImage);
-/*  Color space validity
-    auto pixmap = new QPixmap(QPixmap::fromImage(newImage));
-    destImage = pixmap->toImage();
-    if (destImage.colorSpace().isValid())
-    destImage.convertToColorSpace(QColorSpace::SRgb); */
     focusItem = nullptr;
     pixmapItem = new QGraphicsPixmapItem;
     pixmapItem->setPixmap(pixmap);
     pixmapItem->setTransformationMode(Qt::SmoothTransformation);
-    resize(pixmap.size());
+    scale(1);
+    resize();
     scene->addItem(pixmapItem);
 }
 
 void ImageContainer::scale(float newScaleValue) {
     scaleValue = newScaleValue;
-    focusItem ? resize(scaleValue * focusItem->boundingRect().size().toSize()) : resize(scaleValue * pixmap.size());
+    if (pixmapItem)
+        pixmapItem->setScale(scaleValue);
+    resize();
+}
+
+void ImageContainer::resize() {
+    if (focusItem) {
+        auto rect = focusItem->mapToScene(focusItem->boundingRect()).boundingRect();
+        QGraphicsView::resize(rect.size().toSize());
+        setSceneRect(rect);
+        fitInView(focusItem);
+    } else if (pixmapItem) {
+        auto rect = pixmapItem->mapToScene(pixmapItem->boundingRect()).boundingRect();
+        QGraphicsView::resize(rect.size().toSize());
+        setSceneRect(rect);
+        fitInView(pixmapItem);
+    }
 }
 
 void ImageContainer::resizeEvent(QResizeEvent *event) {
     QGraphicsView::resizeEvent(event);
-    if (focusItem) {
-        setSceneRect(focusItem->boundingRect());
-        fitInView(focusItem);
-    } else {
-        if (pixmapItem)
-            pixmapItem->setScale(scaleValue);
-        setSceneRect(contentsRect());
-    }
 }
 
 void ImageContainer::mousePressEvent(QMouseEvent *event) {
@@ -124,12 +127,17 @@ QGraphicsPixmapItem *ImageContainer::getPixmapItem() {
 }
 
 QPixmap ImageContainer::grab(const QRect &rect) {
+    if (focusItem) {
+        qDebug() << focusItem->boundingRect();
+//        rect.getc
+//        return QGraphicsView::grab(correctedRect);
+    }
     return QGraphicsView::grab(rect);
 }
 
 void ImageContainer::focusOn(const QGraphicsItem *item) {
     focusItem = const_cast<QGraphicsItem *>(item);
-    focusItem ? resize(item->boundingRect().size().toSize()) : resize(scaleValue * pixmap.size());
+    resize();
 }
 
 QGraphicsItem *ImageContainer::getFocusItem() {
