@@ -1,6 +1,7 @@
 #include "crop.h"
 #include "../../../../../Data/data.h"
 
+#include <QGraphicsRectItem>
 #include <QGraphicsScene>
 
 Crop::Crop() : Marquee<MarqueeItem>(tr("Crop")) {}
@@ -8,5 +9,12 @@ Crop::Crop() : Marquee<MarqueeItem>(tr("Crop")) {}
 void Crop::marqueePaintedEvent(const QPainterPath &path) {
     auto view = WidgetData::getInstance().getGraphicsView();
     qDebug() << view->getScene()->sceneRect();
-    view->fitInView(path.boundingRect().toRect());
+
+    auto focusItem = new QGraphicsRectItem();
+    view->addItem(focusItem);
+
+    focusItem->setBrush(Qt::NoBrush);
+    focusItem->setRect(path.boundingRect());
+
+    view->fitInView(focusItem);
 }

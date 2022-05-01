@@ -34,12 +34,12 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void onSelectionChanged();
 
 private:
-    void resizeEvent();
     class : public QGraphicsObject {
     private:
         bool sceneEventFilter(QGraphicsItem *watched, QEvent *event) override {
@@ -57,8 +57,9 @@ private:
 
     QGraphicsScene *scene;
     QGraphicsPixmapItem *pixmapItem = nullptr;
-    Painter painter;
     QPixmap pixmap;
+    QGraphicsItem *focusItem = nullptr;
+    Painter painter;
     QGraphicsItem *selectedItem = nullptr;
 
     float scaleValue = 1;

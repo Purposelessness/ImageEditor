@@ -37,20 +37,24 @@ void ImageContainer::setImage(const QImage &newImage) {
     pixmapItem->setPixmap(pixmap);
     pixmapItem->setTransformationMode(Qt::SmoothTransformation);
     resize(pixmap.size());
-    resizeEvent();
     scene->addItem(pixmapItem);
 }
 
 void ImageContainer::scale(float newScaleValue) {
     scaleValue = newScaleValue;
-    resize(scaleValue * pixmap.size());
-    resizeEvent();
+    focusItem ? resize(scaleValue * focusItem->boundingRect().size().toSize()) : resize(scaleValue * pixmap.size());
 }
 
-void ImageContainer::resizeEvent() {
-    if (pixmapItem)
-        pixmapItem->setScale(scaleValue);
-    setSceneRect(contentsRect());
+void ImageContainer::resizeEvent(QResizeEvent *event) {
+    QGraphicsView::resizeEvent(event);
+    if (focusItem) {
+        setSceneRect(focusItem->boundingRect());
+        QGraphicsView::fitInView(focusItem);
+    } else {
+        if (pixmapItem)
+            pixmapItem->setScale(scaleValue);
+        setSceneRect(contentsRect());
+    }
 }
 
 void ImageContainer::mousePressEvent(QMouseEvent *event) {
@@ -129,7 +133,7 @@ void ImageContainer::fitInView(const QRect &rect) {
 }
 
 void ImageContainer::fitInView(const QGraphicsItem *item) {
+    focusItem = const_cast<QGraphicsItem *>(item);
     resize(item->boundingRect().size().toSize());
-    setSceneRect(item->boundingRect());
-    QGraphicsView::fitInView(item);
+//    QGraphicsView::fitInView(item);
 }
