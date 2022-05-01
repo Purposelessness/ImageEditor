@@ -12,7 +12,7 @@ ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(n
                                                   painter(Painter(this)) {
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setViewportMargins(-2, -2, -2, -2);
+    setViewportMargins(-4, -4, -4, -5);
 //    setBackgroundRole(QPalette::Mid);
     setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
 
