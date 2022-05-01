@@ -3,7 +3,7 @@
 
 
 #include "../ColorInverter/colorinverter.h"
-#include "../FigureCalculator/figurecalculator.h"
+#include "../../../Library/FigureCalculator/figurecalculator.h"
 
 #include <QRectF>
 #include <QImage>
