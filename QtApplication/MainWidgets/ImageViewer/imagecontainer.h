@@ -20,6 +20,7 @@ public:
     QGraphicsPixmapItem *getPixmapItem() override;
     QPixmap grab(const QRect &rect) override;
     void focusOn(const QGraphicsItem *item) override;
+    QGraphicsItem * getFocusItem() override;
 
 signals:
     void mousePressed(const QPoint &mousePos);

@@ -3,6 +3,7 @@
 #ifndef IMAGEEDITOR_UNDOSERVICE_H
 #define IMAGEEDITOR_UNDOSERVICE_H
 
+
 #include <QUndoStack>
 #include <QAction>
 

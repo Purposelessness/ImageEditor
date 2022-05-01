@@ -128,5 +128,9 @@ QPixmap ImageContainer::grab(const QRect &rect) {
 
 void ImageContainer::focusOn(const QGraphicsItem *item) {
     focusItem = const_cast<QGraphicsItem *>(item);
-    resize(item->boundingRect().size().toSize());
+    focusItem ? resize(item->boundingRect().size().toSize()) : resize(scaleValue * pixmap.size());
+}
+
+QGraphicsItem *ImageContainer::getFocusItem() {
+    return focusItem;
 }

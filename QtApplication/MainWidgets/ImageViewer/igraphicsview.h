@@ -16,6 +16,7 @@ public:
     virtual QGraphicsPixmapItem *getPixmapItem() = 0;
     virtual QPixmap grab(const QRect &rect) = 0;
     virtual void focusOn(const QGraphicsItem *item) = 0;
+    virtual QGraphicsItem *getFocusItem() = 0;
 };
 
 

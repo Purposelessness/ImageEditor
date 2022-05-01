@@ -1,6 +1,7 @@
 #ifndef IMAGEEDITOR_ADDITEMCOMMAND_H
 #define IMAGEEDITOR_ADDITEMCOMMAND_H
 
+
 #include <QUndoCommand>
 #include <QGraphicsItem>
 

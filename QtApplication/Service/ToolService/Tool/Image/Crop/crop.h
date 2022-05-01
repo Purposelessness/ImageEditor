@@ -11,9 +11,6 @@ public:
 
 protected:
     void marqueePaintedEvent(const QPainterPath &path) override;
-
-private:
-    QGraphicsItem *item = nullptr;
 };
 
 
