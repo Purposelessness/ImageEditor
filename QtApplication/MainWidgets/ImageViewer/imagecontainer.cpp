@@ -49,7 +49,7 @@ void ImageContainer::resizeEvent(QResizeEvent *event) {
     QGraphicsView::resizeEvent(event);
     if (focusItem) {
         setSceneRect(focusItem->boundingRect());
-        QGraphicsView::fitInView(focusItem);
+        fitInView(focusItem);
     } else {
         if (pixmapItem)
             pixmapItem->setScale(scaleValue);
@@ -126,14 +126,7 @@ QPixmap ImageContainer::grab(const QRect &rect) {
     return QGraphicsView::grab(rect);
 }
 
-void ImageContainer::fitInView(const QRect &rect) {
-    resize(rect.size());
-    setSceneRect(rect);
-    QGraphicsView::fitInView(rect);
-}
-
-void ImageContainer::fitInView(const QGraphicsItem *item) {
+void ImageContainer::focusOn(const QGraphicsItem *item) {
     focusItem = const_cast<QGraphicsItem *>(item);
     resize(item->boundingRect().size().toSize());
-//    QGraphicsView::fitInView(item);
 }

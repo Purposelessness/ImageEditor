@@ -19,8 +19,7 @@ public:
     QGraphicsScene *getScene() override;
     QGraphicsPixmapItem *getPixmapItem() override;
     QPixmap grab(const QRect &rect) override;
-    void fitInView(const QRect &rect) override;
-    void fitInView(const QGraphicsItem *item) override;
+    void focusOn(const QGraphicsItem *item) override;
 
 signals:
     void mousePressed(const QPoint &mousePos);
