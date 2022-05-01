@@ -128,9 +128,18 @@ QGraphicsPixmapItem *ImageContainer::getPixmapItem() {
 
 QPixmap ImageContainer::grab(const QRect &rect) {
     if (focusItem) {
-        qDebug() << focusItem->boundingRect();
-//        rect.getc
-//        return QGraphicsView::grab(correctedRect);
+        qreal x_0_f, y_0_f, w_f, h_f;
+        int x_0_r, y_0_r, w_r, h_r;
+        auto focusItemRect = focusItem->mapToScene(focusItem->boundingRect()).boundingRect();
+        focusItemRect.getRect(&x_0_f, &y_0_f, &w_f, &h_f);
+        rect.getRect(&x_0_r, &y_0_r, &w_r, &h_r);
+        int x_0 = static_cast<int>(x_0_r - x_0_f);
+        int y_0 = static_cast<int>(y_0_r - y_0_f);
+        int w = rect.width();
+        int h = rect.height();
+        auto imageRect = QRect(x_0, y_0, w, h);
+
+        return QGraphicsView::grab(imageRect);
     }
     return QGraphicsView::grab(rect);
 }

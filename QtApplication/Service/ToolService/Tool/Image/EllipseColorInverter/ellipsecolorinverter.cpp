@@ -18,28 +18,21 @@ void EllipseColorInverter::marqueePaintedEvent(const QPainterPath &path) {
     auto pixmapItem = new EllipsePixmapItem();
     graphicsView->addItem(pixmapItem);
 
-    auto rect = path.boundingRect().toRect();
-    auto itemPos = rect.topLeft();
+    auto sceneRect = path.boundingRect();
+    auto itemRect = pixmapItem->mapFromScene(path).boundingRect().toRect();
+    auto itemPos = itemRect.topLeft();
     auto parentPos = pixmapItem->mapToParent(itemPos);
     pixmapItem->setPos(parentPos);
 
-    FigurePoints points = FigureCalculator::calculateEllipse(0, 0, rect.width(), rect.height());
-    auto image = graphicsView->grab(rect).toImage();
-
-    auto dialog = new QDialog();
-    auto label = new QLabel();
-    label->setPixmap(QPixmap::fromImage(image));
-    label->setParent(dialog);
-    dialog->resize(label->size());
-    dialog->show();
+    auto grabRect = QRect(static_cast<int>(sceneRect.left()), static_cast<int>(sceneRect.top()),
+                          itemRect.width(), itemRect.height());
+    FigurePoints points = FigureCalculator::calculateEllipse(0, 0, grabRect.width(), grabRect.height());
+    auto image = graphicsView->grab(grabRect).toImage();
 
     auto newImage = ColorInverterWorker::start(points, image);
 
     pixmapItem->setPixmap(QPixmap::fromImage(newImage));
     pixmapItem->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
-
-    qDebug() << rect;
-    qDebug() << pixmapItem->pos() << pixmapItem->mapToScene(pixmapItem->pos()) << pixmapItem->boundingRect();
 
     new AddItemCommand(pixmapItem);
 
