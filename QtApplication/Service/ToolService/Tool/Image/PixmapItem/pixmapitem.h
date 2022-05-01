@@ -6,7 +6,7 @@
 
 class PixmapItem : public QGraphicsPixmapItem {
 public:
-    PixmapItem() = default;
+    PixmapItem();
     explicit PixmapItem(const QPixmap &pixmap);
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
@@ -15,6 +15,8 @@ protected:
     [[nodiscard]] virtual QPainterPath marqueeShape() const;
 
 private:
+    static void createPens();
+
     static QPen whiteSolidPen;
     static QPen blackDashPen;
 };

@@ -7,7 +7,15 @@
 QPen PixmapItem::whiteSolidPen{};
 QPen PixmapItem::blackDashPen{};
 
+PixmapItem::PixmapItem() {
+    createPens();
+}
+
 PixmapItem::PixmapItem(const QPixmap &pixmap) : QGraphicsPixmapItem(pixmap) {
+    createPens();
+}
+
+void PixmapItem::createPens() {
     whiteSolidPen.setStyle(Qt::SolidLine);
     whiteSolidPen.setColor(Qt::white);
     whiteSolidPen.setWidth(0);
