@@ -33,6 +33,7 @@ void ImageContainer::setImage(const QImage &newImage) {
     destImage = pixmap->toImage();
     if (destImage.colorSpace().isValid())
     destImage.convertToColorSpace(QColorSpace::SRgb); */
+    focusItem = nullptr;
     pixmapItem = new QGraphicsPixmapItem;
     pixmapItem->setPixmap(pixmap);
     pixmapItem->setTransformationMode(Qt::SmoothTransformation);
