@@ -29,12 +29,12 @@ FigurePoints EllipseCalculator::calculateEllipse(int xLeft, int yTop, int xRight
     } else {
         for (int x = x_1, xi = 0; x < x_2; ++x, ++xi) {
             for (int y = y_1, yi = 0; y < y_2; ++y, ++yi) {
-                if (ellipseCheck(x, y, a, b)) {
-                    if (ellipseCheck(x, y, a_b, b_b)) {
-                        points.data[yi][xi] = fill;
-                    } else {
-                        points.data[yi][xi] = border;
-                    }
+                if (!ellipseCheck(x, y, a, b))
+                    continue;
+                if (ellipseCheck(x, y, a_b, b_b)) {
+                    points.data[yi][xi] = fill;
+                } else {
+                    points.data[yi][xi] = border;
                 }
             }
         }
