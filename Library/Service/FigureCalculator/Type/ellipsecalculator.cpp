@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-FigurePoints EllipseCalculator::calculateEllipse(int xLeft, int yTop, int xRight, int yBottom, int borderWidth) {
+FigurePoints EllipseCalculator::calculateEllipse(uint32_t xLeft, uint32_t yTop, uint32_t xRight, uint32_t yBottom, int borderWidth) {
     const int x_0 = (xLeft + xRight) / 2;
     const int y_0 = (yTop + yBottom) / 2;
     const int x_1 = xLeft - x_0;

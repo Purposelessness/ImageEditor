@@ -1,5 +1,7 @@
 #include "saver.h"
 
+#include <cstdio>
+
 namespace Bitmap {
 
     void Saver::save(Image *image, const char *path) {

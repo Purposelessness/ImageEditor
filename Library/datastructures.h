@@ -2,7 +2,6 @@
 #define IMAGEEDITOR_DATASTRUCTURES_H
 
 
-#include <cstdint>
 #include "figurepoints.h"
 
 #pragma pack(push, 1)

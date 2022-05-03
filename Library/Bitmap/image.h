@@ -1,10 +1,8 @@
-#ifndef IMAGEEDITOR_IIMAGE_H
+#ifndef IMAGEEDITOR_IMAGE_H
 #define IMAGEEDITOR_IMAGE_H
 
 
 #include "../iimage.h"
-
-#include <string>
 
 namespace Bitmap {
 
@@ -32,7 +30,7 @@ namespace Bitmap {
     };
 #pragma pack(pop)
 
-    class Image : IImage {
+    class Image : public IImage {
     public:
         Image() = default;
         explicit Image(const BitmapFileHeader &fileHeader, const BitmapInfoHeader &infoHeader, Rgb **pixelData);
@@ -61,4 +59,4 @@ namespace Bitmap {
 }
 
 
-#endif //IMAGEEDITOR_IIMAGE_H
+#endif //IMAGEEDITOR_IMAGE_H

@@ -2,7 +2,7 @@
 #define IMAGEEDITOR_COLORINVERTERWORKER_H
 
 
-#include "../../../Library/FigureCalculator/figurecalculator.h"
+#include "../../../Library/Service/FigureCalculator/figurecalculator.h"
 
 #include <QRectF>
 #include <QImage>

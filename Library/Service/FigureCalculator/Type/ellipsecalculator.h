@@ -2,11 +2,11 @@
 #define IMAGEEDITOR_ELLIPSECALCULATOR_H
 
 
-#include "../../figurepoints.h"
+#include "../../../figurepoints.h"
 
 class EllipseCalculator {
 public:
-    static FigurePoints calculateEllipse(int xLeft, int yTop, int xRight, int yBottom, int borderWidth = 0);
+    static FigurePoints calculateEllipse(uint32_t xLeft, uint32_t yTop, uint32_t xRight, uint32_t yBottom, int borderWidth = 0);
 
 private:
     static bool ellipseCheck(double x, double y, double a, double b);

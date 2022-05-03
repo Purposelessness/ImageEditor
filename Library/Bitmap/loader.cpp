@@ -1,5 +1,8 @@
 #include "loader.h"
 
+#include <cstdio>
+#include <malloc.h>
+
 namespace Bitmap {
 
     Image Loader::load(const char *path) {
