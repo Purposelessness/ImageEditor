@@ -2,7 +2,7 @@
 #define IMAGEEDITOR_ELLIPSECALCULATOR_H
 
 
-#include "../figurepoints.h"
+#include "../../figurepoints.h"
 
 class EllipseCalculator {
 public:

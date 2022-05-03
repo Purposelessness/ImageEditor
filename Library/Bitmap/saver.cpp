@@ -4,7 +4,7 @@ namespace Bitmap {
 
     void Saver::save(Image *image, const char *path) {
         if (image->isEmpty()) {
-            printf("Image is empty\n");
+            printf("IImage is empty\n");
             return;
         }
 

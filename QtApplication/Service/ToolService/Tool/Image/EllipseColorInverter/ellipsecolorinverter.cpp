@@ -1,7 +1,7 @@
 #include "ellipsecolorinverter.h"
 #include "../../../../../Data/data.h"
 #include "../../../../../MainWidgets/ImageViewer/imagecontainer.h"
-#include "../../../../ColorInverter/colorinverterworker.h"
+#include "../../../../ColorInverterWorker//colorinverterworker.h"
 #include "../../../../UndoService/Command/additemcommand.h"
 #include "ellipsepixmapitem.h"
 

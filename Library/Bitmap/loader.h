@@ -11,7 +11,7 @@ namespace Bitmap {
         static Image load(const char *path);
     };
 
-} // Image
+} // IImage
 
 
 #endif //IMAGEEDITOR_LOADER_H

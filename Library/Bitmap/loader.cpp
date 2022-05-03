@@ -32,4 +32,4 @@ namespace Bitmap {
         return Image(fileHeader, infoHeader, pixelData);
     }
 
-} // Image
+} // IImage

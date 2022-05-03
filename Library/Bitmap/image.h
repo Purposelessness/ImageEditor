@@ -1,6 +1,8 @@
-#ifndef IMAGEEDITOR_IMAGE_H
+#ifndef IMAGEEDITOR_IIMAGE_H
 #define IMAGEEDITOR_IMAGE_H
 
+
+#include "../iimage.h"
 
 #include <string>
 
@@ -28,32 +30,29 @@ namespace Bitmap {
         uint32_t colorsInColorTable;
         uint32_t importantColorCount;
     };
-
-    struct Rgb {
-        uint8_t b;
-        uint8_t g;
-        uint8_t r;
-    };
 #pragma pack(pop)
 
-    class Image {
+    class Image : IImage {
     public:
         Image() = default;
         explicit Image(const BitmapFileHeader &fileHeader, const BitmapInfoHeader &infoHeader, Rgb **pixelData);
         ~Image();
 
-        [[nodiscard]] bool isEmpty() const;
+        [[nodiscard]] bool isEmpty() const override;
 
         void printFileHeader() const;
         void printInfoHeader() const;
 
-        Rgb **getPixelData();
+        void setHeight(uint32_t height) override;
+        void setWidth(uint32_t width) override;
+
+        Rgb **getPixelData() override;
+        [[nodiscard]] uint32_t getHeight() const override;
+        [[nodiscard]] uint32_t getWidth() const override;
         BitmapFileHeader *getFileHeader();
         BitmapInfoHeader *getInfoHeader();
 
     private:
-        void swap(unsigned char *a, unsigned char *b);
-
         BitmapFileHeader fileHeader{};
         BitmapInfoHeader infoHeader{};
         Rgb **pixelData = nullptr;
@@ -62,4 +61,4 @@ namespace Bitmap {
 }
 
 
-#endif //IMAGEEDITOR_IMAGE_H
+#endif //IMAGEEDITOR_IIMAGE_H

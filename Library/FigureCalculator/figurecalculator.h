@@ -2,7 +2,7 @@
 #define IMAGEEDITOR_FIGURECALCULATOR_H
 
 
-#include "figurepoints.h"
+#include "../figurepoints.h"
 
 class FigureCalculator {
 public:

@@ -38,12 +38,6 @@ namespace Bitmap {
         printf("ImportantColorCount:\t%x (%u)\n", infoHeader.importantColorCount, infoHeader.importantColorCount);
     }
 
-    void Image::swap(unsigned char *a, unsigned char *b) {
-        unsigned char t = *a;
-        *a = *b;
-        *b = t;
-    }
-
     Rgb **Image::getPixelData() {
         return pixelData;
     }
@@ -54,6 +48,22 @@ namespace Bitmap {
 
     BitmapInfoHeader *Image::getInfoHeader() {
         return &infoHeader;
+    }
+
+    uint32_t Image::getHeight() const {
+        return infoHeader.height;
+    }
+
+    uint32_t Image::getWidth() const {
+        return infoHeader.width;
+    }
+
+    void Image::setHeight(uint32_t height) {
+        infoHeader.height = height;
+    }
+
+    void Image::setWidth(uint32_t width) {
+        infoHeader.width = width;
     }
 
 }

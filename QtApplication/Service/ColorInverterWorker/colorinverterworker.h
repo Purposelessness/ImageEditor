@@ -2,7 +2,6 @@
 #define IMAGEEDITOR_COLORINVERTERWORKER_H
 
 
-#include "../ColorInverter/colorinverter.h"
 #include "../../../Library/FigureCalculator/figurecalculator.h"
 
 #include <QRectF>
