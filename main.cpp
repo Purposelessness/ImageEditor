@@ -1,7 +1,10 @@
 #include "QtApplication/logger.h"
 #include "QtApplication/MainWidgets/EditorWindow/editorwindow.h"
 #include "QtApplication/Service/ToolService/toolservice.h"
+
 #include "Library/Bitmap/image.h"
+#include "Library/Bitmap/loader.h"
+#include "Library/Bitmap/saver.h"
 
 #include <QApplication>
 
@@ -11,9 +14,10 @@ int main(int argc, char *argv[]) {
     ToolService::getInstance();
     EditorWindow w;
 
-    Bitmap::Image image;
-    image.read(R"(D:\simpsonsvr.bmp)");
-    image.write(R"(D:\new.bmp)");
+    Bitmap::Image bitmap = Bitmap::Loader::load("D:/simpsonsvr.bmp");
+    bitmap.printFileHeader();
+    bitmap.printInfoHeader();
+    Bitmap::Saver::save(&bitmap, "D:/new.bmp");
 
     return QApplication::exec();
 }

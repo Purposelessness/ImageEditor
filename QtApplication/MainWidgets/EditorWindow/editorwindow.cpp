@@ -25,7 +25,7 @@ void EditorWindow::openImage() {
 }
 
 void EditorWindow::loadImage(const QString &fileName) {
-// TODO: make read destImage by tiles with multithreading in ImageReader
+// TODO: make load destImage by tiles with multithreading in ImageReader
     readFuture = QtConcurrent::run(ImageReader::loadImage, fileName);
     view->imageViewer->setImage(readFuture.result());
 }
