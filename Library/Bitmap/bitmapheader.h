@@ -66,10 +66,30 @@ namespace Bitmap {
             V3Header v3Header;
             V4Header v4Header;
             V5Header v5Header;
-        } data;
+        } data{};
 
         uint32_t size;
         InfoHeaderVersion version;
+
+        explicit InfoHeader(uint32_t size) : size(size) {
+            switch (size) {
+                case 12:
+                    version = core;
+                    break;
+                case 40:
+                    version = v3;
+                    break;
+                case 108:
+                    version = v4;
+                    break;
+                case 124:
+                    version = v5;
+                    break;
+                default:
+                    version = none;
+                    break;
+            }
+        }
 
         [[nodiscard]] int32_t getHeight() const {
             return version == core ? data.coreHeader.height : data.v3Header.height;

@@ -14,14 +14,13 @@ namespace Bitmap {
         }
 
         FileHeader fileHeader{};
-        InfoHeader infoHeader{};
         Rgb **pixelData;
 
         fread(&fileHeader, sizeof(FileHeader), 1, f);
 
         uint32_t size;
         fread(&size, sizeof(uint32_t), 1, f);
-        infoHeader.size = size;
+        InfoHeader infoHeader{size};
 
         fread(&infoHeader.data, size, 1, f);
 

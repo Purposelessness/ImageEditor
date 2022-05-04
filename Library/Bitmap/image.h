@@ -26,7 +26,7 @@ namespace Bitmap {
 
     private:
         FileHeader fileHeader{};
-        InfoHeader infoHeader{};
+        InfoHeader infoHeader{0};
         Rgb **pixelData = nullptr;
     };
 
