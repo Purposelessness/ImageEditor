@@ -7,6 +7,7 @@
 #include "../Library/Service/FigureCalculator/figurecalculator.h"
 #include "../Library/Service/ColorInverter/colorinverter.h"
 #include "../Library/Service/Painter/painter.h"
+#include "../Library/Service/Benchmark/benchmark.h"
 
 const char *src = "D:/simpsonsvr.bmp";
 const char *dest = "D:/new.bmp";

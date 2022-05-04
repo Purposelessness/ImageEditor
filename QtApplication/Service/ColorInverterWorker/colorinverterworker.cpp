@@ -1,5 +1,5 @@
 #include "colorinverterworker.h"
-#include "../Benchmark/benchmark.h"
+#include "../../../Library/Service/Benchmark/benchmark.h"
 
 static const QRgb mask = 0xFFFFFFFF;
 static const QRgb opaque = 0xFF000000;
