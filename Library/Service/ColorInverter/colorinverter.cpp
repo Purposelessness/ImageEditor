@@ -9,18 +9,18 @@ void ColorInverter::start(IImage *image, const FigurePoints &points) {
     }
 
     Rgb **data = image->getPixelData();
-    uint32_t imageWidth = image->getWidth();
-    uint32_t imageHeight = image->getHeight();
-    uint32_t width = points.width;
-    uint32_t height = points.height;
+    int32_t imageWidth = image->getWidth();
+    int32_t imageHeight = image->getHeight();
+    int32_t width = points.width;
+    int32_t height = points.height;
 
-    for (uint32_t y = 0; y < height; ++y) {
-        for (uint32_t x = 0; x < width; ++x) {
+    for (int32_t y = 0; y < height; ++y) {
+        for (int32_t x = 0; x < width; ++x) {
             if (points.data[y][x] == none)
                 continue;
 
-            uint32_t xImage = points.x + x;
-            uint32_t yImage = points.y + y;
+            int32_t xImage = points.x + x;
+            int32_t yImage = points.y + y;
             if (!pointIsValid(xImage, yImage, imageWidth, imageHeight))
                 continue;
 
@@ -36,6 +36,6 @@ void ColorInverter::invertPixel(Rgb *pixel) {
     pixel->b = 255 - pixel->b;
 }
 
-bool ColorInverter::pointIsValid(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
+bool ColorInverter::pointIsValid(int32_t x, int32_t y, int32_t width, int32_t height) {
     return x >= 0 && x < width && y >= 0 && y < height;
 }

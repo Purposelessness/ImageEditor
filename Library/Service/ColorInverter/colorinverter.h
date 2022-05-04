@@ -10,7 +10,7 @@ public:
 
 private:
     static void invertPixel(Rgb *pixel);
-    static bool pointIsValid(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
+    static bool pointIsValid(int32_t x, int32_t y, int32_t width, int32_t height);
 };
 
 

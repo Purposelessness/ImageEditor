@@ -21,8 +21,8 @@ namespace Bitmap {
         auto fileHeader = image->getFileHeader();
         auto infoHeader = image->getInfoHeader();
 
-        fwrite(fileHeader, 1, sizeof(BitmapFileHeader), f);
-        fwrite(infoHeader, 1, sizeof(BitmapInfoHeader), f);
+        fwrite(fileHeader, 1, sizeof(FileHeader), f);
+        fwrite(infoHeader, 1, sizeof(V3Header), f);
 
         uint32_t height = infoHeader->height;
         uint32_t width = infoHeader->width;

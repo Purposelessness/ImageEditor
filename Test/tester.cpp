@@ -1,3 +1,4 @@
+#include <cstdio>
 #include "tester.h"
 
 #include "../Library/Bitmap/image.h"
@@ -9,6 +10,11 @@
 const char *src = "D:/simpsonsvr.bmp";
 const char *dest = "D:/new.bmp";
 
+void Tester::sizeOf() {
+    printf("CoreHeader %llu; V3Header %llu; V4Header %llu; V5Header %llu\n", sizeof(Bitmap::CoreHeader),
+           sizeof(Bitmap::V3Header), sizeof(Bitmap::V4Header), sizeof(Bitmap::V5Header));
+}
+
 void Tester::loadAndSave() {
     Bitmap::Image bmp = Bitmap::Loader::load(src);
     Bitmap::Saver::save(&bmp, dest);
@@ -16,9 +22,9 @@ void Tester::loadAndSave() {
 
 void Tester::invertColors() {
     Bitmap::Image bmp = Bitmap::Loader::load(src);
-    uint32_t width = bmp.getWidth();
-    uint32_t height = bmp.getHeight();
-    uint32_t x_0, y_0, x, y;
+    int32_t width = bmp.getWidth();
+    int32_t height = bmp.getHeight();
+    int32_t x_0, y_0, x, y;
     x_0 = width / 2;
     x = width;
     y_0 = 0;

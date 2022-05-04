@@ -4,6 +4,7 @@
 
 class Tester {
 public:
+    static void sizeOf();
     static void loadAndSave();
     static void invertColors();
 };

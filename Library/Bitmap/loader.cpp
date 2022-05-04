@@ -13,12 +13,12 @@ namespace Bitmap {
             return Image{};
         }
 
-        BitmapFileHeader fileHeader{};
-        BitmapInfoHeader infoHeader{};
+        FileHeader fileHeader{};
+        V3Header infoHeader{};
         Rgb **pixelData;
 
-        fread(&fileHeader, 1, sizeof(BitmapFileHeader), f);
-        fread(&infoHeader, 1, sizeof(BitmapInfoHeader), f);
+        fread(&fileHeader, 1, sizeof(FileHeader), f);
+        fread(&infoHeader, 1, sizeof(V3Header), f);
 
         uint32_t height = infoHeader.height;
         uint32_t width = infoHeader.width;

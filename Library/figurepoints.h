@@ -11,7 +11,7 @@ enum type {
 };
 
 struct FigurePoints {
-    FigurePoints(uint32_t x, uint32_t y, uint32_t width, uint32_t height) : x(x), y(y), width(width), height(height) {
+    FigurePoints(int32_t x, int32_t y, int32_t width, int32_t height) : x(x), y(y), width(width), height(height) {
         this->data = new type *[height]{};
         for (int i = 0; i < height; ++i) {
             this->data[i] = new type[width]{};
@@ -32,13 +32,13 @@ struct FigurePoints {
         delete[] data;
     }
 
-    [[nodiscard]] bool contains(uint32_t x_0, uint32_t y_0) const {
+    [[nodiscard]] bool contains(int32_t x_0, int32_t y_0) const {
         return this->x <= x_0 && x_0 < this->x + width && this->y <= y_0 && y_0 < this->y + height;
     }
 
-    uint32_t x = 0, y = 0;
+    int32_t x = 0, y = 0;
     type **data = nullptr;
-    const uint32_t width = 0, height = 0;
+    const int32_t width = 0, height = 0;
 };
 
 
