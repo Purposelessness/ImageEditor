@@ -14,18 +14,23 @@ namespace Bitmap {
         }
 
         FileHeader fileHeader{};
-        V3Header infoHeader{};
+        InfoHeader infoHeader{};
         Rgb **pixelData;
 
-        fread(&fileHeader, 1, sizeof(FileHeader), f);
-        fread(&infoHeader, 1, sizeof(V3Header), f);
+        fread(&fileHeader, sizeof(FileHeader), 1, f);
 
-        uint32_t height = infoHeader.height;
-        uint32_t width = infoHeader.width;
+        uint32_t size;
+        fread(&size, sizeof(uint32_t), 1, f);
+        infoHeader.size = size;
+
+        fread(&infoHeader.data, size, 1, f);
+
+        int32_t height = infoHeader.getHeight();
+        int32_t width = infoHeader.getWidth();
 
         pixelData = new Rgb *[height];
         size_t lineSize = width * sizeof(Rgb) + width % 4;
-        for (int i = 0; i < height; ++i) {
+        for (int32_t i = 0; i < height; ++i) {
             pixelData[i] = reinterpret_cast<Rgb *>(malloc(lineSize));
             fread(pixelData[i], 1, lineSize, f);
         }

@@ -53,6 +53,7 @@ namespace Bitmap {
 
     enum InfoHeaderVersion {
         none,
+        core,
         v3,
         v4,
         v5,
@@ -60,13 +61,32 @@ namespace Bitmap {
 
     struct InfoHeader {
         union {
+            CoreHeader coreHeader;
             V3Header v3Header;
             V4Header v4Header;
             V5Header v5Header;
-        };
+        } data;
+
         uint32_t size;
         InfoHeaderVersion version;
+
+        [[nodiscard]] int32_t getHeight() const {
+            return version == core ? data.coreHeader.height : data.v3Header.height;
+        }
+
+        [[nodiscard]] int32_t getWidth() const {
+            return version == core ? data.coreHeader.width : data.v3Header.width;
+        }
+
+        void setHeight(int32_t height) {
+            version == core ? data.coreHeader.height = height : data.v3Header.height = height;
+        }
+
+        void setWidth(int32_t width) {
+            version == core ? data.coreHeader.width = width : data.v3Header.width = width;
+        }
     };
+
 #pragma pack(pop)
 
 }

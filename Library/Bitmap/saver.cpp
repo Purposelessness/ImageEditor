@@ -21,14 +21,15 @@ namespace Bitmap {
         auto fileHeader = image->getFileHeader();
         auto infoHeader = image->getInfoHeader();
 
-        fwrite(fileHeader, 1, sizeof(FileHeader), f);
-        fwrite(infoHeader, 1, sizeof(V3Header), f);
+        fwrite(fileHeader, sizeof(FileHeader), 1, f);
+        fwrite(&infoHeader->size, sizeof(uint32_t), 1, f);
+        fwrite(&infoHeader->data, infoHeader->size, 1, f);
 
-        uint32_t height = infoHeader->height;
-        uint32_t width = infoHeader->width;
+        int32_t height = infoHeader->getHeight();
+        int32_t width = infoHeader->getWidth();
 
         size_t lineSize = width * sizeof(Rgb) + width % 4;
-        for (int i = 0; i < height; ++i) {
+        for (int32_t i = 0; i < height; ++i) {
             fwrite(pixelData[i], 1, lineSize, f);
         }
 

@@ -10,13 +10,10 @@ namespace Bitmap {
     class Image : public IImage {
     public:
         Image() = default;
-        explicit Image(const FileHeader &fileHeader, const V3Header &infoHeader, Rgb **pixelData);
+        explicit Image(const FileHeader &fileHeader, const InfoHeader &infoHeader, Rgb **pixelData);
         ~Image();
 
         [[nodiscard]] bool isEmpty() const override;
-
-        void printFileHeader() const;
-        void printInfoHeader() const;
 
         void setHeight(int32_t height) override;
         void setWidth(int32_t width) override;
@@ -25,11 +22,11 @@ namespace Bitmap {
         [[nodiscard]] int32_t getHeight() const override;
         [[nodiscard]] int32_t getWidth() const override;
         FileHeader *getFileHeader();
-        V3Header *getInfoHeader();
+        InfoHeader *getInfoHeader();
 
     private:
         FileHeader fileHeader{};
-        V3Header infoHeader{};
+        InfoHeader infoHeader{};
         Rgb **pixelData = nullptr;
     };
 
