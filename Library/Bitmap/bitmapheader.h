@@ -70,6 +70,7 @@ namespace Bitmap {
 
         uint32_t size;
         InfoHeaderVersion version;
+        bool isUpsideDown = true;
 
         explicit InfoHeader(uint32_t size) : size(size) {
             switch (size) {

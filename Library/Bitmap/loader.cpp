@@ -27,11 +27,24 @@ namespace Bitmap {
         int32_t height = infoHeader.getHeight();
         int32_t width = infoHeader.getWidth();
 
+        infoHeader.isUpsideDown = height > 0;
+        if (!infoHeader.isUpsideDown) {
+            height = -height;
+            infoHeader.setHeight(-height);
+        }
+
         pixelData = new Rgb *[height];
         size_t lineSize = width * sizeof(Rgb) + width % 4;
-        for (int32_t i = 0; i < height; ++i) {
-            pixelData[i] = reinterpret_cast<Rgb *>(malloc(lineSize));
-            fread(pixelData[i], 1, lineSize, f);
+        if (infoHeader.isUpsideDown) {
+            for (int32_t i = height - 1; i > -1; --i) {
+                pixelData[i] = reinterpret_cast<Rgb *>(malloc(lineSize));
+                fread(pixelData[i], 1, lineSize, f);
+            }
+        } else {
+            for (int i = 0; i < height; ++i) {
+                pixelData[i] = reinterpret_cast<Rgb *>(malloc(lineSize));
+                fread(pixelData[i], 1, lineSize, f);
+            }
         }
 
         fclose(f);
