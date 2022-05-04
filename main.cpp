@@ -12,7 +12,8 @@ int main(int argc, char *argv[]) {
     ToolService::getInstance();
     EditorWindow w;
 
-    Tester::invertColors();
+//    Tester::invertColors();
+    Tester::paintEllipse();
 
     return QApplication::exec();
 }
