@@ -37,6 +37,7 @@ namespace Bitmap {
         uint32_t redMask;
         uint32_t greenMask;
         uint32_t blueMask;
+        uint32_t alphaMask;
         uint32_t colorSpaceType;
         int8_t endpoints[36];
         uint32_t gammaRed;
