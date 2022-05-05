@@ -4,10 +4,10 @@
 
 #include "../../../figurepoints.h"
 
-class EllipseCalculator {
+class Ellipse {
 public:
-    static FigurePoints calculateEllipse(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth = 0);
-    static FigurePoints calculateEllipseBresenham(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth = 0);
+    static FigurePoints calculate(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth = 0, bool fill = true);
+    static FigurePoints calculateBresenham(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth = 0, bool fill = false);
 
 private:
     static bool ellipseCheck(double x, double y, double a, double b);

@@ -8,6 +8,7 @@ public:
     static void loadAndSave();
     static void invertColors();
     static void paintEllipse();
+    static void paintBorderEllipse();
 };
 
 

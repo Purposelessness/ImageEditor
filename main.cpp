@@ -13,7 +13,8 @@ int main(int argc, char *argv[]) {
     EditorWindow w;
 
 //    Tester::invertColors();
-    Tester::paintEllipse();
+//    Tester::paintEllipse();
+    Tester::paintBorderEllipse();
 
     return QApplication::exec();
 }

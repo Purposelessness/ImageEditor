@@ -4,7 +4,7 @@
 #include <cmath>
 #include <cstdio>
 
-FigurePoints EllipseCalculator::calculateEllipse(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth) {
+FigurePoints Ellipse::calculate(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth, bool fillFlag) {
     const int32_t x_0 = (xLeft + xRight) / 2;
     const int32_t y_0 = (yTop + yBottom) / 2;
     const int32_t x_1 = xLeft - x_0;
@@ -14,12 +14,14 @@ FigurePoints EllipseCalculator::calculateEllipse(int32_t xLeft, int32_t yTop, in
     int32_t a = x_2, a_b = x_2 - borderWidth;
     int32_t b = y_2, b_b = y_2 - borderWidth;
 
-    const int32_t width = xRight - xLeft;
-    const int32_t height = yBottom - yTop;
+    const int32_t width = xRight - xLeft + 1;
+    const int32_t height = yBottom - yTop + 1;
 
     FigurePoints points = FigurePoints(xLeft, yTop, width, height);
 
     if (borderWidth == 0) {
+        if (!fillFlag)
+            return points;
         for (int32_t x = x_1, xi = 0; x < x_2; ++x, ++xi) {
             for (int32_t y = y_1, yi = 0; y < y_2; ++y, ++yi) {
                 if (ellipseCheck(x, y, a, b)) {
@@ -33,7 +35,8 @@ FigurePoints EllipseCalculator::calculateEllipse(int32_t xLeft, int32_t yTop, in
                 if (!ellipseCheck(x, y, a, b))
                     continue;
                 if (ellipseCheck(x, y, a_b, b_b)) {
-                    points.data[yi][xi] = fill;
+                    if (fillFlag)
+                        points.data[yi][xi] = fill;
                 } else {
                     points.data[yi][xi] = border;
                 }
@@ -44,31 +47,38 @@ FigurePoints EllipseCalculator::calculateEllipse(int32_t xLeft, int32_t yTop, in
     return points;
 }
 
-bool EllipseCalculator::ellipseCheck(double x, double y, double a, double b) {
+bool Ellipse::ellipseCheck(double x, double y, double a, double b) {
     double result = pow(x / a, 2) + pow(y / b, 2);
     return (result - 1) < EPSILON;
 }
 
-FigurePoints EllipseCalculator::calculateEllipseBresenham(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth) {
+FigurePoints Ellipse::calculateBresenham(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth, bool fillFlag) {
     const int32_t x_0 = (xLeft + xRight) / 2;
     const int32_t y_0 = (yTop + yBottom) / 2;
     const int32_t maxXR = x_0 - xLeft;
     const int32_t maxYR = y_0 - yTop;
-    const int32_t maxXR_fill = x_0 - xLeft - borderWidth;
-    const int32_t maxYR_fill = y_0 - yTop - borderWidth;
+    int32_t maxXR_fill = x_0 - xLeft - borderWidth;
+    int32_t maxYR_fill = y_0 - yTop - borderWidth;
 
-    const int32_t width = xRight - xLeft;
-    const int32_t height = yBottom - yTop;
+    const int32_t width = xRight - xLeft + 1;
+    const int32_t height = yBottom - yTop + 1;
 
     FigurePoints points = FigurePoints(xLeft, yTop, width, height);
 
-    for (int x = 1; x < maxXR_fill; ++x) {
-        for (int y = 1; y < maxYR_fill; ++y) {
-            bresenhamEllipse(&points, width / 2, height / 2, x, y, fill);
+    if (fillFlag) {
+        for (int x = 1; x < maxXR_fill; ++x) {
+            for (int y = 1; y < maxYR_fill; ++y) {
+                bresenhamEllipse(&points, width / 2, height / 2, x, y, fill);
+            }
         }
+        --maxXR_fill, --maxYR_fill;
+    } else if (borderWidth == 1) {
+        printf("%d %d\n", maxXR, maxYR);
+        bresenhamEllipse(&points, width / 2, height / 2, maxXR, maxYR, border);
+        return points;
     }
-    for (int x = maxXR_fill - 1; x < maxXR; ++x) {
-        for (int y = maxYR_fill - 1; y < maxYR; ++y) {
+    for (int x = maxXR_fill; x < maxXR; ++x) {
+        for (int y = maxYR_fill; y < maxYR; ++y) {
             bresenhamEllipse(&points, width / 2, height / 2, x, y, border);
         }
     }
@@ -96,7 +106,7 @@ FigurePoints EllipseCalculator::calculateEllipseBresenham(int32_t xLeft, int32_t
     return points;
 }
 
-void EllipseCalculator::bresenhamEllipse(FigurePoints *figurePoints, int32_t cx, int32_t cy, int32_t xr, int32_t yr, type fillType) {
+void Ellipse::bresenhamEllipse(FigurePoints *figurePoints, int32_t cx, int32_t cy, int32_t xr, int32_t yr, type fillType) {
     int32_t twoASq = 2 * xr * xr;
     int32_t twoBSq = 2 * yr * yr;
     int32_t x = xr;
@@ -143,7 +153,7 @@ void EllipseCalculator::bresenhamEllipse(FigurePoints *figurePoints, int32_t cx,
     }
 }
 
-void EllipseCalculator::addPoints(FigurePoints *points, int32_t cx, int32_t cy, int32_t x, int32_t y, type fillType) {
+void Ellipse::addPoints(FigurePoints *points, int32_t cx, int32_t cy, int32_t x, int32_t y, type fillType) {
     points->data[cy + y][cx + x] = fillType;
     points->data[cy + y][cx - x] = fillType;
     points->data[cy - y][cx + x] = fillType;
