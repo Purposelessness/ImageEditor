@@ -14,7 +14,9 @@ int main(int argc, char *argv[]) {
 
 //    Tester::invertColors();
 //    Tester::paintEllipse();
-    Tester::paintBorderEllipse();
+//    Tester::paintBorderEllipse();
+//    Tester::paintOnePixelLine();
+    Tester::paintStraightOnePixelLine();
 
     return QApplication::exec();
 }

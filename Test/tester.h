@@ -9,6 +9,8 @@ public:
     static void invertColors();
     static void paintEllipse();
     static void paintBorderEllipse();
+    static void paintOnePixelLine();
+    static void paintStraightOnePixelLine();
 };
 
 
