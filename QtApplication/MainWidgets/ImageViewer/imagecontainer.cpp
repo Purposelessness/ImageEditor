@@ -13,7 +13,7 @@ ImageContainer::ImageContainer(QWidget *parent) : QGraphicsView(parent), scene(n
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setViewportMargins(-4, -4, -4, -5);
-//    setBackgroundRole(QPalette::Mid);
+    setBackgroundRole(QPalette::Mid);
     setViewportUpdateMode(QGraphicsView::MinimalViewportUpdate);
 
     connect(scene, SIGNAL(selectionChanged()), this, SLOT(onSelectionChanged()));
@@ -57,13 +57,9 @@ void ImageContainer::resize() {
     }
 }
 
-void ImageContainer::resizeEvent(QResizeEvent *event) {
-    QGraphicsView::resizeEvent(event);
-}
-
 void ImageContainer::mousePressEvent(QMouseEvent *event) {
     if (!itemIsSelected) {
-        painter.onMousePressed(mapToScene(event->pos()).toPoint());
+        painter.onMousePressed(pixmapItem->mapFromScene(mapToScene(event->pos())).toPoint());
     } else if (selectedItem != nullptr && selectedItem != itemAt(event->pos())) {
         selectedItem->setSelected(false);
     }
@@ -72,27 +68,27 @@ void ImageContainer::mousePressEvent(QMouseEvent *event) {
 
 void ImageContainer::mouseMoveEvent(QMouseEvent *event) {
     if (!itemIsSelected)
-        Painter::onMouseMoved(mapToScene(event->pos()).toPoint());
+        Painter::onMouseMoved(pixmapItem->mapFromScene(mapToScene(event->pos())).toPoint());
     QGraphicsView::mouseMoveEvent(event);
     scene->update();
 }
 
 void ImageContainer::mouseReleaseEvent(QMouseEvent *event) {
     if (!itemIsSelected)
-        Painter::onMouseReleased(mapToScene(event->pos()).toPoint());
+        Painter::onMouseReleased(pixmapItem->mapFromScene(mapToScene(event->pos())).toPoint());
     QGraphicsView::mouseReleaseEvent(event);
 }
 
 void ImageContainer::mapItemToPixmap(QGraphicsItem *item) {
-    bool ok = true;
-    auto transform = item->itemTransform(pixmapItem, &ok);
-    if (!ok) {
-        // TODO: error handling
-        delete item;
-        qCritical(ui()) << "Cannot transform graphics item to pixmap item";
-        return;
-    }
-    item->setTransform(transform);
+//    bool ok = true;
+//    auto transform = item->itemTransform(pixmapItem, &ok);
+//    if (!ok) {
+//        // TODO: error handling
+//        delete item;
+//        qCritical(ui()) << "Cannot transform graphics item to pixmap item";
+//        return;
+//    }
+//    item->setTransform(transform);
     item->setParentItem(pixmapItem);
 }
 
@@ -151,4 +147,8 @@ void ImageContainer::focusOn(const QGraphicsItem *item) {
 
 QGraphicsItem *ImageContainer::getFocusItem() {
     return focusItem;
+}
+
+float ImageContainer::getScaleValue() const {
+    return scaleValue;
 }

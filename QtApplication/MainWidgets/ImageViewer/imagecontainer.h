@@ -21,6 +21,7 @@ public:
     QPixmap grab(const QRect &rect) override;
     void focusOn(const QGraphicsItem *item) override;
     QGraphicsItem *getFocusItem() override;
+    [[nodiscard]] float getScaleValue() const override;
 
 signals:
     void mousePressed(const QPoint &mousePos);
@@ -34,7 +35,6 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
-    void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void onSelectionChanged();

@@ -11,6 +11,7 @@ class QPoint;
 
 class IGraphicsView {
 public:
+    virtual float getScaleValue() const = 0;
     virtual void addItem(QGraphicsItem *item) = 0;
     virtual QGraphicsScene *getScene() = 0;
     virtual QGraphicsPixmapItem *getPixmapItem() = 0;
