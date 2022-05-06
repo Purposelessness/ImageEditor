@@ -10,7 +10,8 @@ public:
     static void paintEllipse();
     static void paintBorderEllipse();
     static void paintOnePixelLine();
-    static void paintStraightOnePixelLine();
+    static void paintSimpleLines();
+    static void paintComplexLines();
 };
 
 

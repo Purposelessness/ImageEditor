@@ -85,7 +85,7 @@ void Tester::paintOnePixelLine() {
     Bitmap::Saver::save(&bmp, dest);
 }
 
-void Tester::paintStraightOnePixelLine() {
+void Tester::paintSimpleLines() {
     Bitmap::Image bmp = Bitmap::Loader::load(src);
     int32_t width = bmp.getWidth();
     int32_t height = bmp.getHeight();
@@ -98,6 +98,19 @@ void Tester::paintStraightOnePixelLine() {
     Painter::start(&bmp, line2, Rgb{190, 60, 60}, Rgb{60, 70, 190});
     auto line3 = Calculator::calculateLine(width, 0, width, height, 10);
     Painter::start(&bmp, line3, Rgb{190, 60, 60}, Rgb{60, 70, 190});
+
+    Bitmap::Saver::save(&bmp, dest);
+}
+
+void Tester::paintComplexLines() {
+    Bitmap::Image bmp = Bitmap::Loader::load(src);
+    int32_t width = bmp.getWidth();
+    int32_t height = bmp.getHeight();
+
+    auto line = Calculator::calculateLine(10, 100, width - 10, 500, 50);
+    Painter::start(&bmp, line, Rgb{190, 60, 60}, Rgb{60, 70, 190});
+    auto line1 = Calculator::calculateLine(10, 500, width - 10, 100, 50);
+    Painter::start(&bmp, line1, Rgb{190, 60, 60}, Rgb{60, 70, 190});
 
     Bitmap::Saver::save(&bmp, dest);
 }

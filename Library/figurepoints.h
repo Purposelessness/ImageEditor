@@ -7,7 +7,8 @@
 enum Type {
     none,
     fill,
-    border
+    border,
+    unknown
 };
 
 struct FigurePoints {

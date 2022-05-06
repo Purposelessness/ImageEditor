@@ -9,7 +9,7 @@ FigurePoints Line::calculate(int32_t x_0_r, int32_t y_0_r, int32_t x_1_r, int32_
     int32_t x0 = x_0_r < x_1_r ? x_0_r : x_1_r;
     int32_t x1 = x_0_r > x_1_r ? x_0_r : x_1_r;
     int32_t y0 = y_0_r < y_1_r ? y_0_r : y_1_r;
-    int32_t y1 = y_0_r > y_1_r ? y_0_r : y_1_r;
+    int32_t y1 = y_0_r < y_1_r ? y_1_r : y_0_r;
 
     if (borderWidth == 1) {
         FigurePoints points{x0, y0, width + 1, height + 1};
@@ -19,7 +19,6 @@ FigurePoints Line::calculate(int32_t x_0_r, int32_t y_0_r, int32_t x_1_r, int32_
     }
 
     auto d = borderWidth / 2.0;
-    int r = borderWidth % 2;
     auto dint = static_cast<int32_t>(d);
 
     if (width == 0) {
@@ -42,13 +41,50 @@ FigurePoints Line::calculate(int32_t x_0_r, int32_t y_0_r, int32_t x_1_r, int32_
 
     auto a = static_cast<double>(width);
     auto b = static_cast<double>(height);
-    auto c = lineLength(x_0_r, y_0_r, x_1_r, y_1_r);
-    auto sinA = b / c;
-    auto cosA = a / c;
-    auto xShift = static_cast<int32_t>(d * sinA);
-    auto yShift = static_cast<int32_t>(d * cosA);
+    double c = lineLength(x0, y0, x1, y1);
+    double sinA = b / c;
+    double cosA = a / c;
+    auto dSinA = static_cast<int32_t>(round(d * sinA));
+    auto dCosA = static_cast<int32_t>(round(d * cosA));
 
-    return {0, 0, 0, 0};
+    printf("%d %d %d %d\n", x0, y0, width, height);
+    printf("%f\n", d);
+    printf("%f %f %f %f %d %d\n", a, b, sinA, cosA, dSinA, dCosA);
+    puts("");
+
+    int32_t xl, xr, yt, yb, x2, x3, y2, y3;
+    xl = x0 - dSinA;
+    xr = x1 + dSinA;
+    yt = y0 - dCosA;
+    yb = y1 + dCosA;
+    width = xr - xl;
+    height = yb - yt;
+    FigurePoints points{xl, yt, width + 1, height + 1};
+
+    x0 = 0;
+    x1 = dSinA * 2;
+    x2 = width;
+    x3 = width - dSinA * 2;
+    y0 = 2 * dCosA;
+    y1 = 0;
+    y2 = height - dCosA * 2;
+    y3 = height;
+
+    printf("(%d %d) (%d %d) (%d %d) (%d %d)\n", x0, y0, x1, y1, x2, y2, x3, y3);
+
+    if (y_1_r > y_0_r) {
+        bresenhamAlgorithm(&points, x0, x1, y0, y1);
+        bresenhamAlgorithm(&points, x1, x2, y1, y2);
+        bresenhamAlgorithm(&points, x2, x3, y2, y3);
+        bresenhamAlgorithm(&points, x3, x0, y3, y0);
+    } else {
+        bresenhamAlgorithm(&points, x0, x1, y2, y3);
+        bresenhamAlgorithm(&points, x1, x2, y3, y0);
+        bresenhamAlgorithm(&points, x2, x3, y0, y1);
+        bresenhamAlgorithm(&points, x3, x0, y1, y2);
+    }
+
+    return points;
 }
 
 void Line::bresenhamAlgorithm(FigurePoints *points, int32_t x_0, int32_t x_1, int32_t y_0, int32_t y_1) {
