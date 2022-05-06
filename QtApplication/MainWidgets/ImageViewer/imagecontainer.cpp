@@ -80,22 +80,24 @@ void ImageContainer::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 void ImageContainer::mapItemToPixmap(QGraphicsItem *item) {
-//    bool ok = true;
-//    auto transform = item->itemTransform(pixmapItem, &ok);
-//    if (!ok) {
-//        // TODO: error handling
-//        delete item;
-//        qCritical(ui()) << "Cannot transform graphics item to pixmap item";
-//        return;
-//    }
-//    item->setTransform(transform);
-    item->setParentItem(pixmapItem);
+    if (!pixmapItem)
+        return;
+    bool ok = true;
+    auto transform = item->itemTransform(pixmapItem, &ok);
+    if (!ok) {
+        // TODO: error handling
+        delete item;
+        qCritical(ui()) << "Cannot transform graphics item to pixmap item";
+        return;
+    }
+    item->setTransform(transform);
 }
 
 void ImageContainer::addItem(QGraphicsItem *item) {
     scene->addItem(item);
     item->installSceneEventFilter(&eventFilter);
-    mapItemToPixmap(item);
+    if (pixmapItem)
+        item->setParentItem(pixmapItem);
 }
 
 QGraphicsScene *ImageContainer::getScene() {
