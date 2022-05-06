@@ -1,4 +1,5 @@
 #include "line.h"
+#include "../../FloodFiller/floodfiller.h"
 
 #include <cmath>
 #include <cstdio>
@@ -47,11 +48,6 @@ FigurePoints Line::calculate(int32_t x_0_r, int32_t y_0_r, int32_t x_1_r, int32_
     auto dSinA = static_cast<int32_t>(round(d * sinA));
     auto dCosA = static_cast<int32_t>(round(d * cosA));
 
-    printf("%d %d %d %d\n", x0, y0, width, height);
-    printf("%f\n", d);
-    printf("%f %f %f %f %d %d\n", a, b, sinA, cosA, dSinA, dCosA);
-    puts("");
-
     int32_t xl, xr, yt, yb, x2, x3, y2, y3;
     xl = x0 - dSinA;
     xr = x1 + dSinA;
@@ -70,8 +66,6 @@ FigurePoints Line::calculate(int32_t x_0_r, int32_t y_0_r, int32_t x_1_r, int32_
     y2 = height - dCosA * 2;
     y3 = height;
 
-    printf("(%d %d) (%d %d) (%d %d) (%d %d)\n", x0, y0, x1, y1, x2, y2, x3, y3);
-
     if (y_1_r > y_0_r) {
         bresenhamAlgorithm(&points, x0, x1, y0, y1);
         bresenhamAlgorithm(&points, x1, x2, y1, y2);
@@ -83,6 +77,8 @@ FigurePoints Line::calculate(int32_t x_0_r, int32_t y_0_r, int32_t x_1_r, int32_
         bresenhamAlgorithm(&points, x2, x3, y0, y1);
         bresenhamAlgorithm(&points, x3, x0, y1, y2);
     }
+
+    FloodFiller::start(&points, border, border);
 
     return points;
 }
