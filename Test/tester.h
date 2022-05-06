@@ -13,6 +13,7 @@ public:
     static void paintSimpleLines();
     static void paintComplexLines();
     static void paintTriangle();
+    static void invertDifferentImages();
 };
 
 

@@ -1,7 +1,5 @@
 #include "image.h"
 
-#include <cstdio>
-
 namespace Bitmap {
 
     Image::Image(const Bitmap::FileHeader &fileHeader, const Bitmap::InfoHeader &infoHeader,
@@ -42,6 +40,20 @@ namespace Bitmap {
 
     void Image::setWidth(int32_t width) {
         infoHeader.setWidth(width);
+    }
+
+    Image::Image(const Image &other) {
+        fileHeader = other.fileHeader;
+        infoHeader = other.infoHeader;
+        int32_t width = other.getWidth();
+        int32_t height = other.getHeight();
+        pixelData = new Rgb *[height];
+        for (int32_t y = 0; y < height; ++y) {
+            pixelData[y] = new Rgb[width];
+            for (int32_t x = 0; x < width; ++x) {
+                pixelData[y][x] = other.pixelData[y][x];
+            }
+        }
     }
 
 }

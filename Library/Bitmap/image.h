@@ -10,6 +10,7 @@ namespace Bitmap {
     class Image : public IImage {
     public:
         Image() = default;
+        Image(const Image &other);
         explicit Image(const FileHeader &fileHeader, const InfoHeader &infoHeader, Rgb **pixelData);
         ~Image();
 

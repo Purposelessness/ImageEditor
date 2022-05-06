@@ -127,3 +127,14 @@ void Tester::paintTriangle() {
 
     Bitmap::Saver::save(&bmp, dest);
 }
+
+void Tester::invertDifferentImages() {
+    Bitmap::Image bmp = Bitmap::Loader::load(src);
+    Bitmap::Image srcBmp = bmp;
+    int32_t width = bmp.getWidth();
+    int32_t height = bmp.getHeight();
+
+    auto ellipse = Calculator::ellipse(width / 2, -10, width - 100, height / 2);
+    ColorInverter::start(&bmp, Point{20, height / 2}, &srcBmp, ellipse);
+    Bitmap::Saver::save(&bmp, dest);
+}
