@@ -1,5 +1,5 @@
-#ifndef IMAGEEDITOR_ELLIPSECALCULATOR_H
-#define IMAGEEDITOR_ELLIPSECALCULATOR_H
+#ifndef IMAGEEDITOR_ELLIPSE_H
+#define IMAGEEDITOR_ELLIPSE_H
 
 
 #include "../../../figurepoints.h"
@@ -16,4 +16,4 @@ private:
 };
 
 
-#endif //IMAGEEDITOR_ELLIPSECALCULATOR_H
+#endif //IMAGEEDITOR_ELLIPSE_H

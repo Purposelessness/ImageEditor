@@ -17,7 +17,8 @@ int main(int argc, char *argv[]) {
 //    Tester::paintBorderEllipse();
 //    Tester::paintOnePixelLine();
 //    Tester::paintSimpleLines();
-    Tester::paintComplexLines();
+//    Tester::paintComplexLines();
+    Tester::paintTriangle();
 
     return QApplication::exec();
 }

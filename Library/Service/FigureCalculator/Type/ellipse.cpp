@@ -1,4 +1,4 @@
-#include "ellipsecalculator.h"
+#include "ellipse.h"
 #include "../constants.h"
 
 #include <cmath>

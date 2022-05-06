@@ -34,7 +34,7 @@ void Tester::invertColors() {
     y_0 = 0;
     y = height * 1.5;
 
-    auto ellipse = Calculator::calculateEllipse(x_0, y_0, x, y);
+    auto ellipse = Calculator::ellipse(x_0, y_0, x, y);
     ColorInverter::start(&bmp, ellipse);
     Bitmap::Saver::save(&bmp, dest);
 }
@@ -49,7 +49,7 @@ void Tester::paintEllipse() {
     y_0 = 0;
     y = height * 1.5;
 
-    auto ellipse = Calculator::calculateEllipse(x_0, y_0, x, y, 1);
+    auto ellipse = Calculator::ellipse(x_0, y_0, x, y, 1);
     Painter::start(&bmp, ellipse, Rgb{190, 60, 60}, Rgb{60, 70, 190});
     Bitmap::Saver::save(&bmp, dest);
 }
@@ -64,7 +64,7 @@ void Tester::paintBorderEllipse() {
     y_0 = 0;
     y = height * 1.5;
 
-    auto ellipse = Calculator::calculateEllipse(x_0, y_0, x, y, 1, false);
+    auto ellipse = Calculator::ellipse(x_0, y_0, x, y, 1, false);
     Painter::start(&bmp, ellipse, Rgb{190, 60, 60}, Rgb{60, 70, 190});
     Bitmap::Saver::save(&bmp, dest);
 }
@@ -80,7 +80,7 @@ void Tester::paintOnePixelLine() {
     y = height;
 
     printf("Line\n");
-    auto line = Calculator::calculateLine(x_0, y_0, x, y, 1);
+    auto line = Calculator::line(x_0, y_0, x, y, 1);
     Painter::start(&bmp, line, Rgb{190, 60, 60}, Rgb{60, 70, 190});
     Bitmap::Saver::save(&bmp, dest);
 }
@@ -90,13 +90,13 @@ void Tester::paintSimpleLines() {
     int32_t width = bmp.getWidth();
     int32_t height = bmp.getHeight();
 
-    auto line = Calculator::calculateLine(0, 0, width - 1, height - 1, 1);
+    auto line = Calculator::line(0, 0, width - 1, height - 1, 1);
     Painter::start(&bmp, line, Rgb{190, 60, 60}, Rgb{60, 70, 190});
-    auto line1 = Calculator::calculateLine(width / 2, 0, width / 2, height - 1, 1);
+    auto line1 = Calculator::line(width / 2, 0, width / 2, height - 1, 1);
     Painter::start(&bmp, line1, Rgb{190, 60, 60}, Rgb{60, 70, 190});
-    auto line2 = Calculator::calculateLine(0, 10, width, 10, 3);
+    auto line2 = Calculator::line(0, 10, width, 10, 3);
     Painter::start(&bmp, line2, Rgb{190, 60, 60}, Rgb{60, 70, 190});
-    auto line3 = Calculator::calculateLine(width, 0, width, height, 10);
+    auto line3 = Calculator::line(width, 0, width, height, 10);
     Painter::start(&bmp, line3, Rgb{190, 60, 60}, Rgb{60, 70, 190});
 
     Bitmap::Saver::save(&bmp, dest);
@@ -107,10 +107,23 @@ void Tester::paintComplexLines() {
     int32_t width = bmp.getWidth();
     int32_t height = bmp.getHeight();
 
-    auto line = Calculator::calculateLine(10, 100, width - 10, 500, 50);
+    auto line = Calculator::line(10, 100, width - 10, 500, 50);
     Painter::start(&bmp, line, Rgb{190, 60, 60}, Rgb{60, 70, 190});
-    auto line1 = Calculator::calculateLine(10, 500, width - 10, 100, 50);
+    auto line1 = Calculator::line(10, 500, width - 10, 100, 50);
     Painter::start(&bmp, line1, Rgb{190, 60, 60}, Rgb{60, 70, 190});
+
+    Bitmap::Saver::save(&bmp, dest);
+}
+
+void Tester::paintTriangle() {
+    Bitmap::Image bmp = Bitmap::Loader::load(src);
+    int32_t width = bmp.getWidth();
+    int32_t height = bmp.getHeight();
+
+    auto triangle = Calculator::triangle(50, 50, width / 2, 55, 3);
+    Painter::start(&bmp, triangle, Rgb{190, 60, 60}, Rgb{60, 70, 190});
+    auto triangle1 = Calculator::triangle(width / 2 + 50, 50, width - 50, height / 2, 3);
+    Painter::start(&bmp, triangle1, Rgb{190, 60, 60}, Rgb{60, 70, 190});
 
     Bitmap::Saver::save(&bmp, dest);
 }

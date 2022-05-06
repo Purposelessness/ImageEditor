@@ -2,7 +2,6 @@
 #include "../../FloodFiller/floodfiller.h"
 
 #include <cmath>
-#include <cstdio>
 
 FigurePoints Line::calculate(int32_t x_0_r, int32_t y_0_r, int32_t x_1_r, int32_t y_1_r, int32_t borderWidth) {
     int32_t width = abs(x_1_r - x_0_r);

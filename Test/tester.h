@@ -12,6 +12,7 @@ public:
     static void paintOnePixelLine();
     static void paintSimpleLines();
     static void paintComplexLines();
+    static void paintTriangle();
 };
 
 
