@@ -15,7 +15,7 @@ void Painter::start(IImage *image, const FigurePoints &points, const Rgb &fillCo
 
     for (int32_t y = 0; y < height; ++y) {
         for (int32_t x = 0; x < width; ++x) {
-            if (points.data[y][x] == none)
+            if (points.data[y][x] != fill && points.data[y][x] != border)
                 continue;
 
             int32_t xImage = points.x + x;
@@ -50,7 +50,7 @@ void Painter::start(IImage *image, const std::vector<Point> &points, const Rgb &
 
     for (size_t i = 0; i < len; ++i) {
         auto point = points.at(i);
-        if (point.type == none)
+        if (point.type != fill && point.type != border)
             continue;
 
         int32_t xImage = point.x;

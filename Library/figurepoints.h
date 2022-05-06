@@ -5,10 +5,10 @@
 #include <cstdint>
 
 enum Type {
+    unknown,
     none,
     fill,
-    border,
-    unknown
+    border
 };
 
 struct FigurePoints {

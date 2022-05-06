@@ -16,7 +16,7 @@ void ColorInverter::start(IImage *image, const FigurePoints &points) {
 
     for (int32_t y = 0; y < height; ++y) {
         for (int32_t x = 0; x < width; ++x) {
-            if (points.data[y][x] == none)
+            if (points.data[y][x] != fill)
                 continue;
 
             int32_t xImage = points.x + x;

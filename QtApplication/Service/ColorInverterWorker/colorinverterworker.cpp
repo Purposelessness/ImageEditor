@@ -28,7 +28,7 @@ void ColorInverterWorker::invertColors(const TaskInput &input) {
             if (input.points.contains(x, y)) {
                 int xRect = x - input.points.x;
                 int yRect = y - input.points.y;
-                if (input.points.data[yRect][xRect] != none) {
+                if (input.points.data[yRect][xRect] == fill) {
                     QRgb pixel = input.srcImage.pixel(x, y);
                     pixel = mask - pixel;
                     pixel += opaque;
