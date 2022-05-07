@@ -124,22 +124,62 @@ QGraphicsPixmapItem *ImageContainer::getPixmapItem() {
     return pixmapItem;
 }
 
-QPixmap ImageContainer::grab(const QRect &rect) {
+QPixmap ImageContainer::grab(QRect *rect) {
     if (focusItem) {
         qreal x_0_f, y_0_f, w_f, h_f;
         int x_0_r, y_0_r, w_r, h_r;
         auto focusItemRect = focusItem->mapToScene(focusItem->boundingRect()).boundingRect();
         focusItemRect.getRect(&x_0_f, &y_0_f, &w_f, &h_f);
-        rect.getRect(&x_0_r, &y_0_r, &w_r, &h_r);
+        rect->getRect(&x_0_r, &y_0_r, &w_r, &h_r);
         int x_0 = static_cast<int>(x_0_r - x_0_f);
         int y_0 = static_cast<int>(y_0_r - y_0_f);
-        int w = rect.width();
-        int h = rect.height();
+        int w = rect->width();
+        int h = rect->height();
         auto imageRect = QRect(x_0, y_0, w, h);
+
+        fitRectToFocus(&imageRect);
+
+        rect->setRect(imageRect.left() + static_cast<int>(x_0_f), imageRect.top() + static_cast<int>(y_0_f),
+                      imageRect.width(), imageRect.height());
 
         return QGraphicsView::grab(imageRect);
     }
-    return QGraphicsView::grab(rect);
+    fitRectToScene(rect);
+
+    return QGraphicsView::grab(*rect);
+}
+
+void ImageContainer::fitRectToScene(QRect *rect) const {
+    int x0, y0, width, height;
+    auto sceneWidth = scene->sceneRect().width();
+    auto sceneHeight = scene->sceneRect().height();
+    x0 = rect->left() < 0 ? 0 : rect->left();
+    y0 = rect->top() < 0 ? 0 : rect->top();
+    auto widthDiff = static_cast<int>(sceneWidth - x0);
+    auto heightDiff = static_cast<int>(sceneHeight - y0);
+    auto newRectWidth = rect->right() - x0 + 1;
+    auto newRectHeight = rect->bottom() - y0 + 1;
+    width = newRectWidth < widthDiff ? newRectWidth : widthDiff;
+    height = newRectHeight < heightDiff ? newRectHeight : heightDiff;
+    rect->setRect(x0, y0, width, height);
+}
+
+void ImageContainer::fitRectToFocus(QRect *rect) const {
+    if (!focusItem)
+        return;
+    auto focusItemRect = focusItem->mapToScene(focusItem->boundingRect()).boundingRect().toRect();
+    int x0, y0, width, height;
+    auto focusWidth = focusItemRect.width();
+    auto focusHeight = focusItemRect.height();
+    x0 = rect->left() < 0 ? 0 : rect->left();
+    y0 = rect->top() < 0 ? 0 : rect->top();
+    auto widthDiff = static_cast<int>(focusWidth - x0);
+    auto heightDiff = static_cast<int>(focusHeight - y0);
+    auto newRectWidth = rect->right() - x0 + 1;
+    auto newRectHeight = rect->bottom() - y0 + 1;
+    width = newRectWidth < widthDiff ? newRectWidth : widthDiff;
+    height = newRectHeight < heightDiff ? newRectHeight : heightDiff;
+    rect->setRect(x0, y0, width, height);
 }
 
 void ImageContainer::focusOn(const QGraphicsItem *item) {

@@ -18,10 +18,12 @@ public:
     void addItem(QGraphicsItem *item) override;
     QGraphicsScene *getScene() override;
     QGraphicsPixmapItem *getPixmapItem() override;
-    QPixmap grab(const QRect &rect) override;
+    QPixmap grab(QRect *rect) override;
     void focusOn(const QGraphicsItem *item) override;
     QGraphicsItem *getFocusItem() override;
     [[nodiscard]] float getScaleValue() const override;
+    void fitRectToScene(QRect *rect) const;
+    void fitRectToFocus(QRect *rect) const;
 
 signals:
     void mousePressed(const QPoint &mousePos);

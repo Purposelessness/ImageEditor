@@ -18,16 +18,19 @@ void EllipseColorInverter::marqueePaintedEvent(const QPainterPath &path) {
     auto pixmapItem = new EllipsePixmapItem();
     graphicsView->addItem(pixmapItem);
 
-    auto sceneRect = path.boundingRect();
-    auto itemRect = pixmapItem->mapFromScene(path).boundingRect().toRect();
+    auto sceneRect = path.boundingRect().toRect();
+
+    int x0 = sceneRect.left();
+    int y0 = sceneRect.top();
+    FigurePoints points = Calculator::ellipse(0, 0, sceneRect.width(),sceneRect.height());
+    auto image = graphicsView->grab(&sceneRect).toImage();
+    points.x = x0 - sceneRect.left();
+    points.y = y0 - sceneRect.top();
+
+    auto itemRect = pixmapItem->mapFromScene(sceneRect).boundingRect().toRect();
     auto itemPos = itemRect.topLeft();
     auto parentPos = pixmapItem->mapToParent(itemPos);
     pixmapItem->setPos(parentPos);
-
-    auto grabRect = QRect(static_cast<int>(sceneRect.left()), static_cast<int>(sceneRect.top()),
-                          static_cast<int>(sceneRect.width()), static_cast<int>(sceneRect.height()));
-    FigurePoints points = Calculator::ellipse(0, 0, grabRect.width(), grabRect.height());
-    auto image = graphicsView->grab(grabRect).toImage();
 
     auto newImage = ColorInverterWorker::start(points, image);
 
