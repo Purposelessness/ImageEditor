@@ -18,7 +18,6 @@ public:
 
 private slots:
     void openImage();
-    void loadImage(const QString& fileName);
     void saveImage();
     void showDock();
 

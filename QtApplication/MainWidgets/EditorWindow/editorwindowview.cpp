@@ -15,7 +15,11 @@ EditorWindowView::EditorWindowView(QWidget *parent) : QMainWindow(parent), image
 void EditorWindowView::createActions() {
     auto fileMenu = menuBar()->addMenu(tr("&File"));
 
-    fileMenu->addAction(tr("&Open"), this, SLOT(onOpenActionTriggered()));
+    useLibAct = new QAction(tr("Use lib"));
+    useLibAct->setCheckable(true);
+    fileMenu->addAction(useLibAct);
+    auto open = fileMenu->addAction(tr("&Open"), this, SLOT(onOpenActionTriggered()));
+    open->setShortcut(Qt::CTRL | Qt::Key_O);
     auto save = fileMenu->addAction(tr("Save As"), this, SLOT(onSaveActionTriggered()));
     save->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_S);
 

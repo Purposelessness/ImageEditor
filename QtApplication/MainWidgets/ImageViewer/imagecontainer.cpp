@@ -85,7 +85,6 @@ void ImageContainer::mapItemToPixmap(QGraphicsItem *item) {
     bool ok = true;
     auto transform = item->itemTransform(pixmapItem, &ok);
     if (!ok) {
-        // TODO: error handling
         delete item;
         qCritical(ui()) << "Cannot transform graphics item to pixmap item";
         return;
@@ -125,6 +124,11 @@ QGraphicsPixmapItem *ImageContainer::getPixmapItem() {
 }
 
 QPixmap ImageContainer::grab(QRect *rect) {
+    if (!rect) {
+        return QGraphicsView::grab(
+                QRect{0, 0, static_cast<int>(sceneRect().width()), static_cast<int>(sceneRect().height())});
+    }
+
     if (focusItem) {
         qreal x_0_f, y_0_f, w_f, h_f;
         int x_0_r, y_0_r, w_r, h_r;
@@ -151,8 +155,8 @@ QPixmap ImageContainer::grab(QRect *rect) {
 
 void ImageContainer::fitRectToScene(QRect *rect) const {
     int x0, y0, width, height;
-    auto sceneWidth = scene->sceneRect().width();
-    auto sceneHeight = scene->sceneRect().height();
+    auto sceneWidth = sceneRect().width();
+    auto sceneHeight = sceneRect().height();
     x0 = rect->left() < 0 ? 0 : rect->left();
     y0 = rect->top() < 0 ? 0 : rect->top();
     auto widthDiff = static_cast<int>(sceneWidth - x0);

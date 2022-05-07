@@ -34,6 +34,8 @@ private:
     ImageViewer *imageViewer;
     ToolBar *toolBar;
     ToolDock *toolDock;
+
+    QAction *useLibAct = nullptr;
 };
 
 #endif //IMAGEEDITOR_EDITORWINDOWVIEW_H
