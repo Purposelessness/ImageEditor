@@ -22,7 +22,7 @@ protected:
     QGraphicsItem *startDrawing(const Coordinates &coordinates) override;
     void onDrawing(const Coordinates &coordinates) override;
     void finishDrawing(const Coordinates &coordinates) override;
-    void addCommand() override;
+    void addCommand(const Coordinates &coordinates) override;
 
 private:
     QPen pen = QPen();

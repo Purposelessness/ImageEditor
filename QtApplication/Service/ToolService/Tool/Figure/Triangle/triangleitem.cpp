@@ -17,16 +17,17 @@ void TriangleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 }
 
 QRectF TriangleItem::boundingRect() const {
-    auto rect = MarqueeItem::boundingRect();
-    auto correctRect = rect;
-    qreal penWidth = pen().widthF() * 1.5;
-    qreal top, right, bottom, left;
-    rect.getCoords(&left, &top, &right, &bottom);
-    correctRect.setTop(top - penWidth);
-    correctRect.setRight(right + penWidth);
-    correctRect.setBottom(bottom + penWidth);
-    correctRect.setLeft(left - penWidth);
-    return correctRect;
+    return shape().boundingRect();
+//    auto rect = MarqueeItem::boundingRect();
+//    auto correctRect = rect;
+//    qreal penWidth = pen().widthF() * 1.5;
+//    qreal top, right, bottom, left;
+//    rect.getCoords(&left, &top, &right, &bottom);
+//    correctRect.setTop(top - penWidth);
+//    correctRect.setRight(right + penWidth);
+//    correctRect.setBottom(bottom + penWidth);
+//    correctRect.setLeft(left - penWidth);
+//    return correctRect;
 }
 
 void TriangleItem::setRect(const QRectF &newRect) {

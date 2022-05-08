@@ -39,7 +39,7 @@ template<typename T>
 void ShapeModel<T>::finishDrawing(const Coordinates &coordinates) {
     item->setRect(normalizeRect(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y));
     FigureModel::finishDrawing(coordinates);
-    addCommand();
+    addCommand(coordinates);
     item = nullptr;
 }
 
@@ -105,8 +105,29 @@ FigureData ShapeModel<T>::getData() const {
 }
 
 template<typename T>
-void ShapeModel<T>::addCommand() {
-    auto rect = item->mapToParent(item->boundingRect()).boundingRect().toRect();
+void ShapeModel<T>::addCommand(const Coordinates &coordinates) {
+    auto rect = QRect();
+    int x1r, y1r, x2r, y2r;
+    x1r = static_cast<int>(coordinates.x_0);
+    y1r = static_cast<int>(coordinates.y_0);
+    x2r = static_cast<int>(coordinates.x);
+    y2r = static_cast<int>(coordinates.y);
+    int x1, x2, y1, y2;
+    if (x1r < x2r) {
+        x1 = x1r;
+        x2 = x2r;
+    } else {
+        x1 = x2r;
+        x2 = x1r;
+    }
+    if (y1r < y2r) {
+        y1 = y1r;
+        y2 = y2r;
+    } else {
+        y1 = y2r;
+        y2 = y1r;
+    }
+    rect.setCoords(x1, y1, x2, y2);
     auto borderColor = pen.color().isValid() && pen.color().alpha() > 0 ? pen.color() : QColor();
     auto fillColor = brush.style() != Qt::NoBrush ? brush.color() : QColor();
     auto dataThickness = borderColor.isValid() ? thickness : 0;
