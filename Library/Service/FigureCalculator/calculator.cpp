@@ -4,14 +4,7 @@
 #include "Type/triangle.h"
 
 FigurePoints Calculator::ellipse(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth, bool fill) {
-    if (!fill) {
-        return Ellipse::calculateBresenham(xLeft, yTop, xRight, yBottom, borderWidth, fill);
-    }
     return Ellipse::calculate(xLeft, yTop, xRight, yBottom, borderWidth, fill);
-}
-
-FigurePoints Calculator::ellipseBresenham(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth, bool fill) {
-    return Ellipse::calculateBresenham(xLeft, yTop, xRight, yBottom, borderWidth, fill);
 }
 
 FigurePoints Calculator::triangle(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth, bool fill) {

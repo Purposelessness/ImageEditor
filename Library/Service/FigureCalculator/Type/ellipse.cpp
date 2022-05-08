@@ -1,107 +1,33 @@
 #include "ellipse.h"
 #include "../constants.h"
+#include "../../FloodFiller/floodfiller.h"
 
 #include <cmath>
 #include <cstdio>
 
 FigurePoints Ellipse::calculate(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth, bool fillFlag) {
-    const int32_t x_0 = (xLeft + xRight) / 2;
-    const int32_t y_0 = (yTop + yBottom) / 2;
-    const int32_t x_1 = xLeft - x_0;
-    const int32_t x_2 = xRight - x_0;
-    const int32_t y_1 = yTop - y_0;
-    const int32_t y_2 = yBottom - y_0;
-    int32_t a = x_2, a_b = x_2 - borderWidth;
-    int32_t b = y_2, b_b = y_2 - borderWidth;
+    int32_t d = borderWidth / 2;
 
-    const int32_t width = xRight - xLeft + 1;
-    const int32_t height = yBottom - yTop + 1;
+    int32_t xl = xLeft - d;
+    int32_t yt = yTop - d;
+    int32_t xr = xRight + d;
+    int32_t yb = yBottom + d;
+    int32_t width = xr - xl;
+    int32_t height = yb - yt;
+    FigurePoints points{xl, yt, width + 1, height + 1};
 
-    FigurePoints points = FigurePoints(xLeft, yTop, width, height);
+    int32_t x0 = width / 2;
+    int32_t y0 = height / 2;
+    int32_t rxo = x0;
+    int32_t ryo = y0;
+    int32_t rxi = x0 - borderWidth;
+    int32_t ryi = y0 - borderWidth;
 
-    if (borderWidth == 0) {
-        if (!fillFlag)
-            return points;
-        for (int32_t x = x_1, xi = 0; x < x_2; ++x, ++xi) {
-            for (int32_t y = y_1, yi = 0; y < y_2; ++y, ++yi) {
-                if (ellipseCheck(x, y, a, b)) {
-                    points.data[yi][xi] = FillType::fill;
-                }
-            }
-        }
-    } else {
-        for (int32_t x = x_1, xi = 0; x < x_2; ++x, ++xi) {
-            for (int32_t y = y_1, yi = 0; y < y_2; ++y, ++yi) {
-                if (!ellipseCheck(x, y, a, b))
-                    continue;
-                if (ellipseCheck(x, y, a_b, b_b)) {
-                    if (fillFlag)
-                        points.data[yi][xi] = FillType::fill;
-                } else {
-                    points.data[yi][xi] = FillType::border;
-                }
-            }
-        }
-    }
+    bresenhamEllipse(&points, x0, y0, rxo, ryo);
+    bresenhamEllipse(&points, x0, y0, rxi, ryi);
 
-    return points;
-}
-
-bool Ellipse::ellipseCheck(double x, double y, double a, double b) {
-    double result = pow(x / a, 2) + pow(y / b, 2);
-    return (result - 1) < EPSILON;
-}
-
-FigurePoints Ellipse::calculateBresenham(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth, bool fillFlag) {
-    const int32_t x_0 = (xLeft + xRight) / 2;
-    const int32_t y_0 = (yTop + yBottom) / 2;
-    const int32_t maxXR = x_0 - xLeft;
-    const int32_t maxYR = y_0 - yTop;
-    int32_t maxXR_fill = x_0 - xLeft - borderWidth;
-    int32_t maxYR_fill = y_0 - yTop - borderWidth;
-
-    const int32_t width = xRight - xLeft + 1;
-    const int32_t height = yBottom - yTop + 1;
-
-    FigurePoints points = FigurePoints(xLeft, yTop, width, height);
-
-    if (fillFlag) {
-        for (int x = 1; x < maxXR_fill; ++x) {
-            for (int y = 1; y < maxYR_fill; ++y) {
-                bresenhamEllipse(&points, width / 2, height / 2, x, y, FillType::fill);
-            }
-        }
-        --maxXR_fill, --maxYR_fill;
-    } else if (borderWidth == 1) {
-        printf("%d %d\n", maxXR, maxYR);
-        bresenhamEllipse(&points, width / 2, height / 2, maxXR, maxYR, FillType::border);
-        return points;
-    }
-    for (int x = maxXR_fill; x < maxXR; ++x) {
-        for (int y = maxYR_fill; y < maxYR; ++y) {
-            bresenhamEllipse(&points, width / 2, height / 2, x, y, FillType::border);
-        }
-    }
-
-//    Interesting...... :)
-/*    int32_t x = 1;
-    int32_t y = 1;
-    while (true) {
-        bresenhamEllipse(&points, width / 2, height / 2, x, y, fill);
-
-        if (x < maxXR_fill) ++x;
-        if (y < maxYR_fill) ++y;
-        if (x == maxXR_fill && y == maxYR_fill) break;
-    }
-    x = maxXR_fill - 1;
-    y = maxYR_fill - 1;
-    while (true) {
-        bresenhamEllipse(&points, width / 2, height / 2, x, y, border);
-
-        if (x < maxXR) ++x;
-        if (y < maxYR) ++y;
-        if (x == maxXR && y == maxYR) break;
-    }*/
+    FloodFiller::start(&points, FillType::border, FillType::border);
+    if (fillFlag) FloodFiller::start(&points);
 
     return points;
 }
@@ -158,4 +84,52 @@ void Ellipse::addPoints(FigurePoints *points, int32_t cx, int32_t cy, int32_t x,
     points->data[cy + y][cx - x] = fillType;
     points->data[cy - y][cx + x] = fillType;
     points->data[cy - y][cx - x] = fillType;
+}
+
+FigurePoints Ellipse::calculateEllipseEquation(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth, bool fillFlag) {
+    const int32_t x_0 = (xLeft + xRight) / 2;
+    const int32_t y_0 = (yTop + yBottom) / 2;
+    const int32_t x_1 = xLeft - x_0;
+    const int32_t x_2 = xRight - x_0;
+    const int32_t y_1 = yTop - y_0;
+    const int32_t y_2 = yBottom - y_0;
+    int32_t a = x_2, a_b = x_2 - borderWidth;
+    int32_t b = y_2, b_b = y_2 - borderWidth;
+
+    const int32_t width = xRight - xLeft + 1;
+    const int32_t height = yBottom - yTop + 1;
+
+    FigurePoints points = FigurePoints(xLeft, yTop, width, height);
+
+    if (borderWidth == 0) {
+        if (!fillFlag)
+            return points;
+        for (int32_t x = x_1, xi = 0; x < x_2; ++x, ++xi) {
+            for (int32_t y = y_1, yi = 0; y < y_2; ++y, ++yi) {
+                if (ellipseCheck(x, y, a, b)) {
+                    points.data[yi][xi] = FillType::fill;
+                }
+            }
+        }
+    } else {
+        for (int32_t x = x_1, xi = 0; x < x_2; ++x, ++xi) {
+            for (int32_t y = y_1, yi = 0; y < y_2; ++y, ++yi) {
+                if (!ellipseCheck(x, y, a, b))
+                    continue;
+                if (ellipseCheck(x, y, a_b, b_b)) {
+                    if (fillFlag)
+                        points.data[yi][xi] = FillType::fill;
+                } else {
+                    points.data[yi][xi] = FillType::border;
+                }
+            }
+        }
+    }
+
+    return points;
+}
+
+bool Ellipse::ellipseCheck(double x, double y, double a, double b) {
+    double result = pow(x / a, 2) + pow(y / b, 2);
+    return (result - 1) < EPSILON;
 }
