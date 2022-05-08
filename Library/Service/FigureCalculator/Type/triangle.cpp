@@ -34,8 +34,8 @@ FigurePoints Triangle::calculate(int32_t xLeft, int32_t yTop, int32_t xRight, in
     if (borderWidth == 3) --borderWidth;
 
     double dd = borderWidth / 2.0;
-    int32_t width = abs(xRight - xLeft);
-    int32_t height = abs(yBottom - yTop);
+    int32_t width = xRight - xLeft;
+    int32_t height = yBottom - yTop;
     int32_t a = width / 2;
     int32_t b = height;
     int32_t xm = xLeft + a;
