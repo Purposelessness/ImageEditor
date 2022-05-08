@@ -8,5 +8,5 @@ void Line::setData(const FigureData &figureData) {
 }
 
 FigureType Line::getType() {
-    return line;
+    return FigureType::line;
 }

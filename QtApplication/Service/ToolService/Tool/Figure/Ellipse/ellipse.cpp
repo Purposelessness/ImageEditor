@@ -1,3 +1,3 @@
 #include "ellipse.h"
 
-Ellipse::Ellipse() : Shape(tr("Ellipse")) {}
+Ellipse::Ellipse() : Shape(tr("Ellipse"), CommandType::ellipse) {}

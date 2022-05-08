@@ -1,5 +1,5 @@
 #include "commandcontroller.h"
-#include "icommand.h"
+#include "command.h"
 
 #include "../../../Library/Bitmap/image.h"
 #include "../../../Library/Bitmap/loader.h"
@@ -10,7 +10,7 @@
 
 #include <utility>
 
-CommandController::CommandController(QString srcFileName, QString destFileName, QVector<ICommand *> commands)
+CommandController::CommandController(QString srcFileName, QString destFileName, QVector<Command *> commands)
                  : srcFileName(std::move(srcFileName)), destFileName(std::move(destFileName)), commands(std::move(commands))  {}
 
 void CommandController::start() {
@@ -20,7 +20,7 @@ void CommandController::start() {
         processImage(&image, info);
     }
     Bitmap::Saver::save(&image, destFileName.toUtf8().constData());
-    emit finished(success);
+    emit finished(ExitCode::success);
 }
 
 void CommandController::terminate() {
@@ -29,28 +29,28 @@ void CommandController::terminate() {
 
 ExitCode CommandController::processImage(IImage *image, const CommandInformation &info) {
     switch (info.type) {
-        case none:
-            return invalid;
-        case ellipse:
+        case CommandType::none:
+            return ExitCode::invalid;
+        case CommandType::ellipse:
             drawEllipse(image, info.figureData);
             break;
-        case triangle:
+        case CommandType::triangle:
             drawTriangle(image, info.figureData);
             break;
-        case line:
+        case CommandType::line:
             drawLine(image, info.lineData);
             break;
-        case ellipseColorInverter:
+        case CommandType::ellipseColorInverter:
             invertColorsInEllipse(image, info.colorInverterData);
             break;
-        case crop:
+        case CommandType::crop:
             cropImage(image, info.cropData);
             break;
     }
-    return unknown;
+    return ExitCode::unknown;
 }
 
-void CommandController::drawEllipse(IImage *image, const FigureData &data) {
+void CommandController::drawEllipse(IImage *image, const CommandFigureData &data) {
     int x1, y1, x2, y2;
     data.rect.getCoords(&x1, &y1, &x2, &y2);
     auto fillColor = data.fillColor;
@@ -60,7 +60,7 @@ void CommandController::drawEllipse(IImage *image, const FigureData &data) {
     Painter::start(image, ellipse, convertQColorToRgb(fillColor), convertQColorToRgb(borderColor));
 }
 
-void CommandController::drawTriangle(IImage *image, const FigureData &data) {
+void CommandController::drawTriangle(IImage *image, const CommandFigureData &data) {
     int x1, y1, x2, y2;
     data.rect.getCoords(&x1, &y1, &x2, &y2);
     auto fillColor = data.fillColor;
@@ -70,12 +70,12 @@ void CommandController::drawTriangle(IImage *image, const FigureData &data) {
     Painter::start(image, triangle, convertQColorToRgb(fillColor), convertQColorToRgb(borderColor));
 }
 
-void CommandController::drawLine(IImage *image, const LineData &data) {
+void CommandController::drawLine(IImage *image, const CommandLineData &data) {
     auto triangle = Calculator::line(data.x1, data.y1, data.x2, data.y2, data.thickness);
     Painter::start(image, triangle, convertQColorToRgb(data.color), Rgb{});
 }
 
-void CommandController::invertColorsInEllipse(IImage *image, const ColorInverterData &data) {
+void CommandController::invertColorsInEllipse(IImage *image, const CommandColorInverterData &data) {
     int x1s, y1s, x2s, y2s;
     int x1d, y1d, x2d, y2d;
     data.srcRect.getCoords(&x1s, &y1s, &x2s, &y2s);
@@ -84,7 +84,7 @@ void CommandController::invertColorsInEllipse(IImage *image, const ColorInverter
     ColorInverter::start(image, Point{x1d, y1d}, image, ellipse);
 }
 
-void CommandController::cropImage(IImage *image, const CropData &data) {
+void CommandController::cropImage(IImage *image, const CommandCropData &data) {
 
 }
 

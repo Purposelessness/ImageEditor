@@ -9,7 +9,7 @@ class ParametersInterface : public QObject {
 Q_OBJECT
 
 public:
-    explicit ParametersInterface(QObject *parent = nullptr, FigureType type = none);
+    explicit ParametersInterface(QObject *parent = nullptr, FigureType type = FigureType::none);
 
     void setData(FigureData *data);
     virtual void update() = 0;

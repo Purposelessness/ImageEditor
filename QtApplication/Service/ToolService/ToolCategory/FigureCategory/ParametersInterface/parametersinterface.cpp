@@ -9,7 +9,7 @@ void ParametersInterface::setData(FigureData *newData) {
 }
 
 void ParametersInterface::dataUpdated() {
-    if (type == none)
+    if (type == FigureType::none)
         return;
     emit updated();
 }

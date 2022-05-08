@@ -17,6 +17,8 @@ FigurePoints Ellipse::calculate(int32_t xLeft, int32_t yTop, int32_t xRight, int
     const int32_t width = xRight - xLeft + 1;
     const int32_t height = yBottom - yTop + 1;
 
+    fillFlag ? puts("FILL") : puts("NO FILL");
+
     FigurePoints points = FigurePoints(xLeft, yTop, width, height);
 
     if (borderWidth == 0) {

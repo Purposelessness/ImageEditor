@@ -2,12 +2,14 @@
 #define IMAGEEDITOR_ADDITEMCOMMAND_H
 
 
+#include "../../CommandInterface/command.h"
+
 #include <QUndoCommand>
 #include <QGraphicsItem>
 
-class AddItemCommand : QUndoCommand {
+class AddItemCommand : public QUndoCommand, public Command {
 public:
-    explicit AddItemCommand(QGraphicsItem *item);
+    explicit AddItemCommand(QGraphicsItem *item, const CommandInformation &information);
     ~AddItemCommand() override;
 
     void undo() override;

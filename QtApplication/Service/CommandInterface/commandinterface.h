@@ -5,7 +5,7 @@
 
 
 #include "commandcontroller.h"
-#include "icommand.h"
+#include "command.h"
 
 #include <QVector>
 #include <QObject>
@@ -17,8 +17,8 @@ public:
     static CommandInterface& getInstance();
 
     void processImage(const QString &srcFileName, const QString &destFileName);
-    void push(ICommand *command);
-    ICommand *pop();
+    void push(Command *command);
+    Command *pop();
 
 private slots:
     void onWorkerFinished(ExitCode code);
@@ -28,7 +28,7 @@ private:
     CommandInterface(const CommandInterface& root) = delete;
     CommandInterface& operator=(const CommandInterface&) = delete;
 
-    QVector<ICommand *> commands;
+    QVector<Command *> commands;
 };
 
 

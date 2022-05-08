@@ -24,11 +24,11 @@ void FigureCategory::updateDataInChildren(FigureData *data) {
 
 void FigureCategory::showParametersInterface(FigureType figureType) {
     switch (figureType) {
-        case line:
+        case FigureType::line:
             lineParametersInterface->update();
             view->setWidget(lineParametersInterface->getWidget());
             break;
-        case shape:
+        case FigureType::shape:
             shapeParametersInterface->update();
             view->setWidget(shapeParametersInterface->getWidget());
             break;
@@ -51,5 +51,5 @@ void FigureCategory::onFigureSelected() {
 }
 
 void FigureCategory::onFigureDeselected() {
-    showParametersInterface(none);
+    showParametersInterface(FigureType::none);
 }

@@ -4,16 +4,16 @@
 
 #include <QObject>
 
-class ICommand;
+class Command;
 class IImage;
 struct CommandInformation;
-struct FigureData;
-struct LineData;
-struct ColorInverterData;
-struct CropData;
+struct CommandFigureData;
+struct CommandLineData;
+struct CommandColorInverterData;
+struct CommandCropData;
 struct Rgb;
 
-enum ExitCode {
+enum class ExitCode {
     unknown,
     invalid,
     success,
@@ -23,27 +23,28 @@ enum ExitCode {
 class CommandController : public QObject {
 Q_OBJECT
 
-public slots:
-    explicit CommandController(QString srcFileName, QString destFileName, QVector<ICommand *> commands);
+public:
+    explicit CommandController(QString srcFileName, QString destFileName, QVector<Command *> commands);
 
+public slots:
     void start();
     void terminate();
 
 signals:
-    void finished(ExitCode code = unknown);
+    void finished(ExitCode code = ExitCode::unknown);
 
 private:
     static ExitCode processImage(IImage *image, const CommandInformation &info);
 
-    static void drawEllipse(IImage *image, const FigureData &data);
-    static void drawTriangle(IImage *image, const FigureData &data);
-    static void drawLine(IImage *image, const LineData &data);
-    static void invertColorsInEllipse(IImage *image, const ColorInverterData &data);
-    static void cropImage(IImage *image, const CropData &data);
+    static void drawEllipse(IImage *image, const CommandFigureData &data);
+    static void drawTriangle(IImage *image, const CommandFigureData &data);
+    static void drawLine(IImage *image, const CommandLineData &data);
+    static void invertColorsInEllipse(IImage *image, const CommandColorInverterData &data);
+    static void cropImage(IImage *image, const CommandCropData &data);
     static Rgb convertQColorToRgb(const QColor &color);
 
     QString srcFileName, destFileName;
-    QVector<ICommand *> commands;
+    QVector<Command *> commands;
 };
 
 

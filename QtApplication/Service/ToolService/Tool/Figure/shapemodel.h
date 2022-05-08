@@ -12,6 +12,8 @@ class ShapeModel : public FigureModel, public IShapeModel {
 public:
     ShapeModel();
 
+    void setType(CommandType type);
+
     void setFillColor(const QColor &color = QColor());
     void setLineColor(const QColor &color = QColor());
     void setThickness(const int &value);
@@ -24,6 +26,7 @@ protected:
     QGraphicsItem *startDrawing(const Coordinates &coordinates) override;
     void onDrawing(const Coordinates &coordinates) override;
     void finishDrawing(const Coordinates &coordinates) override;
+    void addCommand() override;
 
 private:
     static QBrush brush;
@@ -32,6 +35,7 @@ private:
 
     T *item = nullptr;
     QAbstractGraphicsShapeItem *selectedItem = nullptr;
+    CommandType type = CommandType::none;
 };
 
 #include "shapemodel.inl"

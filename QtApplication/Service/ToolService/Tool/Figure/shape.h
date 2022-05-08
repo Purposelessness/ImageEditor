@@ -9,7 +9,7 @@ class ToolUnitView;
 template<typename T>
 class Shape : public Figure {
 public:
-    explicit Shape(const QString &name, ShapeModel<T> *model = new ShapeModel<T>());
+    explicit Shape(const QString &name, CommandType type = CommandType::none, ShapeModel<T> *model = new ShapeModel<T>());
 
     void setData(const FigureData &figureData) override;
     FigureType getType() override;

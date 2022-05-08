@@ -7,7 +7,7 @@
 #include <QColorDialog>
 
 LineParametersInterface::LineParametersInterface(const QString &name, QObject *parent, QWidget *widget)
-        : ParametersInterface(parent, line), ToolUnitView(name, widget),
+        : ParametersInterface(parent, FigureType::line), ToolUnitView(name, widget),
           colorPicker(new QPushButton()),
           thicknessSlider(new QSlider()) {
     createColorPicker(tr("Line color"), colorPicker);

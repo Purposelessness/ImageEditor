@@ -7,7 +7,7 @@
 #include <QColorDialog>
 
 ShapeParametersInterface::ShapeParametersInterface(const QString &name, QObject *parent, QWidget *widget)
-        : ParametersInterface(parent, shape), ToolUnitView(name, widget),
+        : ParametersInterface(parent, FigureType::shape), ToolUnitView(name, widget),
           fillColorPicker(new QPushButton()),
           fillMaterialPicker(new QToolButton()),
           lineColorPicker(new QPushButton()),

@@ -22,6 +22,7 @@ void EllipseColorInverter::marqueePaintedEvent(const QPainterPath &path) {
 
     int x0 = sceneRect.left();
     int y0 = sceneRect.top();
+    auto cachedRect = sceneRect;
     FigurePoints points = Calculator::ellipse(0, 0, sceneRect.width(),sceneRect.height());
     auto image = graphicsView->grab(&sceneRect).toImage();
     points.x = x0 - sceneRect.left();
@@ -39,7 +40,10 @@ void EllipseColorInverter::marqueePaintedEvent(const QPainterPath &path) {
 
     pixmapItem->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
 
-    new AddItemCommand(pixmapItem);
+    auto rect = pixmapItem->mapToParent(pixmapItem->mapFromScene(cachedRect)).boundingRect().toRect();
+    auto data = CommandColorInverterData{.srcRect = rect, .destRect = rect};
+    auto info = CommandInformation{.colorInverterData = data, .type = CommandType::ellipseColorInverter};
+    new AddItemCommand(pixmapItem, info);
 
     pixmapItem->setSelected(true);
 }

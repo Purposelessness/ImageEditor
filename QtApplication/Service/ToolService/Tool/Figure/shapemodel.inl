@@ -16,7 +16,8 @@ int ShapeModel<T>::thickness = 10;
 
 template<typename T>
 ShapeModel<T>::ShapeModel() : FigureModel() {
-    static_assert(std::is_base_of<QAbstractGraphicsShapeItem, T>::value, "Class must derive from QAbstractGraphicsShapeItem");
+    static_assert(std::is_base_of<QAbstractGraphicsShapeItem, T>::value,
+                  "Class must derive from QAbstractGraphicsShapeItem");
     pen.setJoinStyle(Qt::MiterJoin);
 }
 
@@ -38,6 +39,8 @@ template<typename T>
 void ShapeModel<T>::finishDrawing(const Coordinates &coordinates) {
     item->setRect(normalizeRect(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y));
     FigureModel::finishDrawing(coordinates);
+    addCommand();
+    item = nullptr;
 }
 
 template<typename T>
@@ -87,7 +90,7 @@ template<typename T>
 FigureData ShapeModel<T>::getData() const {
     FigureData data{};
     if (!selectedItem) {
-        data.type = none;
+        data.type = FigureType::none;
         return data;
     }
     data.fillEnabled = selectedItem->brush().style() != Qt::NoBrush;
@@ -97,6 +100,22 @@ FigureData ShapeModel<T>::getData() const {
     if (data.lineEnabled)
         data.lineColor = selectedItem->pen().color();
     data.thickness = selectedItem->pen().width();
-    data.type = shape;
+    data.type = FigureType::shape;
     return data;
+}
+
+template<typename T>
+void ShapeModel<T>::addCommand() {
+    auto rect = item->mapToParent(item->boundingRect()).boundingRect().toRect();
+    auto borderColor = pen.color().isValid() && pen.color().alpha() > 0 ? pen.color() : QColor();
+    auto fillColor = brush.style() != Qt::NoBrush ? brush.color() : QColor();
+    auto dataThickness = borderColor.isValid() ? thickness : 0;
+    auto data = CommandFigureData{.rect = rect, .fillColor = fillColor, .borderColor = borderColor, .thickness = dataThickness};
+    auto info = CommandInformation{.figureData = data, .type = type};
+    new AddItemCommand(item, info);
+}
+
+template<typename T>
+void ShapeModel<T>::setType(CommandType newType) {
+    type = newType;
 }

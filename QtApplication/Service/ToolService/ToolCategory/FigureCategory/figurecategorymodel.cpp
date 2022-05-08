@@ -36,13 +36,13 @@ void FigureCategoryModel::updateFigureParameters(Figure *figure) {
 }
 
 void FigureCategoryModel::updateCurrentData(FigureData currentFigureData) {
-    if (currentFigureData.type == shape) {
+    if (currentFigureData.type == FigureType::shape) {
         data.fillEnabled = currentFigureData.fillEnabled;
         if (currentFigureData.fillEnabled)
             data.fillColor = currentFigureData.fillColor;
     }
-    data.lineEnabled = currentFigureData.lineEnabled && currentFigureData.type != line;
-    if (currentFigureData.lineEnabled || currentFigureData.type == line)
+    data.lineEnabled = currentFigureData.lineEnabled && currentFigureData.type != FigureType::line;
+    if (currentFigureData.lineEnabled || currentFigureData.type == FigureType::line)
         data.lineColor = currentFigureData.lineColor;
     data.thickness = currentFigureData.thickness;
     data.type = currentFigureData.type;

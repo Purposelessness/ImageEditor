@@ -4,10 +4,11 @@
 
 #include "../tool.h"
 #include "figuremodel.h"
+#include "../../../UndoService/Command/additemcommand.h"
 
 #include <QColor>
 
-enum FigureType {
+enum class FigureType {
     line,
     shape,
     none
@@ -19,7 +20,7 @@ struct FigureData {
     int thickness {10};
     bool fillEnabled {true};
     bool lineEnabled {true};
-    FigureType type {none};
+    FigureType type {FigureType::none};
 };
 
 class QGraphicsItem;

@@ -15,19 +15,20 @@ void LineModel::onDrawing(const Coordinates &coordinates) {
 
 void LineModel::finishDrawing(const Coordinates &coordinates) {
     item->setLine(coordinates.x_0, coordinates.y_0, coordinates.x, coordinates.y);
-    item = nullptr;
     FigureModel::finishDrawing(coordinates);
+    addCommand();
+    item = nullptr;
 }
 
 FigureData LineModel::getData() const {
     FigureData data{};
     if (!selectedItem) {
-        data.type = none;
+        data.type = FigureType::none;
         return data;
     }
     data.lineColor = selectedItem->pen().color();
     data.thickness = selectedItem->pen().width();
-    data.type = line;
+    data.type = FigureType::line;
     return data;
 }
 
@@ -52,4 +53,18 @@ void LineModel::onItemSelected(QGraphicsLineItem *graphicsLineItem) {
 void LineModel::onItemDeselected() {
     selectedItem = nullptr;
     emit itemDeselected();
+}
+
+void LineModel::addCommand() {
+    auto line = item->line();
+    auto p1 = item->mapToParent(line.p1()).toPoint();
+    auto p2 = item->mapToParent(line.p2()).toPoint();
+    if (p1.x() > p2.x()) {
+        auto t = p2;
+        p2 = p1;
+        p1 = t;
+    }
+    auto data = CommandLineData{.x1 = p1.x(), .y1 = p1.y(), .x2 = p2.x(), .y2 = p2.y(), .thickness = thickness};
+    auto info = CommandInformation{.lineData = data, .type = CommandType::line};
+    new AddItemCommand(item, info);
 }

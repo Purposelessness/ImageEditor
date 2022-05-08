@@ -9,7 +9,7 @@ void ImageSaver::saveImage(const QImage &image) {
     const QStringList picturesLocation = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
     QString fileName = QFileDialog::getSaveFileName(nullptr, QWidget::tr("Save"),
                                                     picturesLocation.isEmpty() ? QDir::currentPath() : picturesLocation.last(),
-                                                    QWidget::tr("All files (*.*);;JPEG (*.jpg *.jpeg);;PNG (*.png);;BMP (*.bmp)"));
+                                                    QWidget::tr("BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PNG (*.png)"));
     if (fileName.isEmpty()) {
         qWarning(fileSystem()) << "Selected invalid file name";
         return;
@@ -21,7 +21,7 @@ void ImageSaver::saveImageViaLib(const QString &srcImage) {
     const QStringList picturesLocation = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
     QString fileName = QFileDialog::getSaveFileName(nullptr, QWidget::tr("Save"),
                                                     picturesLocation.isEmpty() ? QDir::currentPath() : picturesLocation.last(),
-                                                    QWidget::tr("All files (*.*);;JPEG (*.jpg *.jpeg);;PNG (*.png);;BMP (*.bmp)"));
+                                                    QWidget::tr("BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PNG (*.png)"));
     if (fileName.isEmpty()) {
         qWarning(fileSystem()) << "Selected invalid file name";
         return;

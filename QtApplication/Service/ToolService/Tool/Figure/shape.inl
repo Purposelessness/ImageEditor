@@ -1,7 +1,9 @@
 #include "shape.h"
 
 template<typename T>
-Shape<T>::Shape(const QString &name, ShapeModel<T> *model) : Figure(name, model), model(model) {}
+Shape<T>::Shape(const QString &name, CommandType type, ShapeModel<T> *model) : Figure(name, model), model(model) {
+    model->setType(type);
+}
 
 template<typename T>
 void Shape<T>::setData(const FigureData &figureData) {
@@ -20,5 +22,5 @@ void Shape<T>::setData(const FigureData &figureData) {
 
 template<typename T>
 FigureType Shape<T>::getType() {
-    return shape;
+    return FigureType::shape;
 }

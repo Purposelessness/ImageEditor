@@ -18,6 +18,7 @@ protected:
     QGraphicsItem *startDrawing(const Coordinates &coordinates) override = 0;
     void onDrawing(const Coordinates &coordinates) override = 0;
     void finishDrawing(const Coordinates &coordinates) override;
+    virtual void addCommand() = 0;
 
 signals:
     void itemSelected();
