@@ -11,8 +11,8 @@ public:
 
 private:
     static bool ellipseCheck(double x, double y, double a, double b);
-    static void bresenhamEllipse(FigurePoints *points, int32_t cx, int32_t cy, int32_t xr, int32_t yr, Type fillType = fill);
-    static void addPoints(FigurePoints *points, int32_t cx, int32_t cy, int32_t x, int32_t y, Type fillType);
+    static void bresenhamEllipse(FigurePoints *points, int32_t cx, int32_t cy, int32_t xr, int32_t yr, FillType fillType = FillType::fill);
+    static void addPoints(FigurePoints *points, int32_t cx, int32_t cy, int32_t x, int32_t y, FillType fillType);
 };
 
 

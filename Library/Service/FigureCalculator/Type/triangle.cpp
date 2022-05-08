@@ -77,7 +77,7 @@ FigurePoints Triangle::calculate(int32_t xLeft, int32_t yTop, int32_t xRight, in
     Line::bresenhamAlgorithm(&points, x1i, x2i, y1i, y2i);
     Line::bresenhamAlgorithm(&points, x2i, x0i, y2i, y0i);
 
-    FloodFiller::start(&points, border, border);
+    FloodFiller::start(&points, FillType::border, FillType::border);
     if (fillFlag) FloodFiller::start(&points);
 
     return points;

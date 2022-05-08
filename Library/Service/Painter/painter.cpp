@@ -15,7 +15,7 @@ void Painter::start(IImage *image, const FigurePoints &points, const Rgb &fillCo
 
     for (int32_t y = 0; y < height; ++y) {
         for (int32_t x = 0; x < width; ++x) {
-            if (points.data[y][x] != fill && points.data[y][x] != border)
+            if (points.data[y][x] != FillType::fill && points.data[y][x] != FillType::border)
                 continue;
 
             int32_t xImage = points.x + x;
@@ -24,7 +24,7 @@ void Painter::start(IImage *image, const FigurePoints &points, const Rgb &fillCo
                 continue;
 
             Rgb *pixel = &data[yImage][xImage];
-            if (points.data[y][x] == fill) {
+            if (points.data[y][x] == FillType::fill) {
                 pixel->r = fillColor.r;
                 pixel->g = fillColor.g;
                 pixel->b = fillColor.b;
@@ -50,7 +50,7 @@ void Painter::start(IImage *image, const std::vector<Point> &points, const Rgb &
 
     for (size_t i = 0; i < len; ++i) {
         auto point = points.at(i);
-        if (point.type != fill && point.type != border)
+        if (point.type != FillType::fill && point.type != FillType::border)
             continue;
 
         int32_t xImage = point.x;
@@ -59,7 +59,7 @@ void Painter::start(IImage *image, const std::vector<Point> &points, const Rgb &
             continue;
 
         Rgb *pixel = &data[yImage][xImage];
-        if (point.type == fill) {
+        if (point.type == FillType::fill) {
             pixel->r = fillColor.r;
             pixel->g = fillColor.g;
             pixel->b = fillColor.b;

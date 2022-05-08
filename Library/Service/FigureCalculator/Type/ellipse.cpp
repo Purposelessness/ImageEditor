@@ -25,7 +25,7 @@ FigurePoints Ellipse::calculate(int32_t xLeft, int32_t yTop, int32_t xRight, int
         for (int32_t x = x_1, xi = 0; x < x_2; ++x, ++xi) {
             for (int32_t y = y_1, yi = 0; y < y_2; ++y, ++yi) {
                 if (ellipseCheck(x, y, a, b)) {
-                    points.data[yi][xi] = fill;
+                    points.data[yi][xi] = FillType::fill;
                 }
             }
         }
@@ -36,9 +36,9 @@ FigurePoints Ellipse::calculate(int32_t xLeft, int32_t yTop, int32_t xRight, int
                     continue;
                 if (ellipseCheck(x, y, a_b, b_b)) {
                     if (fillFlag)
-                        points.data[yi][xi] = fill;
+                        points.data[yi][xi] = FillType::fill;
                 } else {
-                    points.data[yi][xi] = border;
+                    points.data[yi][xi] = FillType::border;
                 }
             }
         }
@@ -68,18 +68,18 @@ FigurePoints Ellipse::calculateBresenham(int32_t xLeft, int32_t yTop, int32_t xR
     if (fillFlag) {
         for (int x = 1; x < maxXR_fill; ++x) {
             for (int y = 1; y < maxYR_fill; ++y) {
-                bresenhamEllipse(&points, width / 2, height / 2, x, y, fill);
+                bresenhamEllipse(&points, width / 2, height / 2, x, y, FillType::fill);
             }
         }
         --maxXR_fill, --maxYR_fill;
     } else if (borderWidth == 1) {
         printf("%d %d\n", maxXR, maxYR);
-        bresenhamEllipse(&points, width / 2, height / 2, maxXR, maxYR, border);
+        bresenhamEllipse(&points, width / 2, height / 2, maxXR, maxYR, FillType::border);
         return points;
     }
     for (int x = maxXR_fill; x < maxXR; ++x) {
         for (int y = maxYR_fill; y < maxYR; ++y) {
-            bresenhamEllipse(&points, width / 2, height / 2, x, y, border);
+            bresenhamEllipse(&points, width / 2, height / 2, x, y, FillType::border);
         }
     }
 
@@ -106,7 +106,7 @@ FigurePoints Ellipse::calculateBresenham(int32_t xLeft, int32_t yTop, int32_t xR
     return points;
 }
 
-void Ellipse::bresenhamEllipse(FigurePoints *figurePoints, int32_t cx, int32_t cy, int32_t xr, int32_t yr, Type fillType) {
+void Ellipse::bresenhamEllipse(FigurePoints *figurePoints, int32_t cx, int32_t cy, int32_t xr, int32_t yr, FillType fillType) {
     int32_t twoASq = 2 * xr * xr;
     int32_t twoBSq = 2 * yr * yr;
     int32_t x = xr;
@@ -153,7 +153,7 @@ void Ellipse::bresenhamEllipse(FigurePoints *figurePoints, int32_t cx, int32_t c
     }
 }
 
-void Ellipse::addPoints(FigurePoints *points, int32_t cx, int32_t cy, int32_t x, int32_t y, Type fillType) {
+void Ellipse::addPoints(FigurePoints *points, int32_t cx, int32_t cy, int32_t x, int32_t y, FillType fillType) {
     points->data[cy + y][cx + x] = fillType;
     points->data[cy + y][cx - x] = fillType;
     points->data[cy - y][cx + x] = fillType;

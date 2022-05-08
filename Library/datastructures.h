@@ -14,7 +14,7 @@ struct Rgb {
 
 struct Point {
     int32_t x, y;
-    Type type;
+    FillType type;
 };
 
 

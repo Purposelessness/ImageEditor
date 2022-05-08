@@ -6,7 +6,7 @@
 
 class FloodFiller {
 public:
-    static void start(FigurePoints *points, Type fillType = fill, Type borderType = border);
+    static void start(FigurePoints *points, FillType fillType = FillType::fill, FillType borderType = FillType::border);
 };
 
 

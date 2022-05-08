@@ -25,7 +25,7 @@ FigurePoints Line::calculate(int32_t x_0_r, int32_t y_0_r, int32_t x_1_r, int32_
         FigurePoints points{x0 - dint, y0, borderWidth, height + 1};
         for (int32_t x = 0; x < borderWidth; ++x) {
             for (int32_t y = 0; y < height; ++y) {
-                points.data[y][x] = border;
+                points.data[y][x] = FillType::border;
             }
         }
         return points;
@@ -33,7 +33,7 @@ FigurePoints Line::calculate(int32_t x_0_r, int32_t y_0_r, int32_t x_1_r, int32_
         FigurePoints points{x0, y0 - dint, width + 1, borderWidth};
         for (int32_t x = 0; x < width; ++x) {
             for (int32_t y = 0; y < borderWidth; ++y) {
-                points.data[y][x] = border;
+                points.data[y][x] = FillType::border;
             }
         }
         return points;
@@ -77,12 +77,12 @@ FigurePoints Line::calculate(int32_t x_0_r, int32_t y_0_r, int32_t x_1_r, int32_
         bresenhamAlgorithm(&points, x3, x0, y1, y2);
     }
 
-    FloodFiller::start(&points, border, border);
+    FloodFiller::start(&points, FillType::border, FillType::border);
 
     return points;
 }
 
-void Line::bresenhamAlgorithm(FigurePoints *points, int32_t x_0, int32_t x_1, int32_t y_0, int32_t y_1) {
+void Line::bresenhamAlgorithm(FigurePoints *points, int32_t x_0, int32_t x_1, int32_t y_0, int32_t y_1, FillType fillType) {
     int32_t dx = x_1 - x_0;
     int32_t dy = y_1 - y_0;
     int32_t adx = abs(dx);
@@ -92,7 +92,7 @@ void Line::bresenhamAlgorithm(FigurePoints *points, int32_t x_0, int32_t x_1, in
     int32_t sy = dy > 0 ? 1 : -1;
     if (adx > ady) {
         for (int32_t x = x_0, y = y_0; sx < 0 ? x >= x_1 : x <= x_1; x += sx) {
-            points->data[y][x] = border;
+            points->data[y][x] = fillType;
             err += ady;
             if (err << 1 >= adx) {
                 y += sy;
@@ -101,7 +101,7 @@ void Line::bresenhamAlgorithm(FigurePoints *points, int32_t x_0, int32_t x_1, in
         }
     } else {
         for (int x = x_0, y = y_0; sy < 0 ? y >= y_1 : y <= y_1; y += sy) {
-            points->data[y][x] = border;
+            points->data[y][x] = fillType;
             err += adx;
             if (err << 1 >= ady) {
                 x += sx;

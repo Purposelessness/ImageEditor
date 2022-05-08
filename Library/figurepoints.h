@@ -4,7 +4,7 @@
 
 #include <cstdint>
 
-enum Type {
+enum class FillType {
     unknown,
     none,
     fill,
@@ -13,16 +13,16 @@ enum Type {
 
 struct FigurePoints {
     FigurePoints(int32_t x, int32_t y, int32_t width, int32_t height) : x(x), y(y), width(width), height(height) {
-        this->data = new Type *[height]{};
+        this->data = new FillType *[height]{};
         for (int i = 0; i < height; ++i) {
-            this->data[i] = new Type[width]{};
+            this->data[i] = new FillType[width]{};
         }
     }
 
     FigurePoints(FigurePoints const &points) : x(points.x), y(points.y), width(points.width), height(points.height) {
-        this->data = new Type *[height]{};
+        this->data = new FillType *[height]{};
         for (int i = 0; i < height; ++i) {
-            this->data[i] = new Type[width]{};
+            this->data[i] = new FillType[width]{};
             for (int k = 0; k < width; ++k) {
                 this->data[i][k] = points.data[i][k];
             }
@@ -38,7 +38,7 @@ struct FigurePoints {
     }
 
     int32_t x = 0, y = 0;
-    Type **data = nullptr;
+    FillType **data = nullptr;
     const int32_t width = 0, height = 0;
 };
 
