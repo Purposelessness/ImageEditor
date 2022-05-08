@@ -6,10 +6,26 @@
 
 FigurePoints Triangle::calculate(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth, bool fillFlag) {
     if (borderWidth == 1) {
-        return {0, 0, 0, 0};
-    } else if (borderWidth == 2) {
+        int32_t width = xRight - xLeft;
+        int32_t height = yBottom - yTop;
+        FigurePoints points{xLeft, yTop, width + 1, height + 1};
 
+        int32_t x1 = 0;
+        int32_t y1 = height;
+        int32_t x2 = width / 2;
+        int32_t y2 = 0;
+        int32_t x3 = width;
+        int32_t y3 = y1;
+
+        Line::bresenhamAlgorithm(&points, x1, x2, y1, y2);
+        Line::bresenhamAlgorithm(&points, x2, x3, y2, y3);
+        Line::bresenhamAlgorithm(&points, x3, x1, y3, y1);
+
+        if (fillFlag) FloodFiller::start(&points);
+
+        return points;
     }
+
     if (borderWidth == 3) --borderWidth;
 
     double dd = borderWidth / 2.0;
@@ -62,7 +78,7 @@ FigurePoints Triangle::calculate(int32_t xLeft, int32_t yTop, int32_t xRight, in
     Line::bresenhamAlgorithm(&points, x2i, x0i, y2i, y0i);
 
     FloodFiller::start(&points, border, border);
-    if (fillFlag) FloodFiller::start(&points, fill, border);
+    if (fillFlag) FloodFiller::start(&points);
 
     return points;
 }

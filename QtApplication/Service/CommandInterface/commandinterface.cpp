@@ -69,7 +69,7 @@ Command *CommandInterface::pop() {
 }
 
 void CommandInterface::onWorkerFinished(ExitCode code) {
-
+    qDebug(commandInterface()) << "Work is finished";
 }
 
 //qsizetype CommandInterface::size() const {

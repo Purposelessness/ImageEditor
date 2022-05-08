@@ -122,7 +122,7 @@ void Tester::paintTriangle() {
 
     auto triangle = Calculator::triangle(50, 50, width / 2, 55, 3);
     Painter::start(&bmp, triangle, Rgb{190, 60, 60}, Rgb{60, 70, 190});
-    auto triangle1 = Calculator::triangle(width / 2 + 50, 50, width - 50, height / 2, 3);
+    auto triangle1 = Calculator::triangle(width / 2 + 50, 50, width - 50, height / 2, 1);
     Painter::start(&bmp, triangle1, Rgb{190, 60, 60}, Rgb{60, 70, 190});
 
     Bitmap::Saver::save(&bmp, dest);
