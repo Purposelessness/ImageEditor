@@ -5,7 +5,10 @@
 #include <cmath>
 
 FigurePoints Triangle::calculate(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth, bool fillFlag) {
-    if (borderWidth == 1) {
+    if (borderWidth == 0 && !fillFlag)
+        return {0, 0, 0, 0};
+
+    if (borderWidth == 1 || borderWidth == 0) {
         int32_t width = xRight - xLeft;
         int32_t height = yBottom - yTop;
         FigurePoints points{xLeft, yTop, width + 1, height + 1};
@@ -17,11 +20,13 @@ FigurePoints Triangle::calculate(int32_t xLeft, int32_t yTop, int32_t xRight, in
         int32_t x3 = width;
         int32_t y3 = y1;
 
-        Line::bresenhamAlgorithm(&points, x1, x2, y1, y2);
-        Line::bresenhamAlgorithm(&points, x2, x3, y2, y3);
-        Line::bresenhamAlgorithm(&points, x3, x1, y3, y1);
+        FillType fillType = borderWidth == 1 ? FillType::border : FillType::fill;
 
-        if (fillFlag) FloodFiller::start(&points);
+        Line::bresenhamAlgorithm(&points, x1, x2, y1, y2, fillType);
+        Line::bresenhamAlgorithm(&points, x2, x3, y2, y3, fillType);
+        Line::bresenhamAlgorithm(&points, x3, x1, y3, y1, fillType);
+
+        if (fillFlag) FloodFiller::start(&points, FillType::fill, fillType);
 
         return points;
     }
