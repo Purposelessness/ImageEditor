@@ -35,7 +35,7 @@ void Tester::invertColors() {
     y = height * 1.5;
 
     auto ellipse = Calculator::ellipse(x_0, y_0, x, y);
-    ColorInverter::start(&bmp, ellipse);
+    ColorInverterData::start(&bmp, ellipse);
     Bitmap::Saver::save(&bmp, dest);
 }
 
@@ -135,6 +135,6 @@ void Tester::invertDifferentImages() {
     int32_t height = bmp.getHeight();
 
     auto ellipse = Calculator::ellipse(width / 2, -10, width - 100, height / 2);
-    ColorInverter::start(&bmp, Point{20, height / 2}, &srcBmp, ellipse);
+    ColorInverterData::start(&bmp, Point{20, height / 2}, &srcBmp, ellipse);
     Bitmap::Saver::save(&bmp, dest);
 }

@@ -4,7 +4,7 @@
 
 #include "../../iimage.h"
 
-class ColorInverter {
+class ColorInverterData {
 public:
     static void start(IImage *image, const FigurePoints &points);
     static void start(IImage *image, const Point &point, IImage *srcImage, const FigurePoints &points);
