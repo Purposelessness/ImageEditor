@@ -8,7 +8,12 @@
 #include "../../../Library/Service/ColorInverter/colorinverter.h"
 #include "../../../Library/Service/Painter/painter.h"
 
-void CommandController::start(const QString &srcFileName, const QString &destFileName, const QVector<ICommand *> &commands) {
+#include <utility>
+
+CommandController::CommandController(QString srcFileName, QString destFileName, QVector<ICommand *> commands)
+                 : srcFileName(std::move(srcFileName)), destFileName(std::move(destFileName)), commands(std::move(commands))  {}
+
+void CommandController::start() {
     auto image = Bitmap::Loader::load(srcFileName.toUtf8().constData());
     for (auto command: commands) {
         auto info = command->getInformation();

@@ -4,16 +4,24 @@
 #define IMAGEEDITOR_COMMANDINTERFACE_H
 
 
+#include "commandcontroller.h"
 #include "icommand.h"
 
 #include <QVector>
+#include <QObject>
 
-class CommandInterface {
+class CommandInterface : QObject {
+Q_OBJECT
+
 public:
     static CommandInterface& getInstance();
 
+    void processImage(const QString &srcFileName, const QString &destFileName);
     void push(ICommand *command);
     ICommand *pop();
+
+private slots:
+    void onWorkerFinished(ExitCode code);
 
 private:
     CommandInterface() = default;

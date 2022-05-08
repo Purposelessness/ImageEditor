@@ -24,7 +24,9 @@ class CommandController : public QObject {
 Q_OBJECT
 
 public slots:
-    void start(const QString &srcFileName, const QString &destFileName, const QVector<ICommand *> &commands);
+    explicit CommandController(QString srcFileName, QString destFileName, QVector<ICommand *> commands);
+
+    void start();
     void terminate();
 
 signals:
@@ -39,6 +41,9 @@ private:
     static void invertColorsInEllipse(IImage *image, const ColorInverterData &data);
     static void cropImage(IImage *image, const CropData &data);
     static Rgb convertQColorToRgb(const QColor &color);
+
+    QString srcFileName, destFileName;
+    QVector<ICommand *> commands;
 };
 
 
