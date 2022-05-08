@@ -14,7 +14,6 @@ Q_OBJECT
 
 public:
     explicit EditorWindow(QWidget *parent = nullptr);
-    ~EditorWindow() override;
 
 private slots:
     void openImage();
@@ -24,7 +23,7 @@ private slots:
 private:
     EditorWindowView *view;
 
-    QFuture<QImage> readFuture;
+    QString imagePath;
 };
 
 

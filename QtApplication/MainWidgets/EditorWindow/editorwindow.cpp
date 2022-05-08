@@ -16,14 +16,16 @@ EditorWindow::EditorWindow(QWidget *parent) : view(new EditorWindowView(parent))
 }
 
 void EditorWindow::openImage() {
-    auto image = ImageLoader::loadImage();
-    if (!image.isNull())
-        view->imageViewer->setImage(image);
+    auto imageLoaderOut = ImageLoader::loadImage();
+    if (!imageLoaderOut.image.isNull()) {
+        view->imageViewer->setImage(imageLoaderOut.image);
+        imagePath = imageLoaderOut.imagePath;
+    }
 }
 
 void EditorWindow::saveImage() {
     if (view->useLibAct->isChecked()) {
-
+        ImageSaver::saveImageViaLib(imagePath);
     } else {
         ImageSaver::saveImage(WidgetData::getInstance().getGraphicsView()->grab().toImage());
     }
@@ -31,9 +33,4 @@ void EditorWindow::saveImage() {
 
 void EditorWindow::showDock() {
     view->toolDock->show();
-}
-
-EditorWindow::~EditorWindow() {
-    if (readFuture.isRunning())
-        readFuture.cancel();
 }

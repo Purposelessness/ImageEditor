@@ -3,9 +3,14 @@
 
 #include <QImage>
 
+struct ImageLoaderOut {
+    QImage image{};
+    QString imagePath{};
+};
+
 class ImageLoader {
 public:
-    static QImage loadImage();
+    static ImageLoaderOut loadImage();
 };
 
 

@@ -6,6 +6,7 @@
 class ImageSaver {
 public:
     static void saveImage(const QImage& image);
+    static void saveImageViaLib(const QString &srcImage);
 };
 
 
