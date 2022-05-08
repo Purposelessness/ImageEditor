@@ -6,7 +6,7 @@
 
 #include "icommand.h"
 
-#include <QStack>
+#include <QVector>
 
 class CommandInterface {
 public:
@@ -14,15 +14,13 @@ public:
 
     void push(ICommand *command);
     ICommand *pop();
-    [[nodiscard]] qsizetype size() const;
-    ICommand *at(qsizetype i);
 
 private:
     CommandInterface() = default;
     CommandInterface(const CommandInterface& root) = delete;
     CommandInterface& operator=(const CommandInterface&) = delete;
 
-    QStack<ICommand *> stack;
+    QVector<ICommand *> commands;
 };
 
 

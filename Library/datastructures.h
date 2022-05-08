@@ -6,12 +6,9 @@
 
 #pragma pack(push, 1)
 struct Rgb {
-    uint8_t b = -1;
-    uint8_t g = -1;
-    uint8_t r = -1;
-    [[nodiscard]] bool isValid() const {
-        return r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255;
-    }
+    uint8_t b = 0;
+    uint8_t g = 0;
+    uint8_t r = 0;
 };
 #pragma pack(pop)
 

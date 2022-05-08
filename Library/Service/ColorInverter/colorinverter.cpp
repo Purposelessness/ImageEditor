@@ -2,7 +2,7 @@
 
 #include <cstdio>
 
-void ColorInverterData::start(IImage *image, const FigurePoints &points) {
+void ColorInverter::start(IImage *image, const FigurePoints &points) {
     if (image->isEmpty()) {
         puts("Image is empty");
         return;
@@ -30,7 +30,7 @@ void ColorInverterData::start(IImage *image, const FigurePoints &points) {
     }
 }
 
-void ColorInverterData::start(IImage *image, const Point &point, IImage *srcImage, const FigurePoints &points) {
+void ColorInverter::start(IImage *image, const Point &point, IImage *srcImage, const FigurePoints &points) {
     if (image->isEmpty() || srcImage->isEmpty()) {
         puts("Image is empty");
         return;
@@ -64,18 +64,18 @@ void ColorInverterData::start(IImage *image, const Point &point, IImage *srcImag
     }
 }
 
-void ColorInverterData::invertPixel(Rgb *pixel) {
+void ColorInverter::invertPixel(Rgb *pixel) {
     pixel->r = 255 - pixel->r;
     pixel->g = 255 - pixel->g;
     pixel->b = 255 - pixel->b;
 }
 
-void ColorInverterData::invertPixel(Rgb *pixel, Rgb srcPixel) {
+void ColorInverter::invertPixel(Rgb *pixel, Rgb srcPixel) {
     pixel->r = 255 - srcPixel.r;
     pixel->g = 255 - srcPixel.g;
     pixel->b = 255 - srcPixel.b;
 }
 
-bool ColorInverterData::pointIsValid(int32_t x, int32_t y, int32_t width, int32_t height) {
+bool ColorInverter::pointIsValid(int32_t x, int32_t y, int32_t width, int32_t height) {
     return x >= 0 && x < width && y >= 0 && y < height;
 }

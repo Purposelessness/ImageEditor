@@ -10,6 +10,7 @@
 Q_LOGGING_CATEGORY(ui, "UI", QtInfoMsg)
 Q_LOGGING_CATEGORY(fileSystem, "FileSystem")
 Q_LOGGING_CATEGORY(service, "Service")
+Q_LOGGING_CATEGORY(commandInterface, "CommandInterface")
 Q_LOGGING_CATEGORY(toolService, "ToolService", QtInfoMsg)
 Q_LOGGING_CATEGORY(core, "Core")
 Q_LOGGING_CATEGORY(stateMachine, "StateMachine", QtInfoMsg)

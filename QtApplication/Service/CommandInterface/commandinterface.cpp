@@ -6,17 +6,19 @@ CommandInterface &CommandInterface::getInstance() {
 }
 
 void CommandInterface::push(ICommand *command) {
-    stack.push(command);
+    commands.push_back(command);
 }
 
 ICommand *CommandInterface::pop() {
-    return stack.pop();
+    auto t = commands.back();
+    commands.pop_back();
+    return t;
 }
 
-qsizetype CommandInterface::size() const {
-    return stack.size();
-}
-
-ICommand *CommandInterface::at(qsizetype i) {
-    return stack.at(i);
-}
+//qsizetype CommandInterface::size() const {
+//    return commands.size();
+//}
+//
+//ICommand *CommandInterface::at(qsizetype i) {
+//    return commands.at(i);
+//}
