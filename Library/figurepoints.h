@@ -33,6 +33,10 @@ struct FigurePoints {
         delete[] data;
     }
 
+    [[nodiscard]] bool isNull() const {
+        return width == 0 && height == 0;
+    }
+
     [[nodiscard]] bool contains(int32_t x_0, int32_t y_0) const {
         return this->x <= x_0 && x_0 < this->x + width && this->y <= y_0 && y_0 < this->y + height;
     }

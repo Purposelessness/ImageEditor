@@ -7,6 +7,9 @@ void Painter::start(IImage *image, const FigurePoints &points, const Rgb &fillCo
         return;
     }
 
+    if (points.isNull())
+        return;
+
     Rgb **data = image->getPixelData();
     int32_t imageWidth = image->getWidth();
     int32_t imageHeight = image->getHeight();
@@ -42,6 +45,9 @@ void Painter::start(IImage *image, const std::vector<Point> &points, const Rgb &
         puts("Image is empty\n");
         return;
     }
+
+    if (points.empty())
+        return;
 
     Rgb **data = image->getPixelData();
     int32_t imageWidth = image->getWidth();
