@@ -56,14 +56,10 @@ void LineModel::onItemDeselected() {
 }
 
 void LineModel::addCommand(const Coordinates &coordinates) {
-    auto p1 = QPointF(coordinates.x_0, coordinates.y_0).toPoint();
-    auto p2 = QPointF(coordinates.x, coordinates.y).toPoint();
-    if (p1.x() > p2.x()) {
-        auto t = p2;
-        p2 = p1;
-        p1 = t;
-    }
-    auto data = CommandLineData{.x1 = p1.x(), .y1 = p1.y(), .x2 = p2.x(), .y2 = p2.y(), .color = pen.color(), .thickness = thickness};
+    auto data = item ? CommandLineData{item}
+                     : CommandLineData{QPoint{static_cast<int>(coordinates.x_0), static_cast<int>(coordinates.y_0)},
+                                       QPoint{static_cast<int>(coordinates.x), static_cast<int>(coordinates.y)},
+                                       item->pen().color(), item->pen().width()};
     auto info = CommandInformation{.lineData = data, .type = CommandType::line};
     new AddItemCommand(item, info);
 }
