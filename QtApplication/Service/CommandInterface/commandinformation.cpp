@@ -78,5 +78,5 @@ CommandColorInverterData CommandColorInverterData::get() {
 CommandCropData::CommandCropData(const QRect &rect) : rect(rect.normalized()) {}
 
 CommandCropData CommandCropData::get() {
-    return rect;
+    return CommandCropData{rect};
 }
