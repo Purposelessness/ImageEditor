@@ -6,6 +6,23 @@
 #include <cstdio>
 
 FigurePoints Ellipse::calculate(int32_t xLeft, int32_t yTop, int32_t xRight, int32_t yBottom, int32_t borderWidth, bool fillFlag) {
+    if (borderWidth == 0 && !fillFlag)
+        return {0, 0, 0, 0};
+
+    if (borderWidth == 1 || borderWidth == 0) {
+        int32_t width = xRight - xLeft;
+        int32_t height = yBottom - yTop;
+        int32_t x0 = width / 2;
+        int32_t y0 = height / 2;
+        FigurePoints points{xLeft, yTop, width + 1, height + 1};
+
+        FillType fillType = borderWidth == 1 ? FillType::border : FillType::fill;
+        bresenhamEllipse(&points, x0, y0, x0, y0, fillType);
+        FloodFiller::start(&points, FillType::fill, fillType);
+
+        return points;
+    }
+
     int32_t d = borderWidth / 2;
 
     int32_t xl = xLeft - d;
