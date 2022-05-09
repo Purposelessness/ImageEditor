@@ -27,7 +27,7 @@ void CommandController::terminate() {
 
 }
 
-ExitCode CommandController::processImage(IImage *image, const CommandInformation &info) {
+ExitCode CommandController::processImage(Bitmap::Image *image, const CommandInformation &info) {
     switch (info.type) {
         case CommandType::none:
             return ExitCode::invalid;
@@ -50,7 +50,8 @@ ExitCode CommandController::processImage(IImage *image, const CommandInformation
     return ExitCode::unknown;
 }
 
-void CommandController::drawEllipse(IImage *image, const CommandFigureData &data) {
+void CommandController::drawEllipse(Bitmap::Image *image, CommandFigureData data) {
+    data.update();
     int x1, y1, x2, y2;
     data.rect.getCoords(&x1, &y1, &x2, &y2);
     auto fillColor = data.fillColor;
@@ -60,7 +61,8 @@ void CommandController::drawEllipse(IImage *image, const CommandFigureData &data
     Painter::start(image, ellipse, convertQColorToRgb(fillColor), convertQColorToRgb(borderColor));
 }
 
-void CommandController::drawTriangle(IImage *image, const CommandFigureData &data) {
+void CommandController::drawTriangle(Bitmap::Image *image, CommandFigureData data) {
+    data.update();
     int x1, y1, x2, y2;
     data.rect.getCoords(&x1, &y1, &x2, &y2);
     auto fillColor = data.fillColor;
@@ -70,27 +72,30 @@ void CommandController::drawTriangle(IImage *image, const CommandFigureData &dat
     Painter::start(image, triangle, convertQColorToRgb(fillColor), convertQColorToRgb(borderColor));
 }
 
-void CommandController::drawLine(IImage *image, const CommandLineData &data) {
-    auto triangle = Calculator::line(data.x1, data.y1, data.x2, data.y2, data.thickness);
-    Painter::start(image, triangle, convertQColorToRgb(data.color), Rgb{});
+void CommandController::drawLine(Bitmap::Image *image, CommandLineData data) {
+    data.update();
+    auto line = Calculator::line(data.x1, data.y1, data.x2, data.y2, data.thickness);
+    Painter::start(image, line, Rgb{}, convertQColorToRgb(data.color));
 }
 
-void CommandController::invertColorsInEllipse(IImage *image, const CommandColorInverterData &data) {
+void CommandController::invertColorsInEllipse(Bitmap::Image *image, CommandColorInverterData data) {
+    Bitmap::Image srcImage = *image;
+    data.update();
     int x1s, y1s, x2s, y2s;
     int x1d, y1d, x2d, y2d;
     data.srcRect.getCoords(&x1s, &y1s, &x2s, &y2s);
     data.destRect.getCoords(&x1d, &y1d, &x2d, &y2d);
     auto ellipse = Calculator::ellipse(x1s, y1s, x2s, y2s);
-    ColorInverter::start(image, Point{x1d, y1d}, image, ellipse);
+    ColorInverter::start(image, Point{x1d, y1d}, &srcImage, ellipse);
 }
 
-void CommandController::cropImage(IImage *image, const CommandCropData &data) {
+void CommandController::cropImage(Bitmap::Image *image, CommandCropData data) {
 
 }
 
 Rgb CommandController::convertQColorToRgb(const QColor &color) {
-    return color.isValid() ? Rgb{static_cast<uint8_t>(color.blue()),
-                                 static_cast<uint8_t>(color.green()),
-                                 static_cast<uint8_t>(color.red())}
+    return color.isValid() ? Rgb{static_cast<uint8_t>(color.green()),
+                                 static_cast<uint8_t>(color.red()),
+                                 static_cast<uint8_t>(color.blue()),}
                            : Rgb{};
 }

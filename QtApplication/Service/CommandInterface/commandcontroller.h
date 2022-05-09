@@ -4,8 +4,10 @@
 
 #include <QObject>
 
+namespace Bitmap {
+    class Image;
+}
 class Command;
-class IImage;
 struct CommandInformation;
 struct CommandFigureData;
 struct CommandLineData;
@@ -34,13 +36,13 @@ signals:
     void finished(ExitCode code = ExitCode::unknown);
 
 private:
-    static ExitCode processImage(IImage *image, const CommandInformation &info);
+    static ExitCode processImage(Bitmap::Image *image, const CommandInformation &info);
 
-    static void drawEllipse(IImage *image, const CommandFigureData &data);
-    static void drawTriangle(IImage *image, const CommandFigureData &data);
-    static void drawLine(IImage *image, const CommandLineData &data);
-    static void invertColorsInEllipse(IImage *image, const CommandColorInverterData &data);
-    static void cropImage(IImage *image, const CommandCropData &data);
+    static void drawEllipse(Bitmap::Image *image, CommandFigureData data);
+    static void drawTriangle(Bitmap::Image *image, CommandFigureData data);
+    static void drawLine(Bitmap::Image *image, CommandLineData data);
+    static void invertColorsInEllipse(Bitmap::Image *image, CommandColorInverterData data);
+    static void cropImage(Bitmap::Image *image, CommandCropData data);
     static Rgb convertQColorToRgb(const QColor &color);
 
     QString srcFileName, destFileName;

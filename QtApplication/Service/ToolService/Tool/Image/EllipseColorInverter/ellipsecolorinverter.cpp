@@ -41,7 +41,7 @@ void EllipseColorInverter::marqueePaintedEvent(const QPainterPath &path) {
     pixmapItem->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
 
     auto rect = pixmapItem->mapToParent(pixmapItem->mapFromScene(cachedRect)).boundingRect().toRect();
-    auto data = CommandColorInverterData{.srcRect = rect, .destRect = rect};
+    auto data = CommandColorInverterData{rect, pixmapItem};
     auto info = CommandInformation{.colorInverterData = data, .type = CommandType::ellipseColorInverter};
     new AddItemCommand(pixmapItem, info);
 

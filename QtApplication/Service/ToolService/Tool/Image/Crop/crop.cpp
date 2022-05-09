@@ -18,7 +18,7 @@ void Crop::marqueePaintedEvent(const QPainterPath &path) {
     focusItem->setRect(focusItem->mapFromScene(path.boundingRect()).boundingRect());
 
     auto rect = focusItem->mapToParent(focusItem->boundingRect().toRect()).boundingRect().toRect();
-    auto data = CommandCropData{.rect = rect};
+    auto data = CommandCropData{rect};
     auto info = CommandInformation{.cropData = data, .type = CommandType::crop};
     new FocusOnCommand(view, focusItem, view->getFocusItem(), info);
     view->focusOn(focusItem);

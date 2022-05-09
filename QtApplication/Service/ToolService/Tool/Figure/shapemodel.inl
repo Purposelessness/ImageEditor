@@ -107,16 +107,16 @@ FigureData ShapeModel<T>::getData() const {
 template<typename T>
 void ShapeModel<T>::addCommand(const Coordinates &coordinates) {
     CommandFigureData data;
+    auto rect = QRect();
+    int x1r, y1r, x2r, y2r;
+    x1r = static_cast<int>(coordinates.x_0);
+    y1r = static_cast<int>(coordinates.y_0);
+    x2r = static_cast<int>(coordinates.x);
+    y2r = static_cast<int>(coordinates.y);
+    rect.setCoords(x1r, y1r, x2r, y2r);
     if (item) {
-        data = CommandFigureData{item};
+        data = CommandFigureData{item, rect};
     } else {
-        auto rect = QRect();
-        int x1r, y1r, x2r, y2r;
-        x1r = static_cast<int>(coordinates.x_0);
-        y1r = static_cast<int>(coordinates.y_0);
-        x2r = static_cast<int>(coordinates.x);
-        y2r = static_cast<int>(coordinates.y);
-        rect.setCoords(x1r, y1r, x2r, y2r);
         auto fillColor = brush.style() != Qt::NoBrush ? brush.color() : QColor();
         data = CommandFigureData{rect, fillColor, pen.color(), pen.width()};
     }

@@ -7,7 +7,7 @@ CommandLineData::CommandLineData(const QPoint &p1, const QPoint &p2, const QColo
         setLine(p1, p2);
 }
 
-CommandLineData CommandLineData::get() {
+void CommandLineData::update() {
     if (line) {
         QPoint p1 = line->mapToParent(line->line().p1()).toPoint();
         QPoint p2 = line->mapToParent(line->line().p2()).toPoint();
@@ -15,7 +15,6 @@ CommandLineData CommandLineData::get() {
         color = line->pen().color();
         thickness = line->pen().width();
     }
-    return CommandLineData{QPoint{x1, y1}, QPoint{x2, y2}, color, thickness};
 }
 
 void CommandLineData::setLine(const QPoint &p1, const QPoint &p2) {
@@ -32,7 +31,8 @@ void CommandLineData::setLine(const QPoint &p1, const QPoint &p2) {
     }
 }
 
-CommandFigureData::CommandFigureData(QAbstractGraphicsShapeItem *item) : item(item) {}
+CommandFigureData::CommandFigureData(QAbstractGraphicsShapeItem *item, const QRect &rect)
+                 : item(item), rect(rect.normalized()) {}
 
 CommandFigureData::CommandFigureData(const QRect &rect, const QColor &fillColor, const QColor &borderColor, int thickness)
                  : rect(rect.normalized()), thickness(thickness) {
@@ -41,14 +41,14 @@ CommandFigureData::CommandFigureData(const QRect &rect, const QColor &fillColor,
     setThickness(thickness);
 }
 
-CommandFigureData CommandFigureData::get() {
+void CommandFigureData::update() {
     if (item) {
-        rect = item->mapToParent(item->boundingRect()).boundingRect().toRect().normalized();
-        setFillColor(item->brush().color());
-        setBorderColor(item->brush().color());
+        auto newCenter = item->mapToParent(item->boundingRect()).boundingRect().toRect().normalized().center();
+        rect.moveCenter(newCenter);
+        setFillColor(item->brush().style() != Qt::NoBrush ? item->brush().color() : QColor{});
+        setBorderColor(item->pen().color());
         setThickness(item->pen().width());
     }
-    return CommandFigureData{rect, fillColor, borderColor, thickness};
 }
 
 void CommandFigureData::setFillColor(const QColor &color) {
@@ -63,20 +63,15 @@ void CommandFigureData::setThickness(int nThickness) {
     thickness = borderColor.isValid() ? nThickness : 0;
 }
 
-CommandColorInverterData::CommandColorInverterData(QAbstractGraphicsShapeItem *item) : item(item) {}
+CommandColorInverterData::CommandColorInverterData(const QRect &srcRect, QGraphicsPixmapItem *item)
+                        : srcRect(srcRect.normalized()), item(item) {}
 
 CommandColorInverterData::CommandColorInverterData(const QRect &srcRect, const QRect &destRect)
                         : srcRect(srcRect.normalized()), destRect(destRect.normalized()) {}
 
-CommandColorInverterData CommandColorInverterData::get() {
-    if (item) {
+void CommandColorInverterData::update() {
+    if (item)
         destRect = item->mapToParent(item->boundingRect()).boundingRect().toRect().normalized();
-    }
-    return CommandColorInverterData{srcRect, destRect};
 }
 
 CommandCropData::CommandCropData(const QRect &rect) : rect(rect.normalized()) {}
-
-CommandCropData CommandCropData::get() {
-    return CommandCropData{rect};
-}

@@ -9,6 +9,7 @@
 #include <QPoint>
 #include <QPen>
 #include <QBrush>
+#include <QGraphicsPixmapItem>
 
 enum class CommandType {
     none,
@@ -24,9 +25,9 @@ public:
     CommandLineData() = default;
     explicit CommandLineData(QGraphicsLineItem *line);
     explicit CommandLineData(const QPoint &p1, const QPoint &p2, const QColor &color, int thickness);
-    CommandLineData get();
     void setLine(const QPoint&p1, const QPoint &p2);
-private:
+
+    void update();
     int x1{}, y1{}, x2{}, y2{};
     QColor color{};
     int thickness{};
@@ -36,13 +37,13 @@ private:
 struct CommandFigureData {
 public:
     CommandFigureData() = default;
-    explicit CommandFigureData(QAbstractGraphicsShapeItem *item);
+    explicit CommandFigureData(QAbstractGraphicsShapeItem *item, const QRect &startRect);
     explicit CommandFigureData(const QRect &rect, const QColor &fillColor, const QColor &borderColor, int thickness);
-    CommandFigureData get();
     void setFillColor(const QColor &color);
     void setBorderColor(const QColor &color);
     void setThickness(int nThickness);
-private:
+
+    void update();
     QRect rect{};
     QColor fillColor{}, borderColor{};
     int thickness{};
@@ -52,20 +53,19 @@ private:
 struct CommandColorInverterData {
 public:
     CommandColorInverterData() = default;
-    explicit CommandColorInverterData(QAbstractGraphicsShapeItem *item);
+    explicit CommandColorInverterData(const QRect &srcRect, QGraphicsPixmapItem *item);
     explicit CommandColorInverterData(const QRect &srcRect, const QRect &destRect);
-    CommandColorInverterData get();
-private:
+
+    void update();
     QRect srcRect{}, destRect{};
-    QAbstractGraphicsShapeItem *item = nullptr;
+    QGraphicsPixmapItem *item = nullptr;
 };
 
 struct CommandCropData {
 public:
     CommandCropData() = default;
     explicit CommandCropData(const QRect &rect);
-    CommandCropData get();
-private:
+
     QRect rect{};
 };
 
