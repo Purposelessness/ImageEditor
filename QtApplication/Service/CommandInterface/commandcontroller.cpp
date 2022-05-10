@@ -84,12 +84,17 @@ void CommandController::drawLine(Bitmap::Image *image, CommandLineData data) {
 void CommandController::invertColorsInEllipse(Bitmap::Image *image, CommandColorInverterData data) {
     Bitmap::Image srcImage = *image;
     data.update();
-    int x1s, y1s, x2s, y2s;
-    int x1d, y1d, x2d, y2d;
-    data.srcRect.getCoords(&x1s, &y1s, &x2s, &y2s);
-    data.destRect.getCoords(&x1d, &y1d, &x2d, &y2d);
-    printf("%d %d %d %d; %d %d %d %d\n", x1s, y1s, x2s, y2s, x1d, y1d, x2d, y2d);
-    auto ellipse = Calculator::ellipse(x1s, y1s, x2s, y2s);
+    int x1s, y1s, ws, hs;
+    int x1d, y1d, wd, hd;
+    data.srcRect.getRect(&x1s, &y1s, &ws, &hs);
+    data.destRect.getRect(&x1d, &y1d, &wd, &hd);
+    auto ellipse = Calculator::ellipse(x1s, y1s, x1s + ws - 1, y1s + hs - 1);
+    auto dw = ws - wd;
+    auto dh = hs - hd;
+    if (x1d < 0 && dw != 0)
+        x1d -= dw;
+    if (y1d < 0 && dh != 0)
+        y1d -= dh;
     ColorInverter::start(image, Point{x1d, y1d}, &srcImage, ellipse);
 }
 
