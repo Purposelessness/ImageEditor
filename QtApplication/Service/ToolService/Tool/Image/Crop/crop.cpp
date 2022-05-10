@@ -9,13 +9,19 @@ Crop::Crop() : Marquee<MarqueeItem>(tr("Crop")) {}
 
 void Crop::marqueePaintedEvent(const QPainterPath &path) {
     auto view = WidgetData::getInstance().getGraphicsView();
+    if (!view)
+        return;
+
+    auto pixmapRect = view->getPixmapItem()->boundingRect();
 
     auto focusItem = new QGraphicsRectItem();
     view->addItem(focusItem);
 
     focusItem->setBrush(Qt::NoBrush);
     focusItem->setPen(Qt::NoPen);
-    focusItem->setRect(focusItem->mapFromScene(path.boundingRect()).boundingRect());
+    auto mappedFromSceneRect = focusItem->mapFromScene(path.boundingRect()).boundingRect();
+    auto intersectedRect = pixmapRect.intersected(mappedFromSceneRect);
+    focusItem->setRect(intersectedRect);
 
     auto rect = focusItem->mapToParent(focusItem->boundingRect().toRect()).boundingRect().toRect();
     auto data = CommandCropData{rect};
