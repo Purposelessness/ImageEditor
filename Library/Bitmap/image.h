@@ -18,10 +18,12 @@ namespace Bitmap {
 
         void setHeight(int32_t height) override;
         void setWidth(int32_t width) override;
+        void setCropRect(const Rect &cropRect = Rect());
 
         Rgb **getPixelData() override;
         [[nodiscard]] int32_t getHeight() const override;
         [[nodiscard]] int32_t getWidth() const override;
+        [[nodiscard]] Rect getCropRect() const override;
         FileHeader *getFileHeader();
         InfoHeader *getInfoHeader();
 
@@ -29,6 +31,7 @@ namespace Bitmap {
         FileHeader fileHeader{};
         InfoHeader infoHeader{0};
         Rgb **pixelData = nullptr;
+        Rect cropRect{};
     };
 
 }

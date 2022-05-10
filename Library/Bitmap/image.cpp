@@ -56,4 +56,12 @@ namespace Bitmap {
         }
     }
 
+    void Image::setCropRect(const Rect &newCropRect) {
+        cropRect = newCropRect;
+    }
+
+    Rect Image::getCropRect() const {
+        return cropRect;
+    }
+
 }

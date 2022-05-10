@@ -13,8 +13,17 @@ struct Rgb {
 #pragma pack(pop)
 
 struct Point {
-    int32_t x, y;
-    FillType type;
+    int32_t x{}, y{};
+    FillType type{};
+};
+
+struct Rect {
+    int32_t x{}, y{};
+    int32_t width{}, height{};
+
+    [[nodiscard]] bool isNull() const {
+        return width == 0 && height == 0;
+    }
 };
 
 

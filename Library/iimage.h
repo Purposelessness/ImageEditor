@@ -14,6 +14,7 @@ public:
     virtual Rgb **getPixelData() = 0;
     [[nodiscard]] virtual int32_t getHeight() const = 0;
     [[nodiscard]] virtual int32_t getWidth() const = 0;
+    [[nodiscard]] virtual Rect getCropRect() const = 0;
 };
 
 

@@ -15,12 +15,13 @@ CommandController::CommandController(QString srcFileName, QString destFileName, 
 
 void CommandController::start() {
     auto image = Bitmap::Loader::load(srcFileName.toUtf8().constData());
+    ExitCode code = ExitCode::success;
     for (auto command: commands) {
         auto info = command->getInformation();
-        processImage(&image, info);
+        code = processImage(&image, info);
     }
     Bitmap::Saver::save(&image, destFileName.toUtf8().constData());
-    emit finished(ExitCode::success);
+    emit finished(code);
 }
 
 void CommandController::terminate() {
@@ -46,8 +47,10 @@ ExitCode CommandController::processImage(Bitmap::Image *image, const CommandInfo
         case CommandType::crop:
             cropImage(image, info.cropData);
             break;
+        default:
+            return ExitCode::unknown;
     }
-    return ExitCode::unknown;
+    return ExitCode::success;
 }
 
 void CommandController::drawEllipse(Bitmap::Image *image, CommandFigureData data) {
@@ -85,12 +88,15 @@ void CommandController::invertColorsInEllipse(Bitmap::Image *image, CommandColor
     int x1d, y1d, x2d, y2d;
     data.srcRect.getCoords(&x1s, &y1s, &x2s, &y2s);
     data.destRect.getCoords(&x1d, &y1d, &x2d, &y2d);
+    printf("%d %d %d %d; %d %d %d %d\n", x1s, y1s, x2s, y2s, x1d, y2d, x2d, y2d);
     auto ellipse = Calculator::ellipse(x1s, y1s, x2s, y2s);
     ColorInverter::start(image, Point{x1d, y1d}, &srcImage, ellipse);
 }
 
 void CommandController::cropImage(Bitmap::Image *image, CommandCropData data) {
-
+    int xl, yt, w, h;
+    data.rect.getRect(&xl, &yt, &w, &h);
+    image->setCropRect(Rect{xl, yt, w, h});
 }
 
 Rgb CommandController::convertQColorToRgb(const QColor &color) {

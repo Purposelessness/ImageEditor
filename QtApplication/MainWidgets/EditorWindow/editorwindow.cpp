@@ -3,6 +3,7 @@
 #include "../../logger.h"
 #include "../../Service/ImageLoader/imageloader.h"
 #include "../../Service/ImageSaver/imagesaver.h"
+#include "../../Service/UndoService/undoservice.h"
 
 #include <QStandardPaths>
 #include <QFileDialog>
@@ -18,6 +19,7 @@ EditorWindow::EditorWindow(QWidget *parent) : view(new EditorWindowView(parent))
 void EditorWindow::openImage() {
     auto imageLoaderOut = ImageLoader::loadImage();
     if (!imageLoaderOut.image.isNull()) {
+        UndoService::getInstance().clear();
         view->imageViewer->setImage(imageLoaderOut.image);
         imagePath = imageLoaderOut.imagePath;
     }
