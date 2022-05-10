@@ -1,5 +1,5 @@
 #include "undoservice.h"
-#include "QDebug"
+#include "../CommandInterface/commandinterface.h"
 
 UndoService::UndoService() : undoAction(createUndoAction(this)), redoAction(createRedoAction(this)) {}
 
@@ -19,4 +19,9 @@ QAction *UndoService::getRedoAction() {
 UndoService::~UndoService() {
     delete undoAction;
     delete redoAction;
+}
+
+void UndoService::clear() {
+    QUndoStack::clear();
+    CommandInterface::getInstance().clear();
 }

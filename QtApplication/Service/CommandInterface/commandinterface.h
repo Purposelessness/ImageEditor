@@ -19,6 +19,7 @@ public:
     void processImage(const QString &srcFileName, const QString &destFileName);
     void push(Command *command);
     Command *pop();
+    void clear();
 
 private slots:
     void onWorkerFinished(ExitCode code);

@@ -14,6 +14,7 @@ public:
 
     QAction *getUndoAction();
     QAction *getRedoAction();
+    void clear();
 
 private:
     UndoService();

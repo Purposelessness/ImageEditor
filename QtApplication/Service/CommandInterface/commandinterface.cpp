@@ -33,6 +33,16 @@ Command *CommandInterface::pop() {
     return t;
 }
 
+void CommandInterface::clear() {
+    commands.clear();
+}
+
 void CommandInterface::onWorkerFinished(ExitCode code) {
-    qDebug(commandInterface()) << "Work is finished";
+    if (code == ExitCode::invalid) {
+        qInfo(commandInterface()) << "Work is finished but some actions cannot be done";
+    } else if (code == ExitCode::unknown) {
+        qWarning(commandInterface()) << "Some commands are unknown";
+    } else {
+        qDebug(commandInterface()) << "Work is finished";
+    }
 }
