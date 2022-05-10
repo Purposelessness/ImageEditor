@@ -105,8 +105,8 @@ void CommandController::cropImage(Bitmap::Image *image, CommandCropData data) {
 }
 
 Rgb CommandController::convertQColorToRgb(const QColor &color) {
-    return color.isValid() ? Rgb{static_cast<uint8_t>(color.green()),
-                                 static_cast<uint8_t>(color.red()),
-                                 static_cast<uint8_t>(color.blue()),}
+    return color.isValid() ? Rgb{static_cast<uint8_t>(color.blue()),
+                                 static_cast<uint8_t>(color.green()),
+                                 static_cast<uint8_t>(color.red()),}
                            : Rgb{};
 }
