@@ -88,7 +88,7 @@ void CommandController::invertColorsInEllipse(Bitmap::Image *image, CommandColor
     int x1d, y1d, x2d, y2d;
     data.srcRect.getCoords(&x1s, &y1s, &x2s, &y2s);
     data.destRect.getCoords(&x1d, &y1d, &x2d, &y2d);
-    printf("%d %d %d %d; %d %d %d %d\n", x1s, y1s, x2s, y2s, x1d, y2d, x2d, y2d);
+    printf("%d %d %d %d; %d %d %d %d\n", x1s, y1s, x2s, y2s, x1d, y1d, x2d, y2d);
     auto ellipse = Calculator::ellipse(x1s, y1s, x2s, y2s);
     ColorInverter::start(image, Point{x1d, y1d}, &srcImage, ellipse);
 }

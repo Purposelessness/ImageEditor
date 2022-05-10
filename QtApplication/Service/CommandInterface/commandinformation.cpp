@@ -70,8 +70,11 @@ CommandColorInverterData::CommandColorInverterData(const QRect &srcRect, const Q
                         : srcRect(srcRect.normalized()), destRect(destRect.normalized()) {}
 
 void CommandColorInverterData::update() {
-    if (item)
+    if (item) {
         destRect = item->mapToParent(item->boundingRect()).boundingRect().toRect().normalized();
+        qDebug() << srcRect;
+        qDebug() << destRect;
+    }
 }
 
 CommandCropData::CommandCropData(const QRect &rect) : rect(rect.normalized()) {}

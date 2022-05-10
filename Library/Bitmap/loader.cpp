@@ -22,7 +22,7 @@ namespace Bitmap {
         fread(&size, sizeof(uint32_t), 1, f);
         InfoHeader infoHeader{size};
 
-        fread(&infoHeader.data, size, 1, f);
+        fread(&infoHeader.data, size - sizeof(uint32_t), 1, f);
 
         int32_t height = infoHeader.getHeight();
         int32_t width = infoHeader.getWidth();
