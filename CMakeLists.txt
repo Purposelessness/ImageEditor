@@ -14,7 +14,6 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS
         Core
         Gui
         Widgets
-        Concurrent
         REQUIRED
         )
 
@@ -22,7 +21,6 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
         Core
         Gui
         Widgets
-        Concurrent
         REQUIRED
         )
 
@@ -63,7 +61,6 @@ target_link_libraries(ImageEditor PRIVATE
         Qt::Core
         Qt::Gui
         Qt::Widgets
-        Qt::Concurrent
         )
 
 if (QT_VERSION_MAJOR EQUAL 6)
