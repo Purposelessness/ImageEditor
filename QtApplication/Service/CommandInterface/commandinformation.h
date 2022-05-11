@@ -53,11 +53,12 @@ public:
 struct CommandColorInverterData {
 public:
     CommandColorInverterData() = default;
-    explicit CommandColorInverterData(const QRect &srcRect, QGraphicsPixmapItem *item);
-    explicit CommandColorInverterData(const QRect &srcRect, const QRect &destRect);
+    explicit CommandColorInverterData(const QRect &srcRect, const QPoint &offset, QGraphicsPixmapItem *item);
+    explicit CommandColorInverterData(const QRect &srcRect, const QPoint &offset, const QRect &destRect);
 
     void update();
     QRect srcRect{}, destRect{};
+    QPoint offset{};
     QGraphicsPixmapItem *item = nullptr;
 };
 

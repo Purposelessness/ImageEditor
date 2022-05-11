@@ -63,17 +63,17 @@ void CommandFigureData::setThickness(int nThickness) {
     thickness = borderColor.isValid() ? nThickness : 0;
 }
 
-CommandColorInverterData::CommandColorInverterData(const QRect &srcRect, QGraphicsPixmapItem *item)
-                        : srcRect(srcRect.normalized()), item(item) {}
+CommandColorInverterData::CommandColorInverterData(const QRect &srcRect, const QPoint &offset, QGraphicsPixmapItem *item)
+                        : srcRect(srcRect.normalized()), offset(offset), item(item) {}
 
-CommandColorInverterData::CommandColorInverterData(const QRect &srcRect, const QRect &destRect)
-                        : srcRect(srcRect.normalized()), destRect(destRect.normalized()) {}
+CommandColorInverterData::CommandColorInverterData(const QRect &srcRect, const QPoint &offset, const QRect &destRect)
+                        : srcRect(srcRect.normalized()), offset(offset), destRect(destRect.normalized()) {}
 
 void CommandColorInverterData::update() {
     if (item) {
         destRect = item->mapToParent(item->boundingRect()).boundingRect().toRect().normalized();
-        qDebug() << srcRect;
-        qDebug() << destRect;
+        qDebug() << "SRC" << srcRect;
+        qDebug() << "DST" << destRect;
     }
 }
 

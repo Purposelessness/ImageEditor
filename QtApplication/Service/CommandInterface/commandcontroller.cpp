@@ -89,12 +89,8 @@ void CommandController::invertColorsInEllipse(Bitmap::Image *image, CommandColor
     data.srcRect.getRect(&x1s, &y1s, &ws, &hs);
     data.destRect.getRect(&x1d, &y1d, &wd, &hd);
     auto ellipse = Calculator::ellipse(x1s, y1s, x1s + ws - 1, y1s + hs - 1);
-    auto dw = ws - wd;
-    auto dh = hs - hd;
-    if (x1d < 0 && dw != 0)
-        x1d -= dw;
-    if (y1d < 0 && dh != 0)
-        y1d -= dh;
+    x1d += data.offset.x();
+    y1d += data.offset.y();
     ColorInverter::start(image, Point{x1d, y1d}, &srcImage, ellipse);
 }
 
