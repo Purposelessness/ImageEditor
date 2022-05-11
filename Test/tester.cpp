@@ -9,9 +9,8 @@
 #include "../Library/Service/Benchmark/benchmark.h"
 
 #include <cstdio>
-#include <ctime>
 
-const char *src = "D:/simpsonsvr.bmp";
+const char *src = "D:/2_big.bmp";
 const char *dest = "D:/new.bmp";
 
 void Tester::sizeOf() {
@@ -44,12 +43,12 @@ void Tester::paintEllipse() {
     int32_t width = bmp.getWidth();
     int32_t height = bmp.getHeight();
     int32_t x_0, y_0, x, y;
-    x_0 = width / 2;
-    x = width;
-    y_0 = 0;
-    y = height * 1.5;
+    x_0 = 0 + 50;
+    x = width - 50;
+    y_0 = 50;
+    y = height - 50;
 
-    auto ellipse = Calculator::ellipse(x_0, y_0, x, y, 1);
+    auto ellipse = Calculator::ellipse(x_0, y_0, x, y, 10, false);
     Painter::start(&bmp, ellipse, Rgb{190, 60, 60}, Rgb{60, 70, 190});
     auto ellipse1 = Calculator::ellipse(50, 50, width / 2 - 50, height - 50, 0);
     Painter::start(&bmp, ellipse1, Rgb{190, 60, 60}, Rgb{60, 70, 190});
