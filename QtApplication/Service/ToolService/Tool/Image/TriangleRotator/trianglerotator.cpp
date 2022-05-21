@@ -1,16 +1,13 @@
-#include "ellipsecolorinverter.h"
+#include "trianglerotator.h"
 #include "../../../../../Data/data.h"
 #include "../../../../../MainWidgets/ImageViewer/imagecontainer.h"
 #include "../../../../ColorInverterWorker//colorinverterworker.h"
 #include "../../../../UndoService/Command/additemcommand.h"
 #include "../PixmapItem/pixmapitem.h"
 
-#include <QDialog>
-#include <QLabel>
+TriangleRotator::TriangleRotator() : Marquee<TriangleMarqueeItem>(tr("TriangleRotator")) {}
 
-EllipseColorInverter::EllipseColorInverter() : Marquee<EllipseMarqueeItem>(tr("EllipseColorInverter")) {}
-
-void EllipseColorInverter::marqueePaintedEvent(const QPainterPath &path) {
+void TriangleRotator::marqueePaintedEvent(const QPainterPath &path) {
     auto graphicsView = WidgetData::getInstance().getGraphicsView();
     if (!graphicsView)
         return;
@@ -23,7 +20,7 @@ void EllipseColorInverter::marqueePaintedEvent(const QPainterPath &path) {
     int x0 = sceneRect.left();
     int y0 = sceneRect.top();
     auto cachedRect = sceneRect;
-    FigurePoints points = Calculator::ellipse(0, 0, sceneRect.width(),sceneRect.height());
+    FigurePoints points = Calculator::triangle(0, 0, sceneRect.width(),sceneRect.height());
     auto image = graphicsView->grab(&sceneRect).toImage();
     points.x = x0 - sceneRect.left();
     points.y = y0 - sceneRect.top();
@@ -38,13 +35,15 @@ void EllipseColorInverter::marqueePaintedEvent(const QPainterPath &path) {
 
     auto pixmap = QPixmap::fromImage(newImage).scaledToWidth(itemRect.width());
     pixmapItem->setPixmap(pixmap);
+    pixmapItem->setTransformOriginPoint(pixmapItem->boundingRect().center());
 
     pixmapItem->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
 
     auto offset = pixmapItem->mapToParent(pixmapItem->mapFromScene(sceneOffset)).toPoint();
     auto rect = pixmapItem->mapToParent(pixmapItem->mapFromScene(cachedRect)).boundingRect().toRect();
     auto data = CommandColorInverterData{rect, offset, pixmapItem};
-    auto info = CommandInformation{.colorInverterData = data, .type = CommandType::ellipseColorInverter};
+    auto info = CommandInformation{.colorInverterData = data, .type = CommandType::triangleRotator};
+    pixmapItem->setRotation(90);
     new AddItemCommand(pixmapItem, info);
 
     pixmapItem->setSelected(true);

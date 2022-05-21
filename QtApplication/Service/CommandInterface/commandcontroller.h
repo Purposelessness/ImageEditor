@@ -43,6 +43,7 @@ private:
     static void drawLine(Bitmap::Image *image, CommandLineData data);
     static void invertColorsInEllipse(Bitmap::Image *image, CommandColorInverterData data);
     static void cropImage(Bitmap::Image *image, CommandCropData data);
+    static void rotateTriangle(Bitmap::Image *image, CommandColorInverterData data);
     static Rgb convertQColorToRgb(const QColor &color);
 
     QString srcFileName, destFileName;

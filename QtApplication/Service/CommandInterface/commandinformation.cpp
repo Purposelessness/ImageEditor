@@ -71,7 +71,10 @@ CommandColorInverterData::CommandColorInverterData(const QRect &srcRect, const Q
 
 void CommandColorInverterData::update() {
     if (item) {
+        auto rot = item->rotation();
+        item->setRotation(0);
         destRect = item->mapToParent(item->boundingRect()).boundingRect().toRect().normalized();
+        item->setRotation(rot);
         qDebug() << "SRC" << srcRect;
         qDebug() << "DST" << destRect;
     }

@@ -17,6 +17,7 @@ enum class CommandType {
     triangle,
     line,
     ellipseColorInverter,
+    triangleRotator,
     crop
 };
 

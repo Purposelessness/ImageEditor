@@ -7,6 +7,7 @@
 #include "../../../Library/Service/FigureCalculator/calculator.h"
 #include "../../../Library/Service/ColorInverter/colorinverter.h"
 #include "../../../Library/Service/Painter/painter.h"
+#include "../../../Library/Service/Rotator/rotator.h"
 
 #include <utility>
 
@@ -46,6 +47,9 @@ ExitCode CommandController::processImage(Bitmap::Image *image, const CommandInfo
             break;
         case CommandType::crop:
             cropImage(image, info.cropData);
+            break;
+        case CommandType::triangleRotator:
+            rotateTriangle(image, info.colorInverterData);
             break;
         default:
             return ExitCode::unknown;
@@ -105,4 +109,17 @@ Rgb CommandController::convertQColorToRgb(const QColor &color) {
                                  static_cast<uint8_t>(color.green()),
                                  static_cast<uint8_t>(color.red()),}
                            : Rgb{};
+}
+
+void CommandController::rotateTriangle(Bitmap::Image *image, CommandColorInverterData data) {
+    Bitmap::Image srcImage = *image;
+    data.update();
+    int x1s, y1s, ws, hs;
+    int x1d, y1d, wd, hd;
+    data.srcRect.getRect(&x1s, &y1s, &ws, &hs);
+    data.destRect.getRect(&x1d, &y1d, &wd, &hd);
+    auto ellipse = Calculator::triangle(x1s, y1s, x1s + ws - 1, y1s + hs - 1);
+    x1d += data.offset.x();
+    y1d += data.offset.y();
+    Rotator::start(image, Point{x1d, y1d}, &srcImage, ellipse, 90);
 }
