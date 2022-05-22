@@ -163,6 +163,6 @@ void Tester::scaleArea() {
 void Tester::rotate() {
     Bitmap::Image bmp = Bitmap::Loader::load(simpson);
     auto triangle = Calculator::triangle(bmp.getWidth() / 4, bmp.getHeight() / 4, bmp.getWidth() * 3 / 4,bmp.getHeight() * 3 / 4);
-    Rotator::startBmp(&bmp, {0, 0}, triangle, 30);
+    Rotator::startBmpShear(&bmp, {0, 0}, triangle, 30);
     Bitmap::Saver::save(&bmp, dest);
 }
