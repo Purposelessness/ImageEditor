@@ -71,12 +71,26 @@ public:
     QRect rect{};
 };
 
+struct CommandRotatorData {
+public:
+    CommandRotatorData() = default;
+    explicit CommandRotatorData(const QRect &srcRect, const QPoint &offset, QGraphicsPixmapItem *item, int angle);
+    explicit CommandRotatorData(const QRect &srcRect, const QPoint &offset, const QRect &destRect, int angle);
+
+    void update();
+    QRect srcRect{}, destRect{};
+    QPoint offset{};
+    QGraphicsPixmapItem *item = nullptr;
+    int angle{};
+};
+
 struct CommandInformation {
     union {
         CommandFigureData figureData{};
         CommandLineData lineData;
         CommandColorInverterData colorInverterData;
         CommandCropData cropData;
+        CommandRotatorData rotatorData;
     };
     CommandType type = CommandType::none;
 };

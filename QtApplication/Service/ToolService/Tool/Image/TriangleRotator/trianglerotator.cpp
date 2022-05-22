@@ -1,9 +1,12 @@
 #include "trianglerotator.h"
 #include "../../../../../Data/data.h"
 #include "../../../../../MainWidgets/ImageViewer/imagecontainer.h"
-#include "../../../../ColorInverterWorker//colorinverterworker.h"
 #include "../../../../UndoService/Command/additemcommand.h"
 #include "../PixmapItem/pixmapitem.h"
+#include "../../../../FigureExtracterWorker/figureextractorworker.h"
+#include "../../../../../../Library/Service/FigureCalculator/calculator.h"
+
+#include <QInputDialog>
 
 TriangleRotator::TriangleRotator() : Marquee<TriangleMarqueeItem>(tr("TriangleRotator")) {}
 
@@ -31,7 +34,7 @@ void TriangleRotator::marqueePaintedEvent(const QPainterPath &path) {
     auto parentPos = pixmapItem->mapToParent(itemPos);
     pixmapItem->setPos(parentPos);
 
-    auto newImage = ColorInverterWorker::start(points, image);
+    auto newImage = FigureExtractorWorker::start(points, image);
 
     auto pixmap = QPixmap::fromImage(newImage).scaledToWidth(itemRect.width());
     pixmapItem->setPixmap(pixmap);
@@ -39,11 +42,16 @@ void TriangleRotator::marqueePaintedEvent(const QPainterPath &path) {
 
     pixmapItem->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
 
+    bool ok;
+    int angle = QInputDialog::getInt(nullptr, tr("Rotation angle"), tr("Angle:"), 0, INT_MIN, INT_MAX, 1, &ok);
+    angle %= 360;
+    if (!ok) angle = 0;
+
     auto offset = pixmapItem->mapToParent(pixmapItem->mapFromScene(sceneOffset)).toPoint();
     auto rect = pixmapItem->mapToParent(pixmapItem->mapFromScene(cachedRect)).boundingRect().toRect();
-    auto data = CommandColorInverterData{rect, offset, pixmapItem};
-    auto info = CommandInformation{.colorInverterData = data, .type = CommandType::triangleRotator};
-    pixmapItem->setRotation(90);
+    auto data = CommandRotatorData{rect, offset, pixmapItem, angle};
+    auto info = CommandInformation{.rotatorData = data, .type = CommandType::triangleRotator};
+    pixmapItem->setRotation(angle);
     new AddItemCommand(pixmapItem, info);
 
     pixmapItem->setSelected(true);

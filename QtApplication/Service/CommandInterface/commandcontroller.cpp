@@ -49,7 +49,7 @@ ExitCode CommandController::processImage(Bitmap::Image *image, const CommandInfo
             cropImage(image, info.cropData);
             break;
         case CommandType::triangleRotator:
-            rotateTriangle(image, info.colorInverterData);
+            rotateTriangle(image, info.rotatorData);
             break;
         default:
             return ExitCode::unknown;
@@ -111,7 +111,7 @@ Rgb CommandController::convertQColorToRgb(const QColor &color) {
                            : Rgb{};
 }
 
-void CommandController::rotateTriangle(Bitmap::Image *image, CommandColorInverterData data) {
+void CommandController::rotateTriangle(Bitmap::Image *image, CommandRotatorData data) {
     Bitmap::Image srcImage = *image;
     data.update();
     int x1s, y1s, ws, hs;
@@ -121,5 +121,5 @@ void CommandController::rotateTriangle(Bitmap::Image *image, CommandColorInverte
     auto ellipse = Calculator::triangle(x1s, y1s, x1s + ws - 1, y1s + hs - 1);
     x1d += data.offset.x();
     y1d += data.offset.y();
-    Rotator::start(image, Point{x1d, y1d}, &srcImage, ellipse, 90);
+    Rotator::start(image, Point{x1d, y1d}, &srcImage, ellipse, data.angle);
 }

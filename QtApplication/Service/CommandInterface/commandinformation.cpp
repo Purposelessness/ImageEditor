@@ -75,9 +75,22 @@ void CommandColorInverterData::update() {
         item->setRotation(0);
         destRect = item->mapToParent(item->boundingRect()).boundingRect().toRect().normalized();
         item->setRotation(rot);
-        qDebug() << "SRC" << srcRect;
-        qDebug() << "DST" << destRect;
     }
 }
 
 CommandCropData::CommandCropData(const QRect &rect) : rect(rect.normalized()) {}
+
+CommandRotatorData::CommandRotatorData(const QRect &srcRect, const QPoint &offset, QGraphicsPixmapItem *item, int angle)
+                  : srcRect(srcRect.normalized()), offset(offset), item(item), angle(angle) {}
+
+CommandRotatorData::CommandRotatorData(const QRect &srcRect, const QPoint &offset, const QRect &destRect, int angle)
+                  : srcRect(srcRect.normalized()), offset(offset), destRect(destRect.normalized()), angle(angle) {}
+
+void CommandRotatorData::update() {
+    if (item) {
+        angle = static_cast<int>(item->rotation());
+        item->setRotation(0);
+        destRect = item->mapToParent(item->boundingRect()).boundingRect().toRect().normalized();
+        item->setRotation(angle);
+    }
+}
