@@ -64,4 +64,8 @@ namespace Bitmap {
         return cropRect;
     }
 
+    bool Image::isPixelValid(int32_t x, int32_t y) const {
+        return x >= 0 && x < infoHeader.getWidth() && y >= 0 && y < infoHeader.getHeight();
+    }
+
 }

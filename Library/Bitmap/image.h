@@ -15,6 +15,7 @@ namespace Bitmap {
         ~Image();
 
         [[nodiscard]] bool isEmpty() const override;
+        [[nodiscard]] bool isPixelValid(int32_t x, int32_t y) const;
 
         void setHeight(int32_t height) override;
         void setWidth(int32_t width) override;

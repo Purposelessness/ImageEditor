@@ -7,10 +7,13 @@
 #include "../Library/Service/ColorInverter/colorinverter.h"
 #include "../Library/Service/Painter/painter.h"
 #include "../Library/Service/Benchmark/benchmark.h"
+#include "../Library/Service/Scaler/scaler.h"
 
 #include <cstdio>
 
-const char *src = "D:/2_big.bmp";
+const char *src = "D:/BMP/red_big.bmp";
+const char *srcSmall = "D:/BMP/red_small.bmp";
+const char *simpson = "D:/BMP/simpson.bmp";
 const char *dest = "D:/new.bmp";
 
 void Tester::sizeOf() {
@@ -141,4 +144,17 @@ void Tester::invertDifferentImages() {
     auto ellipse = Calculator::ellipse(width / 2, -10, width - 100, height / 2);
     ColorInverter::start(&bmp, Point{20, height / 2}, &srcBmp, ellipse);
     Bitmap::Saver::save(&bmp, dest);
+}
+
+void Tester::scale() {
+    Bitmap::Image bmp = Bitmap::Loader::load(simpson);
+    auto nBmp = Scaler::startBmp(bmp, bmp.getWidth() * 4, bmp.getHeight() * 4);
+    Bitmap::Saver::save(&nBmp, dest);
+}
+
+void Tester::scaleArea() {
+    Bitmap::Image bmp = Bitmap::Loader::load(simpson);
+    FigurePoints p{bmp.getWidth() / 2, bmp.getHeight() / 2, bmp.getWidth() / 2, bmp.getHeight() / 2};
+    auto nBmp = Scaler::startBmp(bmp, bmp.getWidth(), bmp.getHeight(), p);
+    Bitmap::Saver::save(&nBmp, dest);
 }

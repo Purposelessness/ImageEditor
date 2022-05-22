@@ -14,6 +14,8 @@ public:
     static void paintComplexLines();
     static void paintTriangle();
     static void invertDifferentImages();
+    static void scale();
+    static void scaleArea();
 };
 
 

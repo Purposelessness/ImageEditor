@@ -2,6 +2,8 @@
 #include "QtApplication/MainWidgets/EditorWindow/editorwindow.h"
 #include "QtApplication/Service/ToolService/toolservice.h"
 
+#include "Test/tester.h"
+
 #include <QApplication>
 
 int main(int argc, char *argv[]) {
@@ -9,6 +11,8 @@ int main(int argc, char *argv[]) {
     initLogger();
     ToolService::getInstance();
     EditorWindow w;
+
+    Tester::scaleArea();
 
     return QApplication::exec();
 }
