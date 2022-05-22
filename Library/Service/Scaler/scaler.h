@@ -7,9 +7,8 @@
 class Scaler {
 public:
     static Bitmap::Image startBmp(Bitmap::Image &image, int32_t newWidth, int32_t newHeight, const FigurePoints &points = FigurePoints());
-
-private:
-    static Rgb getPixel();
+    static FigurePoints startPoints(const FigurePoints &figurePoints, int32_t newWidth, int32_t newHeight);
+    static Point startPoint(const Point &point, double scale);
 };
 
 
