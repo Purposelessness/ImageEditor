@@ -1,14 +1,16 @@
-#include <cstdio>
-#include <cmath>
 #include "rotator.h"
 
-void Rotator::start(IImage *image, const Point &point, IImage *srcImage, const FigurePoints &points, int angle) {
-    if (image->isEmpty() || srcImage->isEmpty()) {
+#include <cstdio>
+#include <cmath>
+
+void Rotator::startBmp(Bitmap::Image *image, const Point &point, const FigurePoints &points, int angle) {
+    if (image->isEmpty()) {
         puts("Image is empty");
         return;
     }
 
-    Rgb **srcData = srcImage->getPixelData();
+    auto srcImage = *image;
+    Rgb **srcData = srcImage.getPixelData();
     Rgb **data = image->getPixelData();
     int32_t imageWidth = image->getWidth();
     int32_t imageHeight = image->getHeight();
@@ -49,7 +51,7 @@ bool Rotator::pointIsValid(int32_t x, int32_t y, int32_t width, int32_t height) 
 
 Point Rotator::transformPixel(Point pixel, int angle) {
     double angled = angle * M_PI / 180;
-    int32_t nx = cos(angled) * pixel.x - sin(angled) * pixel.y;
-    int32_t ny = sin(angled) * pixel.x + cos(angled) * pixel.y;
+    auto nx = static_cast<int32_t>(round(cos(angled) * pixel.x - sin(angled) * pixel.y));
+    auto ny = static_cast<int32_t>(sin(angled) * pixel.x + cos(angled) * pixel.y);
     return {nx, ny, pixel.type};
 }

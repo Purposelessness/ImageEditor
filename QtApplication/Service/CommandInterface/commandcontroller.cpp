@@ -112,7 +112,6 @@ Rgb CommandController::convertQColorToRgb(const QColor &color) {
 }
 
 void CommandController::rotateTriangle(Bitmap::Image *image, CommandRotatorData data) {
-    Bitmap::Image srcImage = *image;
     data.update();
     int x1s, y1s, ws, hs;
     int x1d, y1d, wd, hd;
@@ -121,5 +120,5 @@ void CommandController::rotateTriangle(Bitmap::Image *image, CommandRotatorData 
     auto ellipse = Calculator::triangle(x1s, y1s, x1s + ws - 1, y1s + hs - 1);
     x1d += data.offset.x();
     y1d += data.offset.y();
-    Rotator::start(image, Point{x1d, y1d}, &srcImage, ellipse, data.angle);
+    Rotator::startBmp(image, Point{x1d, y1d}, ellipse, data.angle);
 }

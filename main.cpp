@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     ToolService::getInstance();
     EditorWindow w;
 
-    Tester::scaleArea();
+    Tester::rotate();
 
     return QApplication::exec();
 }

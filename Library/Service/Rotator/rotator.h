@@ -2,11 +2,11 @@
 #define IMAGEEDITOR_ROTATOR_H
 
 
-#include "../../iimage.h"
+#include "../../Bitmap/image.h"
 
 class Rotator {
 public:
-    static void start(IImage *image, const Point &point, IImage *srcImage, const FigurePoints &points, int angle);
+    static void startBmp(Bitmap::Image *image, const Point &point, const FigurePoints &points, int angle);
 
 private:
     static Point transformPixel(Point pixel, int angle);

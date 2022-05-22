@@ -12,6 +12,8 @@ enum class FillType {
 };
 
 struct FigurePoints {
+    FigurePoints() = default;
+
     FigurePoints(int32_t x, int32_t y, int32_t width, int32_t height) : x(x), y(y), width(width), height(height) {
         this->data = new FillType *[height]{};
         for (int i = 0; i < height; ++i) {
@@ -39,6 +41,10 @@ struct FigurePoints {
 
     [[nodiscard]] bool contains(int32_t x_0, int32_t y_0) const {
         return this->x <= x_0 && x_0 < this->x + width && this->y <= y_0 && y_0 < this->y + height;
+    }
+
+    [[nodiscard]] bool isValid(int32_t nx, int32_t ny) const {
+        return nx >= 0 && nx < width && ny >= 0 && ny < height;
     }
 
     int32_t x = 0, y = 0;

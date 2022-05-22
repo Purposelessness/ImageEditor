@@ -8,6 +8,7 @@
 #include "../Library/Service/Painter/painter.h"
 #include "../Library/Service/Benchmark/benchmark.h"
 #include "../Library/Service/Scaler/scaler.h"
+#include "../Library/Service/Rotator/rotator.h"
 
 #include <cstdio>
 
@@ -157,4 +158,11 @@ void Tester::scaleArea() {
     FigurePoints p{bmp.getWidth() / 2, bmp.getHeight() / 2, bmp.getWidth() / 2, bmp.getHeight() / 2};
     auto nBmp = Scaler::startBmp(bmp, bmp.getWidth(), bmp.getHeight(), p);
     Bitmap::Saver::save(&nBmp, dest);
+}
+
+void Tester::rotate() {
+    Bitmap::Image bmp = Bitmap::Loader::load(simpson);
+    auto triangle = Calculator::triangle(bmp.getWidth() / 4, bmp.getHeight() / 4, bmp.getWidth() * 3 / 4,bmp.getHeight() * 3 / 4);
+    Rotator::startBmp(&bmp, {0, 0}, triangle, 30);
+    Bitmap::Saver::save(&bmp, dest);
 }

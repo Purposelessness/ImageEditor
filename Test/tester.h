@@ -16,6 +16,7 @@ public:
     static void invertDifferentImages();
     static void scale();
     static void scaleArea();
+    static void rotate();
 };
 
 
