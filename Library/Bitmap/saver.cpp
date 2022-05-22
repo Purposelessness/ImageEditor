@@ -45,6 +45,8 @@ namespace Bitmap {
             infoHeader->setHeight(height);
         }
 
+        fileHeader->fileSize = height * width * sizeof(Rgb) + height * (width % 4) + fileHeader->pixelArrayOffset;
+
         if (!infoHeader->isUpsideDown) {
             infoHeader->setHeight(-height);
         }
