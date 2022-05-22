@@ -107,7 +107,7 @@ void CommandController::cropImage(Bitmap::Image *image, CommandCropData data) {
 Rgb CommandController::convertQColorToRgb(const QColor &color) {
     return color.isValid() ? Rgb{static_cast<uint8_t>(color.blue()),
                                  static_cast<uint8_t>(color.green()),
-                                 static_cast<uint8_t>(color.red()),}
+                                 static_cast<uint8_t>(color.red())}
                            : Rgb{};
 }
 
@@ -120,5 +120,5 @@ void CommandController::rotateTriangle(Bitmap::Image *image, CommandRotatorData 
     auto ellipse = Calculator::triangle(x1s, y1s, x1s + ws - 1, y1s + hs - 1);
     x1d += data.offset.x();
     y1d += data.offset.y();
-    Rotator::startBmp(image, Point{x1d, y1d}, ellipse, data.angle);
+    Rotator::startBmpShear(image, Point{x1d, y1d}, ellipse, data.angle);
 }
