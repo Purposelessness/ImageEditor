@@ -9,6 +9,7 @@
 #include "../Library/Service/Benchmark/benchmark.h"
 #include "../Library/Service/Scaler/scaler.h"
 #include "../Library/Service/Rotator/rotator.h"
+#include "../Library/Service/Outliner/outliner.h"
 
 #include <cstdio>
 
@@ -164,5 +165,11 @@ void Tester::rotate() {
     Bitmap::Image bmp = Bitmap::Loader::load(simpson);
     auto triangle = Calculator::triangle(bmp.getWidth() / 4, bmp.getHeight() / 4, bmp.getWidth() * 3 / 4,bmp.getHeight() * 3 / 4);
     Rotator::startBmpShear(&bmp, {0, 0}, triangle, 30);
+    Bitmap::Saver::save(&bmp, dest);
+}
+
+void Tester::outline() {
+    Bitmap::Image bmp = Bitmap::Loader::load(simpson);
+    Outliner::start(&bmp, Rgb{255, 255, 255}, Rgb{255, 0, 255}, 5);
     Bitmap::Saver::save(&bmp, dest);
 }

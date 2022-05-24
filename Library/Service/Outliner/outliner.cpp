@@ -13,4 +13,6 @@ void Outliner::start(IImage *image, const Rgb &color, const Rgb &outlineColor, c
     }
 }
 
-
+bool Outliner::rgbEqual(const Rgb &r1, const Rgb &r2) {
+    return r1.b == r2.b && r1.g == r2.g && r1.r == r2.r;
+}

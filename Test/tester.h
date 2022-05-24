@@ -17,6 +17,7 @@ public:
     static void scale();
     static void scaleArea();
     static void rotate();
+    static void outline();
 };
 
 

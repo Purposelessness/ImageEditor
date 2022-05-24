@@ -15,6 +15,7 @@ public:
 
 private:
     static bool pointIsValid(int32_t x, int32_t y, int32_t width, int32_t height);
+    static bool rgbEqual(const Rgb &r1, const Rgb &r2);
 };
 
 

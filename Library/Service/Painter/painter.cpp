@@ -116,3 +116,7 @@ void Painter::drawRect(const PixelData &pixelData, int32_t width, const Point &p
 bool Painter::pointIsValid(int32_t x, int32_t y, int32_t width, int32_t height) {
     return x >= 0 && x < width && y >= 0 && y < height;
 }
+
+bool Painter::rgbEqual(const Rgb &r1, const Rgb &r2) {
+    return r1.b == r2.b && r1.g == r2.g && r1.r == r2.r;
+}
