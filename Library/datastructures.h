@@ -12,6 +12,16 @@ struct Rgb {
 };
 #pragma pack(pop)
 
+bool rgbEqual(const Rgb &r1, const Rgb &r2) {
+    return r1.b == r2.b && r1.g == r2.g && r1.r == r2.r;
+}
+
+struct PixelData {
+    Rgb **rgb{};
+    int32_t width{};
+    int32_t height{};
+};
+
 struct Point {
     int32_t x{}, y{};
     FillType type{};

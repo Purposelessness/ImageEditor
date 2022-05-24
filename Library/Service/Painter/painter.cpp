@@ -77,6 +77,42 @@ void Painter::start(IImage *image, const std::vector<Point> &points, const Rgb &
     }
 }
 
+void Painter::drawRect(IImage *image, int32_t width, const Point &point, const Rgb &color, const Rgb &e, bool eFlag) {
+    auto pixelData = image->getPixelData();
+    drawRect({pixelData, image->getWidth(), image->getHeight()}, width, point, color, e, eFlag);
+}
+
+void Painter::drawRect(const PixelData &pixelData, int32_t width, const Point &point, const Rgb &color, const Rgb &e, bool eFlag) {
+    auto rgb = pixelData.rgb;
+    auto pw = pixelData.width;
+    auto ph = pixelData.height;
+    auto cx = point.x;
+    auto cy = point.y;
+    if (width == 1) {
+        if (pointIsValid(cx, cy, pw, ph))
+            rgb[cy][cx] = color;
+        return;
+    }
+
+    int32_t a = width / 2;
+    if (eFlag) {
+        for (int32_t y = cy - a; y <= cy + a; ++y) {
+            for (int32_t x = cx - a; x <= cx + a; ++x) {
+                auto pix = &rgb[y][x];
+                if (pointIsValid(x, y, pw, ph) && !rgbEqual(*pix, e))
+                    *pix = color;
+            }
+        }
+    } else {
+        for (int32_t y = cy - a; y <= cy + a; ++y) {
+            for (int32_t x = cx - a; x <= cx + a; ++x) {
+                if (pointIsValid(x, y, pw, ph))
+                    rgb[y][x] = color;
+            }
+        }
+    }
+}
+
 bool Painter::pointIsValid(int32_t x, int32_t y, int32_t width, int32_t height) {
     return x >= 0 && x < width && y >= 0 && y < height;
 }
