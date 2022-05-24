@@ -14,6 +14,7 @@
 #include <cstdio>
 
 const char *src = "D:/BMP/red_big.bmp";
+const char *marbles = "D:/BMP/marbles.bmp";
 const char *srcSmall = "D:/BMP/red_small.bmp";
 const char *simpson = "D:/BMP/simpson.bmp";
 const char *dest = "D:/new.bmp";
@@ -169,7 +170,7 @@ void Tester::rotate() {
 }
 
 void Tester::outline() {
-    Bitmap::Image bmp = Bitmap::Loader::load(simpson);
-    Outliner::start(&bmp, Rgb{255, 255, 255}, Rgb{255, 0, 255}, 5);
-    Bitmap::Saver::save(&bmp, dest);
+    Bitmap::Image bmp = Bitmap::Loader::load(marbles);
+    Outliner::start(&bmp, Rgb{255, 255, 255}, Rgb{255, 0, 255}, 1);
+    Bitmap::Saver::save(&bmp, dest)
 }

@@ -8,7 +8,7 @@ void Outliner::start(IImage *image, const Rgb &color, const Rgb &outlineColor, c
     for (int32_t y = 0; y < height; ++y) {
         for (int32_t x = 0; x < width; ++x) {
             if (rgbEqual(rgb[y][x], color))
-                Painter::drawRect({rgb, width, height}, thickness, {x, y}, outlineColor, color, true);
+                Painter::drawRect({rgb, width, height}, 1 + 2 * thickness, {x, y}, outlineColor, color, true);
         }
     }
 }
