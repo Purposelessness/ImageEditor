@@ -16,10 +16,7 @@ public:
 
 private:
     static Point transformPixel(Point pixel, int angle);
-    static Point transformPixelShearOne(Point pixel, int angle);
-    static Point transformPixelShearTwo(Point pixel, int angle);
-    static void transformPixelShearOne(Point &pixel, double tanHalf);
-    static void transformPixelShearTwo(Point &pixel, double sinus);
+    static void shear(Point &pixel, int angle);
     static bool pointIsValid(int32_t x, int32_t y, int32_t width, int32_t height);
 };
 

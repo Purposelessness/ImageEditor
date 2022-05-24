@@ -55,8 +55,6 @@ namespace Bitmap {
         fwrite(&infoHeader->size, sizeof(uint32_t), 1, f);
         fwrite(&infoHeader->data, infoHeader->size - sizeof(uint32_t), 1, f);
 
-        printf("%d\n", fileHeader->fileSize);
-
         size_t lineSize = width * sizeof(Rgb) + width % 4;
         auto writeData = !croppedData ? pixelData : croppedData;
         for (int32_t i = height - 1; i > -1; --i) {

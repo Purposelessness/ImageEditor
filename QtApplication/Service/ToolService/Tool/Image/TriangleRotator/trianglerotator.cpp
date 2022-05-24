@@ -18,18 +18,18 @@ void TriangleRotator::marqueePaintedEvent(const QPainterPath &path) {
     auto pixmapItem = new PixmapItem();
     graphicsView->addItem(pixmapItem);
 
-    auto sceneRect = path.boundingRect().toRect();
+    auto mappedToSceneRect = path.boundingRect().toRect();
 
-    int x0 = sceneRect.left();
-    int y0 = sceneRect.top();
-    auto cachedRect = sceneRect;
-    FigurePoints points = Calculator::triangle(0, 0, sceneRect.width(),sceneRect.height());
-    auto image = graphicsView->grab(&sceneRect).toImage();
-    points.x = x0 - sceneRect.left();
-    points.y = y0 - sceneRect.top();
+    int x0 = mappedToSceneRect.left();
+    int y0 = mappedToSceneRect.top();
+    auto cachedRect = mappedToSceneRect;
+    FigurePoints points = Calculator::triangle(0, 0, mappedToSceneRect.width(), mappedToSceneRect.height());
+    auto image = graphicsView->grab(&mappedToSceneRect).toImage();
+    points.x = x0 - mappedToSceneRect.left();
+    points.y = y0 - mappedToSceneRect.top();
     QPoint sceneOffset(points.x, points.y);
 
-    auto itemRect = pixmapItem->mapFromScene(sceneRect).boundingRect().toRect();
+    auto itemRect = pixmapItem->mapFromScene(mappedToSceneRect).boundingRect().toRect();
     auto itemPos = itemRect.topLeft();
     auto parentPos = pixmapItem->mapToParent(itemPos);
     pixmapItem->setPos(parentPos);
@@ -38,13 +38,13 @@ void TriangleRotator::marqueePaintedEvent(const QPainterPath &path) {
 
     auto pixmap = QPixmap::fromImage(newImage).scaledToWidth(itemRect.width());
     pixmapItem->setPixmap(pixmap);
-    pixmapItem->setTransformOriginPoint(pixmapItem->boundingRect().center());
+    auto center = pixmapItem->mapFromScene(cachedRect.center());
+    pixmapItem->setTransformOriginPoint(center);
 
     pixmapItem->setFlags(QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemIsMovable);
 
     bool ok;
     int angle = QInputDialog::getInt(nullptr, tr("Rotation angle"), tr("Angle:"), 0, INT_MIN, INT_MAX, 1, &ok);
-    angle %= 360;
     if (!ok) angle = 0;
 
     auto offset = pixmapItem->mapToParent(pixmapItem->mapFromScene(sceneOffset)).toPoint();
