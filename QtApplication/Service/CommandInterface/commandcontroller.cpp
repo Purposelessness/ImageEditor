@@ -8,6 +8,7 @@
 #include "../../../Library/Service/ColorInverter/colorinverter.h"
 #include "../../../Library/Service/Painter/painter.h"
 #include "../../../Library/Service/Rotator/rotator.h"
+#include "../../../Library/Service/Outliner/outliner.h"
 
 #include <utility>
 
@@ -50,6 +51,9 @@ ExitCode CommandController::processImage(Bitmap::Image *image, const CommandInfo
             break;
         case CommandType::triangleRotator:
             rotateTriangle(image, info.rotatorData);
+            break;
+        case CommandType::outline:
+            outline(image, info.outlinerData);
             break;
         default:
             return ExitCode::unknown;
@@ -121,4 +125,8 @@ void CommandController::rotateTriangle(Bitmap::Image *image, CommandRotatorData 
     x1d += data.offset.x();
     y1d += data.offset.y();
     Rotator::startBmpShear(image, Point{x1d, y1d}, ellipse, data.angle);
+}
+
+void CommandController::outline(Bitmap::Image *image, CommandOutlinerData data) {
+    Outliner::start(image, convertQColorToRgb(data.color), convertQColorToRgb(data.destColor), data.width);
 }

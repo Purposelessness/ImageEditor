@@ -9,7 +9,7 @@ class Tool : public ToolUnit {
 Q_OBJECT
 
 public:
-    explicit Tool(const QString &name, ToolModel *newModel);
+    explicit Tool(const QString &name, ToolModel *newModel = nullptr);
 
     QAction *getAction() final;
     virtual void onMousePressed(const QPoint &mousePos, IGraphicsView *graphicsView);

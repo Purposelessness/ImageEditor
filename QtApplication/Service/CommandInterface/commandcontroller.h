@@ -14,6 +14,7 @@ struct CommandLineData;
 struct CommandColorInverterData;
 struct CommandCropData;
 struct CommandRotatorData;
+struct CommandOutlinerData;
 struct Rgb;
 
 enum class ExitCode {
@@ -45,6 +46,7 @@ private:
     static void invertColorsInEllipse(Bitmap::Image *image, CommandColorInverterData data);
     static void cropImage(Bitmap::Image *image, CommandCropData data);
     static void rotateTriangle(Bitmap::Image *image, CommandRotatorData data);
+    static void outline(Bitmap::Image *image, CommandOutlinerData data);
     static Rgb convertQColorToRgb(const QColor &color);
 
     QString srcFileName, destFileName;

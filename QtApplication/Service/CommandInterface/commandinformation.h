@@ -18,7 +18,8 @@ enum class CommandType {
     line,
     ellipseColorInverter,
     triangleRotator,
-    crop
+    crop,
+    outline
 };
 
 struct CommandLineData {
@@ -84,6 +85,15 @@ public:
     int angle{};
 };
 
+struct CommandOutlinerData {
+public:
+    explicit CommandOutlinerData(int width, const QColor &color, const QColor &destColor);
+
+    int width;
+    QColor color;
+    QColor destColor;
+};
+
 struct CommandInformation {
     union {
         CommandFigureData figureData{};
@@ -91,6 +101,7 @@ struct CommandInformation {
         CommandColorInverterData colorInverterData;
         CommandCropData cropData;
         CommandRotatorData rotatorData;
+        CommandOutlinerData outlinerData;
     };
     CommandType type = CommandType::none;
 };

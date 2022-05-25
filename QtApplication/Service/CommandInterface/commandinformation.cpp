@@ -94,3 +94,6 @@ void CommandRotatorData::update() {
         item->setRotation(angle);
     }
 }
+
+CommandOutlinerData::CommandOutlinerData(int width, const QColor &color, const QColor &destColor)
+                   : width(width), color(color), destColor(destColor) {}
