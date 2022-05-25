@@ -1,5 +1,7 @@
 #include "figureextractorworker.h"
 
+static const QRgb transparent = 0x00000000;
+
 QImage FigureExtractorWorker::start(const FigurePoints& points, const QImage& srcImage) {
     QImage image(srcImage.size(), QImage::Format_ARGB32);
 
@@ -20,9 +22,7 @@ void FigureExtractorWorker::extractFigure(const TaskInput &input) {
                 continue;
             int xRect = x - input.points.x;
             int yRect = y - input.points.y;
-            if (input.points.data[yRect][xRect] == FillType::fill) {
-                line[x] = input.srcImage.pixel(x, y);
-            }
+            line[x] = input.points.data[yRect][xRect] == FillType::fill ? input.srcImage.pixel(x, y) : transparent;
         }
     }
 }
