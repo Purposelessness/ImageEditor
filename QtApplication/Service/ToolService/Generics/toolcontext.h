@@ -3,7 +3,7 @@
 
 
 #include "toolcontextobject.h"
-#include "../../../Core/StateMachine/context.h"
+#include "../../../Core/Strategy/context.h"
 #include "toolunit.h"
 
 #include <QObject>

@@ -22,7 +22,5 @@ ImageLoaderOut ImageLoader::loadImage(const QString &path) {
     QImageReader reader(fileName);
     reader.setAutoTransform(true);
     const QImage newImage = reader.read();
-    qDebug() << path;
-    qDebug() << newImage.size();
     return newImage.isNull() ? ImageLoaderOut{} : ImageLoaderOut{.image = newImage, .imagePath = fileName};
 }

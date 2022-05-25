@@ -13,7 +13,7 @@ Q_LOGGING_CATEGORY(service, "Service")
 Q_LOGGING_CATEGORY(commandInterface, "CommandInterface")
 Q_LOGGING_CATEGORY(toolService, "ToolService", QtInfoMsg)
 Q_LOGGING_CATEGORY(core, "Core")
-Q_LOGGING_CATEGORY(stateMachine, "StateMachine", QtInfoMsg)
+Q_LOGGING_CATEGORY(stateMachine, "Strategy", QtInfoMsg)
 
 QString fileName;
 
