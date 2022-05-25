@@ -172,5 +172,5 @@ void Tester::rotate() {
 void Tester::outline() {
     Bitmap::Image bmp = Bitmap::Loader::load(marbles);
     Outliner::start(&bmp, Rgb{255, 255, 255}, Rgb{255, 0, 255}, 1);
-    Bitmap::Saver::save(&bmp, dest)
+    Bitmap::Saver::save(&bmp, dest);
 }
