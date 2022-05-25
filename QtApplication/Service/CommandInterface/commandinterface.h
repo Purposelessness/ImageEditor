@@ -10,7 +10,7 @@
 #include <QVector>
 #include <QObject>
 
-class CommandInterface : QObject {
+class CommandInterface : public QObject {
 Q_OBJECT
 
 public:
@@ -20,6 +20,9 @@ public:
     void push(Command *command);
     Command *pop();
     void clear();
+
+signals:
+    void finished();
 
 private slots:
     void onWorkerFinished(ExitCode code);

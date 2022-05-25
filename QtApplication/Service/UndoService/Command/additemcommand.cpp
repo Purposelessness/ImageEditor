@@ -7,13 +7,15 @@ AddItemCommand::AddItemCommand(QGraphicsItem *item, const CommandInformation &in
 
 void AddItemCommand::undo() {
     pop();
-    item->hide();
+    if (item)
+        item->hide();
     QUndoCommand::undo();
 }
 
 void AddItemCommand::redo() {
     push();
-    item->show();
+    if (item)
+        item->show();
     QUndoCommand::redo();
 }
 

@@ -49,3 +49,12 @@ void WidgetData::setTooBar(IToolBar *newToolBar) {
 IToolBar *WidgetData::getToolBar() {
     return toolBar;
 }
+
+void WidgetData::setEditorWindow(EditorWindow *newWindow) {
+    editorWindow = newWindow;
+    emit editorWindowUpdated();
+}
+
+EditorWindow *WidgetData::getEditorWindow() {
+    return editorWindow;
+}

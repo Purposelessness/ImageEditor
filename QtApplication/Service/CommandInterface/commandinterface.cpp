@@ -45,4 +45,5 @@ void CommandInterface::onWorkerFinished(ExitCode code) {
     } else {
         qDebug(commandInterface()) << "Work is finished";
     }
+    emit finished();
 }

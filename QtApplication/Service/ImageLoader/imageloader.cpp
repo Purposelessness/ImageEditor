@@ -5,11 +5,16 @@
 #include <QStandardPaths>
 #include <QFileDialog>
 
-ImageLoaderOut ImageLoader::loadImage() {
-    const QStringList picturesLocation = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
-    QString fileName = QFileDialog::getOpenFileName(nullptr, QWidget::tr("Open"),
-                                                    picturesLocation.isEmpty() ? QDir::currentPath() : picturesLocation.last(),
-                                                    QWidget::tr("All files (*.*);;JPEG (*.jpg *.jpeg);;PNG (*.png);;BMP (*.bmp)"));
+ImageLoaderOut ImageLoader::loadImage(const QString &path) {
+    QString fileName;
+    if (path.isEmpty()) {
+        const QStringList picturesLocation = QStandardPaths::standardLocations(QStandardPaths::PicturesLocation);
+        fileName = QFileDialog::getOpenFileName(nullptr, QWidget::tr("Open"),
+                                                        picturesLocation.isEmpty() ? QDir::currentPath() : picturesLocation.last(),
+                                                        QWidget::tr("All files (*.*);;JPEG (*.jpg *.jpeg);;PNG (*.png);;BMP (*.bmp)"));
+    } else {
+        fileName = path;
+    }
     if (fileName.isEmpty()) {
         qWarning(fileSystem()) << "Selected invalid file";
         return ImageLoaderOut{};
@@ -17,5 +22,7 @@ ImageLoaderOut ImageLoader::loadImage() {
     QImageReader reader(fileName);
     reader.setAutoTransform(true);
     const QImage newImage = reader.read();
+    qDebug() << path;
+    qDebug() << newImage.size();
     return newImage.isNull() ? ImageLoaderOut{} : ImageLoaderOut{.image = newImage, .imagePath = fileName};
 }

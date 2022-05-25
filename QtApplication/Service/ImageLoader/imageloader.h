@@ -10,7 +10,7 @@ struct ImageLoaderOut {
 
 class ImageLoader {
 public:
-    static ImageLoaderOut loadImage();
+    static ImageLoaderOut loadImage(const QString &filePath = QString());
 };
 
 

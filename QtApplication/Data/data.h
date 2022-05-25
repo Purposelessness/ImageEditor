@@ -12,6 +12,7 @@ class IToolDock;
 class IToolBar;
 class ToolService;
 class QGraphicsPixmapItem;
+class EditorWindow;
 
 class Data : public QObject {
 Q_OBJECT
@@ -38,6 +39,9 @@ Q_OBJECT
 public:
     static WidgetData &getInstance();
 
+    void setEditorWindow(EditorWindow *window);
+    EditorWindow *getEditorWindow();
+
     void setGraphicsView(IGraphicsView *graphicsView);
     IGraphicsView *getGraphicsView();
 
@@ -48,6 +52,7 @@ public:
     IToolBar *getToolBar();
 
 signals:
+    void editorWindowUpdated();
     void graphicsViewUpdated();
     void toolDockUpdated();
     void toolBarUpdated();
@@ -57,6 +62,7 @@ private:
     WidgetData(const WidgetData &root) = delete;
     WidgetData &operator=(const WidgetData &) = delete;
 
+    EditorWindow *editorWindow = nullptr;
     IGraphicsView *graphicsView = nullptr;
     IToolDock *toolDock = nullptr;
     IToolBar *toolBar = nullptr;

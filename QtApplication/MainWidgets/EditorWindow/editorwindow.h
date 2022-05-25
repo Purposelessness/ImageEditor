@@ -15,13 +15,15 @@ Q_OBJECT
 public:
     explicit EditorWindow(QWidget *parent = nullptr);
 
-private slots:
-    void openImage();
-    void saveImage();
+public slots:
+    void openImage(bool temp = false);
+    void openTempImage();
+    void saveImage(bool temp = false);
     void showDock();
 
 private:
     EditorWindowView *view;
+    bool openTempFlag = false;
 
     QString imagePath;
 };
