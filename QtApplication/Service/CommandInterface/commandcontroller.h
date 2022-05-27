@@ -16,6 +16,7 @@ struct CommandCropData;
 struct CommandRotatorData;
 struct CommandOutlinerData;
 struct CommandGlueData;
+struct CommandReflectorData;
 struct Rgb;
 
 enum class ExitCode {
@@ -49,6 +50,7 @@ private:
     static void rotateTriangle(Bitmap::Image *image, CommandRotatorData data);
     static void outline(Bitmap::Image *image, CommandOutlinerData data);
     static void glue(Bitmap::Image *image, CommandGlueData data);
+    static void reflect(Bitmap::Image * image, CommandReflectorData data);
     static Rgb convertQColorToRgb(const QColor &color);
 
     QString srcFileName, destFileName;

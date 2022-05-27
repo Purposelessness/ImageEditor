@@ -20,7 +20,8 @@ enum class CommandType {
     triangleRotator,
     crop,
     outline,
-    glue
+    glue,
+    reflector
 };
 
 struct CommandLineData {
@@ -102,6 +103,12 @@ public:
     char *imagePath{};
 };
 
+struct CommandReflectorData {
+    explicit CommandReflectorData(const QRect &rect);
+
+    QRect rect;
+};
+
 struct CommandInformation {
     union {
         CommandFigureData figureData{};
@@ -111,6 +118,7 @@ struct CommandInformation {
         CommandRotatorData rotatorData;
         CommandOutlinerData outlinerData;
         CommandGlueData glueData;
+        CommandReflectorData reflectorData;
     };
     CommandType type = CommandType::none;
 };

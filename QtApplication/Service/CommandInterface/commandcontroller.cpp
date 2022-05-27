@@ -10,6 +10,7 @@
 #include "../../../Library/Service/Rotator/rotator.h"
 #include "../../../Library/Service/Outliner/outliner.h"
 #include "../../../Library/Service/Glue/glue.h"
+#include "../../../Library/Service/Reflector/reflector.h"
 
 #include <utility>
 
@@ -58,6 +59,9 @@ ExitCode CommandController::processImage(Bitmap::Image *image, const CommandInfo
             break;
         case CommandType::glue:
             glue(image, info.glueData);
+            break;
+        case CommandType::reflector:
+            reflect(image, info.reflectorData);
             break;
         default:
             return ExitCode::unknown;
@@ -138,4 +142,10 @@ void CommandController::outline(Bitmap::Image *image, CommandOutlinerData data) 
 void CommandController::glue(Bitmap::Image *image, CommandGlueData data) {
     auto i2 = Bitmap::Loader::load(data.imagePath);
     Glue::start(image, &i2);
+}
+
+void CommandController::reflect(Bitmap::Image *image, CommandReflectorData data) {
+    int x, y, w, h;
+    data.rect.getRect(&x, &y, &w, &h);
+    Reflector::start(image, {x, y, w, h}, Orientation::vertical);
 }

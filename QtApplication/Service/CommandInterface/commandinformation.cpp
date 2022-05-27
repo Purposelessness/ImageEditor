@@ -105,3 +105,5 @@ CommandGlueData::CommandGlueData(const char *path) {
     imagePath = new char[strlen(path) + 1]{};
     strcpy(imagePath, path);
 }
+
+CommandReflectorData::CommandReflectorData(const QRect &rect) : rect(rect) {}
