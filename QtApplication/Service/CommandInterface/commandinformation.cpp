@@ -1,5 +1,8 @@
 #include "commandinformation.h"
 
+#include <utility>
+#include <cstring>
+
 CommandLineData::CommandLineData(QGraphicsLineItem *line) : line(line) {}
 
 CommandLineData::CommandLineData(const QPoint &p1, const QPoint &p2, const QColor &color, int thickness)
@@ -97,3 +100,8 @@ void CommandRotatorData::update() {
 
 CommandOutlinerData::CommandOutlinerData(int width, const QColor &color, const QColor &destColor)
                    : width(width), color(color), destColor(destColor) {}
+
+CommandGlueData::CommandGlueData(const char *path) {
+    imagePath = new char[strlen(path) + 1]{};
+    strcpy(imagePath, path);
+}

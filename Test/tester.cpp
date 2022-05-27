@@ -10,6 +10,7 @@
 #include "../Library/Service/Scaler/scaler.h"
 #include "../Library/Service/Rotator/rotator.h"
 #include "../Library/Service/Outliner/outliner.h"
+#include "../Library/Service/Glue/glue.h"
 
 #include <cstdio>
 
@@ -173,4 +174,11 @@ void Tester::outline() {
     Bitmap::Image bmp = Bitmap::Loader::load(marbles);
     Outliner::start(&bmp, Rgb{255, 255, 255}, Rgb{255, 0, 255}, 1);
     Bitmap::Saver::save(&bmp, dest);
+}
+
+void Tester::glue() {
+    Bitmap::Image bmp1 = Bitmap::Loader::load(marbles);
+    Bitmap::Image bmp2 = Bitmap::Loader::load(simpson);
+    Glue::start(&bmp1, &bmp2);
+    Bitmap::Saver::save(&bmp1, dest);
 }

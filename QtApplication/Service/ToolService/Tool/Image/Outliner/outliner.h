@@ -12,9 +12,6 @@ public:
 
 public slots:
     void use();
-
-private:
-    void editImage(QImage *image, int width, const QColor &color, const QColor &destColor);
 };
 
 

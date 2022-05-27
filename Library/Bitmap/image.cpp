@@ -68,4 +68,11 @@ namespace Bitmap {
         return x >= 0 && x < infoHeader.getWidth() && y >= 0 && y < infoHeader.getHeight();
     }
 
+    void Image::setNewImage(const FileHeader &nfh, const InfoHeader &nih, Rgb **npd) {
+        delete[] pixelData;
+        fileHeader = nfh;
+        infoHeader = nih;
+        pixelData = npd;
+    }
+
 }

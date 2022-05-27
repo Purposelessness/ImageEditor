@@ -18,6 +18,7 @@ public:
     static void scaleArea();
     static void rotate();
     static void outline();
+    static void glue();
 };
 
 

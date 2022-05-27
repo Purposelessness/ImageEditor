@@ -21,6 +21,8 @@ namespace Bitmap {
         void setWidth(int32_t width) override;
         void setCropRect(const Rect &cropRect = Rect());
 
+        void setNewImage(const FileHeader &fileHeader, const InfoHeader &infoHeader, Rgb **pixelData);
+
         Rgb **getPixelData() override;
         [[nodiscard]] int32_t getHeight() const override;
         [[nodiscard]] int32_t getWidth() const override;

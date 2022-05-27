@@ -9,6 +9,7 @@
 #include "../../../Library/Service/Painter/painter.h"
 #include "../../../Library/Service/Rotator/rotator.h"
 #include "../../../Library/Service/Outliner/outliner.h"
+#include "../../../Library/Service/Glue/glue.h"
 
 #include <utility>
 
@@ -54,6 +55,9 @@ ExitCode CommandController::processImage(Bitmap::Image *image, const CommandInfo
             break;
         case CommandType::outline:
             outline(image, info.outlinerData);
+            break;
+        case CommandType::glue:
+            glue(image, info.glueData);
             break;
         default:
             return ExitCode::unknown;
@@ -129,4 +133,9 @@ void CommandController::rotateTriangle(Bitmap::Image *image, CommandRotatorData 
 
 void CommandController::outline(Bitmap::Image *image, CommandOutlinerData data) {
     Outliner::start(image, convertQColorToRgb(data.color), convertQColorToRgb(data.destColor), data.width);
+}
+
+void CommandController::glue(Bitmap::Image *image, CommandGlueData data) {
+    auto i2 = Bitmap::Loader::load(data.imagePath);
+    Glue::start(image, &i2);
 }
